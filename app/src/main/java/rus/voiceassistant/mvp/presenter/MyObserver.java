@@ -38,8 +38,7 @@ public class MyObserver {
                     subscriber.onNext(readFromUrl(createUrl(text)));
                 } catch (IOException e) {
                     e.printStackTrace();
-                }
-            }
+                }}
         })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -33,6 +33,9 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.0'
     compile 'io.reactivex:rxandroid:1.1.0'
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile('com.mikepenz:materialdrawer:5.0.0@aar') {
+        transitive = true
+    }
 }
 buildscript {
     ext.kotlin_version = '1.0.1-1'
