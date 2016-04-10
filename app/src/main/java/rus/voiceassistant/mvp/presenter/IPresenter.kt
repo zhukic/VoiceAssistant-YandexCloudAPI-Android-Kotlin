@@ -9,6 +9,8 @@ interface IPresenter {
 
     fun observe(text: String?)
 
+    fun onCreateAlarmClicked()
+
     fun onRecognitionStarted()
 
     fun onRecognitionFinished(requestCode: Int, resultCode: Int, data: Intent?)

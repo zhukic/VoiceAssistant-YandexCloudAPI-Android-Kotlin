@@ -2,7 +2,6 @@ package rus.voiceassistant.mvp.presenter
 
 import android.content.Intent
 import android.util.Log
-import kotlinx.android.synthetic.main.content_main.*
 import org.json.JSONObject
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.mvp.view.IView
@@ -42,12 +41,16 @@ class PresenterImpl(var view: IView?) : IPresenter, ObserveListener {
         }
     }
 
+    override fun onCreateAlarmClicked() {
+        view?.showTimePicker()
+    }
+
     override fun observe(text: String?) {
         resultOK(text)
     }
 
     override fun onObserveFinished(text: String) {
-        view?.setText(text)
+
     }
 
     fun resultOK(text: String?) {
@@ -56,7 +59,7 @@ class PresenterImpl(var view: IView?) : IPresenter, ObserveListener {
     }
 
     fun resultError(text: String?) {
-        view?.setText(text)
+
     }
 
     override fun onDestroy() {
