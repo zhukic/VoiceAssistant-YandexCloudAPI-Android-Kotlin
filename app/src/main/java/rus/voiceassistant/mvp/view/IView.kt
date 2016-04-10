@@ -12,6 +12,8 @@ interface IView: TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetL
 
     fun showTimePicker()
 
+    fun showDatePicker()
+
     fun onError()
 
 }

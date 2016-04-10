@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fab_menu.*
 import ru.yandex.speechkit.SpeechKit
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.R
+import rus.voiceassistant.mvp.model.alarm.Alarm
 import rus.voiceassistant.mvp.presenter.IPresenter
 import rus.voiceassistant.mvp.presenter.PresenterImpl
 import java.util.*
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(), IView {
     }
 
     lateinit var presenter: IPresenter
+    lateinit var alarmsFragment: AlarmsFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +69,15 @@ class MainActivity : AppCompatActivity(), IView {
 
         initNavigationDrawer()
 
-        fragmentManager.beginTransaction().add(R.id.fragment_container, AlarmsFragment()).commit()
+        alarmsFragment = AlarmsFragment()
+
+        fragmentManager.beginTransaction().add(R.id.fragment_container, alarmsFragment).commit()
 
         fab_menu.setClosedOnTouchOutside(true)
 
+        fab_micro.setOnClickListener { presenter.onRecognitionStarted() }
         fab_create_alarm.setOnClickListener { presenter.onCreateAlarmClicked() }
-
+        fab_create_remind.setOnClickListener { presenter.onCreateNotificationClicked() }
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
     }
 
@@ -124,11 +129,10 @@ class MainActivity : AppCompatActivity(), IView {
     }
 
     override fun startRecognitionActivity() {
-        /*val intent = Intent(this, RecognizerActivity::class.java)
+        val intent = Intent(this, RecognizerActivity::class.java)
         intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, EXTRA_LANGUAGE)
         intent.putExtra(RecognizerActivity.EXTRA_MODEL, EXTRA_MODEL)
-        startActivityForResult(intent, 0)*/
-        showTimePicker()
+        startActivityForResult(intent, 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -140,7 +144,18 @@ class MainActivity : AppCompatActivity(), IView {
         tpd.show(getFragmentManager(), "TimePickerDialog");
     }
 
+    override fun showDatePicker() {
+        val calendar: Calendar = Calendar.getInstance(Locale("ru"))
+        val dpd = DatePickerDialog.newInstance(
+                this,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH))
+        dpd.show(fragmentManager, "DatePicker")
+    }
+
     override fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
+        alarmsFragment.addAlarm(Alarm(hourOfDay, minute))
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {

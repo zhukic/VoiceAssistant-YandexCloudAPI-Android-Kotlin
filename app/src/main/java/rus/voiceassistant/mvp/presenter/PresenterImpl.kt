@@ -45,6 +45,10 @@ class PresenterImpl(var view: IView?) : IPresenter, ObserveListener {
         view?.showTimePicker()
     }
 
+    override fun onCreateNotificationClicked() {
+        view?.showDatePicker()
+    }
+
     override fun observe(text: String?) {
         resultOK(text)
     }

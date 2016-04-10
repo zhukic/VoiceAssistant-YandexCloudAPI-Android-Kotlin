@@ -11,6 +11,8 @@ interface IPresenter {
 
     fun onCreateAlarmClicked()
 
+    fun onCreateNotificationClicked()
+
     fun onRecognitionStarted()
 
     fun onRecognitionFinished(requestCode: Int, resultCode: Int, data: Intent?)
