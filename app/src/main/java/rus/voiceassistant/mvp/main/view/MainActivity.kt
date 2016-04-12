@@ -1,5 +1,6 @@
-package rus.voiceassistant.mvp.view;
+package rus.voiceassistant.mvp.main.view;
 
+import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -16,9 +17,13 @@ import android.view.MenuItem;
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TimePicker
+import com.elmargomez.typer.Font
+import com.elmargomez.typer.Typer
+import com.mikepenz.community_material_typeface_library.CommunityMaterial
 import com.wdullaer.materialdatetimepicker.Utils;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial
+import com.mikepenz.iconics.IconicsDrawable
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -34,15 +39,14 @@ import kotlinx.android.synthetic.main.fab_menu.*
 import ru.yandex.speechkit.SpeechKit
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.R
-import rus.voiceassistant.mvp.model.alarm.Alarm
-import rus.voiceassistant.mvp.presenter.IPresenter
-import rus.voiceassistant.mvp.presenter.PresenterImpl
+import rus.voiceassistant.mvp.alarm.model.Alarm
+import rus.voiceassistant.mvp.alarm.view.AlarmsFragment
+import rus.voiceassistant.mvp.main.presenter.IPresenter
+import rus.voiceassistant.mvp.main.presenter.PresenterImpl
 import java.util.*
 
 
-//TODO recyclerView
-//TODO tablayout
-//TODO timePicker
+
 class MainActivity : AppCompatActivity(), IView {
 
     companion object {
@@ -98,29 +102,29 @@ class MainActivity : AppCompatActivity(), IView {
                                 .withIdentifier(1)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
-                                .withTypeface(Typeface.createFromAsset(assets, "Roboto-Medium.ttf"))
+                                .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
                                 .withIcon(GoogleMaterial.Icon.gmd_access_alarms),
                         PrimaryDrawerItem()
                                 .withName(getString(R.string.action_reminder))
                                 .withIdentifier(2)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
-                                .withTypeface(Typeface.createFromAsset(assets, "Roboto-Medium.ttf"))
+                                .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
                                 .withIcon(GoogleMaterial.Icon.gmd_event),
                         PrimaryDrawerItem()
                                 .withName(getString(R.string.action_note))
                                 .withIdentifier(3)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
-                                .withTypeface(Typeface.createFromAsset(assets, "Roboto-Medium.ttf"))
-                                .withIcon(GoogleMaterial.Icon.gmd_note),
+                                .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
+                                .withIcon(CommunityMaterial.Icon.cmd_note_outline),
                         DividerDrawerItem(),
                         PrimaryDrawerItem()
                                 .withName(getString(R.string.action_settings))
                                 .withIdentifier(4)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
-                                .withTypeface(Typeface.createFromAsset(assets, "Roboto-Medium.ttf"))
+                                .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
                 //.withOnDrawerItemClickListener { view, i, iDrawerItem -> createAlarm(i) }
@@ -191,7 +195,6 @@ class MainActivity : AppCompatActivity(), IView {
             intent.putExtra(AlarmClock.EXTRA_HOUR, 7)
             intent.putExtra(AlarmClock.EXTRA_MINUTES, 30)
             intent.putExtra(AlarmClock.EXTRA_IS_PM, true)
-            startActivity(intent)
         }
         return true
     }

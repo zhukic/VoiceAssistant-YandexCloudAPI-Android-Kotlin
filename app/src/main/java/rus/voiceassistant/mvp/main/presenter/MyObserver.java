@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.presenter;
+package rus.voiceassistant.mvp.main.presenter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 
 import rx.Observable;
-import rx.Scheduler;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

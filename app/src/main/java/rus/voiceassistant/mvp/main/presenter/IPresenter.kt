@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.presenter
+package rus.voiceassistant.mvp.main.presenter
 
 import android.content.Intent
 

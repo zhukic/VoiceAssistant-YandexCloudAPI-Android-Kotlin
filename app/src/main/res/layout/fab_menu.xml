@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fab_menu"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="bottom|right"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="10dp"
@@ -15,7 +15,7 @@
     fab:menu_shadowRadius="4dp"
     fab:menu_shadowXOffset="1dp"
     fab:menu_shadowYOffset="3dp"
-    fab:menu_colorNormal="#DA4336"
+    fab:menu_colorNormal="@color/accent"
     fab:menu_colorPressed="#E75043"
     fab:menu_colorRipple="#99FFFFFF"
     fab:menu_animationDelayPerItem="50"
@@ -47,24 +47,28 @@
             android:id="@+id/fab_micro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/accent"
             android:src="@mipmap/ic_microphone"
             fab:fab_size="normal" />
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_create_alarm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/accent"
             android:src="@mipmap/ic_alarm_plus"
             fab:fab_size="normal" />
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_create_remind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/accent"
             android:src="@mipmap/ic_calendar_plus"
             fab:fab_size="normal" />
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_create_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/accent"
             android:src="@mipmap/ic_note_plus"
             fab:fab_size="normal" />
 

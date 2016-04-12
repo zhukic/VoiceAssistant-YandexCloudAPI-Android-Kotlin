@@ -1,10 +1,10 @@
-package rus.voiceassistant.mvp.presenter
+package rus.voiceassistant.mvp.main.presenter
 
 import android.content.Intent
 import android.util.Log
 import org.json.JSONObject
 import ru.yandex.speechkit.gui.RecognizerActivity
-import rus.voiceassistant.mvp.view.IView
+import rus.voiceassistant.mvp.main.view.IView
 import rx.Observable
 import rx.functions.Func1
 import rx.schedulers.Schedulers

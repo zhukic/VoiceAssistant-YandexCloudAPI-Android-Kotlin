@@ -2,25 +2,19 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/checkbox"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+    android:layout_height="72dp"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:clickable="true"
+    android:focusable="true">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
         android:id="@+id/linearLayout"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/checkbox"
-        android:layout_toEndOf="@+id/checkbox">
+        android:layout_centerVertical="true">
 
         <TextView
             android:layout_width="wrap_content"
@@ -35,9 +29,17 @@
             android:layout_height="wrap_content"
             android:id="@+id/textDay"
             android:text="Завтра"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="@color/secondaryTextColor"
             android:textSize="16sp" />
 
     </LinearLayout>
+
+    <android.support.v7.widget.SwitchCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/material_switch"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
