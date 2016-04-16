@@ -27,10 +27,10 @@ class RecyclerAdapter(val view: IAlarmView, val items: List<Alarm>): RecyclerVie
             val textDay: TextView = v.textDay ): RecyclerView.ViewHolder(v)
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!МНОГО РАЗ ВЫЗЫВАЕТСЯ
+
         holder?.textTime?.typeface = Typer.set(view.getContext()).getFont(Font.ROBOTO_REGULAR)
         holder?.textDay?.typeface = Typer.set(view.getContext()).getFont(Font.ROBOTO_REGULAR)
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
         holder?.textTime?.text = items.get(position).getTime()
         holder?.switch?.setOnCheckedChangeListener { button, isChecked -> view.onCheckedChange(position, isChecked) }
     }

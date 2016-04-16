@@ -1,11 +1,14 @@
 package rus.voiceassistant.mvp.main.view;
 
+import android.app.Fragment
+import android.app.FragmentManager
 import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle;
 import android.provider.AlarmClock
+import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat
@@ -35,7 +38,6 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fab_menu.*
 import ru.yandex.speechkit.SpeechKit
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.R
@@ -46,7 +48,7 @@ import rus.voiceassistant.mvp.main.presenter.PresenterImpl
 import java.util.*
 
 
-
+//TODO Extension functions
 class MainActivity : AppCompatActivity(), IView {
 
     companion object {
@@ -60,6 +62,10 @@ class MainActivity : AppCompatActivity(), IView {
 
     lateinit var presenter: IPresenter
     lateinit var alarmsFragment: AlarmsFragment
+
+    fun FragmentManager.addFragment(containerViewId: Int, fragment: Fragment) {
+        this.beginTransaction().add(containerViewId, fragment).commit()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,13 +81,7 @@ class MainActivity : AppCompatActivity(), IView {
 
         alarmsFragment = AlarmsFragment()
 
-        fragmentManager.beginTransaction().add(R.id.fragment_container, alarmsFragment).commit()
-
-        fab_menu.setClosedOnTouchOutside(true)
-
-        fab_micro.setOnClickListener { presenter.onRecognitionStarted() }
-        fab_create_alarm.setOnClickListener { presenter.onCreateAlarmClicked() }
-        fab_create_remind.setOnClickListener { presenter.onCreateNotificationClicked() }
+        fragmentManager.addFragment(R.id.fragment_container, AlarmsFragment())
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
     }
 
@@ -143,28 +143,6 @@ class MainActivity : AppCompatActivity(), IView {
         //presenter.onRecognitionFinished(requestCode, resultCode, data)
     }
 
-    override fun showTimePicker() {
-        val tpd: TimePickerDialog = TimePickerDialog.newInstance(this, 0, 0, true);
-        tpd.show(getFragmentManager(), "TimePickerDialog");
-    }
-
-    override fun showDatePicker() {
-        val calendar: Calendar = Calendar.getInstance(Locale("ru"))
-        val dpd = DatePickerDialog.newInstance(
-                this,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH))
-        dpd.show(fragmentManager, "DatePicker")
-    }
-
-    override fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
-        alarmsFragment.addAlarm(Alarm(hourOfDay, minute))
-    }
-
-    override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
-    }
-
     override fun onError() {
 
     }
@@ -186,17 +164,6 @@ class MainActivity : AppCompatActivity(), IView {
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
-    }
-
-    fun createAlarm(i: Int): Boolean {
-        Log.i(TAG, i.toString())
-        if(i == 100) {
-            val intent = Intent(AlarmClock.ACTION_SET_ALARM)
-            intent.putExtra(AlarmClock.EXTRA_HOUR, 7)
-            intent.putExtra(AlarmClock.EXTRA_MINUTES, 30)
-            intent.putExtra(AlarmClock.EXTRA_IS_PM, true)
-        }
-        return true
     }
 
 }

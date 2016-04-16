@@ -1,6 +1,8 @@
 package rus.voiceassistant.mvp.alarm.presenter
 
 import android.util.Log
+import rus.voiceassistant.MyApplication
+import rus.voiceassistant.database.DatabaseManager
 import rus.voiceassistant.mvp.alarm.model.Alarm
 import rus.voiceassistant.mvp.alarm.view.IAlarmView
 import java.util.*
@@ -14,7 +16,7 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
         val TAG = "TAG"
     }
 
-    val alarms: ArrayList<Alarm> = ArrayList()
+    val alarms: ArrayList<Alarm> = DatabaseManager.getAlarmsListFromDatabase()
 
     override fun onCheckedChanged(position: Int, isChecked: Boolean) {
         Log.i(TAG, position.toString() + " " + isChecked)
@@ -24,12 +26,26 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
             view?.onAlarmOff(alarms.get(position))*/
     }
 
-    override fun onAlarmAdded(alarm: Alarm) {
-        alarms.add(alarm)
+    override fun onResume() {
+        view?.setAlarms(alarms)
     }
 
-    override fun getAlarmsList(): ArrayList<Alarm> {
-        return alarms
+    override fun onAddAlarmClicked() {
+        view?.showTimePicker()
+    }
+
+    override fun removeAlarm(position: Int) {
+        DatabaseManager.remove(alarms.get(position).id)
+        alarms.removeAt(position)
+    }
+
+    override fun createAlarm(hourOfDay: Int, minute: Int) {
+        val alarm = Alarm()
+        alarm.hour = hourOfDay
+        alarm.minute = minute
+        alarms.add(alarm)
+        MyApplication.alarmDao?.create(alarm)
+        view?.onAlarmAdded(alarm)
     }
 
     override fun onDestroy() {

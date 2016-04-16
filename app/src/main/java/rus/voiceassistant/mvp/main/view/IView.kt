@@ -6,13 +6,9 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 /**
  * Created by RUS on 25.03.2016.
  */
-interface IView: TimePickerDialog.OnTimeSetListener, DatePickerDialog.OnDateSetListener {
+interface IView {
 
     fun startRecognitionActivity()
-
-    fun showTimePicker()
-
-    fun showDatePicker()
 
     fun onError()
 

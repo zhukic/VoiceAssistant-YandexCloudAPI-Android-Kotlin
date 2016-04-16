@@ -8,11 +8,15 @@ import java.util.*
  */
 interface IAlarmPresenter {
 
+    fun onResume()
+
+    fun createAlarm(hourOfDay: Int, minute: Int)
+
+    fun onAddAlarmClicked()
+
+    fun removeAlarm(position: Int)
+
     fun onCheckedChanged(position: Int, isChecked: Boolean)
-
-    fun onAlarmAdded(alarm: Alarm)
-
-    fun getAlarmsList(): ArrayList<Alarm>
 
     fun onDestroy()
 

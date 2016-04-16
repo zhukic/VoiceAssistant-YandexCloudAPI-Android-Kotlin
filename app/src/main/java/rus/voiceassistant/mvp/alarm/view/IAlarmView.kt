@@ -1,6 +1,8 @@
 package rus.voiceassistant.mvp.alarm.view
 
 import android.content.Context
+import android.widget.TimePicker
+import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import rus.voiceassistant.mvp.alarm.model.Alarm
 import java.text.FieldPosition
 import java.util.*
@@ -8,9 +10,11 @@ import java.util.*
 /**
  * Created by RUS on 12.04.2016.
  */
-interface IAlarmView {
+interface IAlarmView : TimePickerDialog.OnTimeSetListener {
 
-    fun addAlarm(alarm: Alarm)
+    fun showTimePicker()
+
+    fun onAlarmAdded(alarm: Alarm)
 
     fun setAlarms(alarms: ArrayList<Alarm>)
 
@@ -18,8 +22,6 @@ interface IAlarmView {
 
     fun getContext(): Context?
 
-    fun onAlarmOn(alarm: Alarm)
-
-    fun onAlarmOff(alarm: Alarm)
+    fun onAlarmOnOff(alarm: Alarm)
 
 }
