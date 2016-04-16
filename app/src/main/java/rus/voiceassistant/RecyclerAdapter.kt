@@ -14,6 +14,8 @@ import com.elmargomez.typer.Typer
 import kotlinx.android.synthetic.main.alarm_item.view.*
 import rus.voiceassistant.mvp.alarm.model.Alarm
 import rus.voiceassistant.mvp.alarm.view.IAlarmView
+import rus.voiceassistant.utils.DateUtils
+import java.util.*
 
 /**
  * Created by RUS on 10.04.2016.
@@ -31,6 +33,10 @@ class RecyclerAdapter(val view: IAlarmView, val items: List<Alarm>): RecyclerVie
         holder?.textTime?.typeface = Typer.set(view.getContext()).getFont(Font.ROBOTO_REGULAR)
         holder?.textDay?.typeface = Typer.set(view.getContext()).getFont(Font.ROBOTO_REGULAR)
 
+        if(DateUtils.isDateComesToday(items.get(position).hour, items.get(position).minute))
+            holder?.textDay?.text = "Сегодня"
+        else
+            holder?.textDay?.text = "Завтра"
         holder?.textTime?.text = items.get(position).getTime()
         holder?.switch?.setOnCheckedChangeListener { button, isChecked -> view.onCheckedChange(position, isChecked) }
     }

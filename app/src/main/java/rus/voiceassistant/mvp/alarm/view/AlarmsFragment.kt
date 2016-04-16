@@ -51,6 +51,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
                 if(viewHolder != null) {
                     presenter.removeAlarm(viewHolder.adapterPosition)
                     recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                    fab.show()
                 }
             }
         }

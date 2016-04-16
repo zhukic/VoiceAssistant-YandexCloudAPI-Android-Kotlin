@@ -4,4 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="alarm_icon_size">50dp</dimen>
+    <dimen name="alarm_text_date_size">24sp</dimen>
+    <dimen name="alarm_text_day_size">16sp</dimen>
 </resources>

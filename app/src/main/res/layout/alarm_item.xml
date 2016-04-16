@@ -5,7 +5,6 @@
     android:layout_height="72dp"
     android:background="?attr/selectableItemBackgroundBorderless"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:clickable="true"
     android:focusable="true">
 
@@ -20,23 +19,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textTime"
-            android:text="07:00"
             android:textColor="@color/primaryTextColor"
-            android:textSize="24sp" />
+            android:textSize="@dimen/alarm_text_date_size" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textDay"
-            android:text="Завтра"
             android:textColor="@color/secondaryTextColor"
-            android:textSize="16sp" />
+            android:textSize="@dimen/alarm_text_day_size" />
 
     </LinearLayout>
 
     <android.support.v7.widget.SwitchCompat
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         android:id="@+id/material_switch"
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
