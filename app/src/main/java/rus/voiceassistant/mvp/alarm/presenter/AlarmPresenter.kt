@@ -32,6 +32,7 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
 
     override fun onAddAlarmClicked() {
         view?.showTimePicker()
+        view?.showToast("AlarmClicked")
     }
 
     override fun removeAlarm(position: Int) {

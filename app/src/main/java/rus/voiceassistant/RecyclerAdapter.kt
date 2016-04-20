@@ -14,7 +14,7 @@ import com.elmargomez.typer.Typer
 import kotlinx.android.synthetic.main.alarm_item.view.*
 import rus.voiceassistant.mvp.alarm.model.Alarm
 import rus.voiceassistant.mvp.alarm.view.IAlarmView
-import rus.voiceassistant.utils.DateUtils
+import rus.voiceassistant.isDateComesToday
 import java.util.*
 
 /**
@@ -33,7 +33,9 @@ class RecyclerAdapter(val view: IAlarmView, val items: List<Alarm>): RecyclerVie
         holder?.textTime?.typeface = Typer.set(view.getContext()).getFont(Font.ROBOTO_REGULAR)
         holder?.textDay?.typeface = Typer.set(view.getContext()).getFont(Font.ROBOTO_REGULAR)
 
-        if(DateUtils.isDateComesToday(items.get(position).hour, items.get(position).minute))
+        val calendar = Calendar.getInstance()
+
+        if(calendar.isDateComesToday(items[position].hour, items[position].minute))
             holder?.textDay?.text = "Сегодня"
         else
             holder?.textDay?.text = "Завтра"

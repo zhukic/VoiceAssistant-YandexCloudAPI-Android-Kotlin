@@ -45,6 +45,7 @@ import rus.voiceassistant.mvp.alarm.model.Alarm
 import rus.voiceassistant.mvp.alarm.view.AlarmsFragment
 import rus.voiceassistant.mvp.main.presenter.IPresenter
 import rus.voiceassistant.mvp.main.presenter.PresenterImpl
+import rus.voiceassistant.addFragment
 import java.util.*
 
 
@@ -63,10 +64,6 @@ class MainActivity : AppCompatActivity(), IView {
     lateinit var presenter: IPresenter
     lateinit var alarmsFragment: AlarmsFragment
 
-    fun FragmentManager.addFragment(containerViewId: Int, fragment: Fragment) {
-        this.beginTransaction().add(containerViewId, fragment).commit()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -82,6 +79,7 @@ class MainActivity : AppCompatActivity(), IView {
         alarmsFragment = AlarmsFragment()
 
         fragmentManager.addFragment(R.id.fragment_container, AlarmsFragment())
+
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
     }
 

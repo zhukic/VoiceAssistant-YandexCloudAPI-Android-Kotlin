@@ -23,6 +23,7 @@ import rus.voiceassistant.RecyclerAdapter
 import rus.voiceassistant.mvp.alarm.model.Alarm
 import rus.voiceassistant.mvp.alarm.presenter.AlarmPresenter
 import rus.voiceassistant.mvp.alarm.presenter.IAlarmPresenter
+import rus.voiceassistant.toast
 import java.util.*
 
 /**
@@ -32,39 +33,36 @@ class AlarmsFragment : Fragment(), IAlarmView {
 
     val presenter: IAlarmPresenter = AlarmPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater?.inflate(R.layout.alarm_fragment, container, false)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.alarm_fragment, container, false)
 
-        val fab = view?.findViewById(R.id.fab) as FloatingActionButton
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab.setOnClickListener { presenter.onAddAlarmClicked() }
 
-        val recyclerView = view?.findViewById(R.id.recyclerView) as RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(getActivity())
 
-        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
 
             override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
                 return true
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                if(viewHolder != null) {
-                    presenter.removeAlarm(viewHolder.adapterPosition)
-                    recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    fab.show()
-                }
+                presenter.removeAlarm(viewHolder!!.adapterPosition)
+                recyclerView.adapter.notifyItemRemoved(viewHolder!!.adapterPosition)
             }
         }
         val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
         itemTouchHelper.attachToRecyclerView(recyclerView)
-
-        return view
     }
 
     override fun onResume() {
         super.onResume()
-
         presenter.onResume()
+    }
+
+    override fun showToast(text: String) {
+        toast(text)
     }
 
     override fun showTimePicker() {
@@ -88,17 +86,13 @@ class AlarmsFragment : Fragment(), IAlarmView {
         presenter.onCheckedChanged(position, isChecked)
     }
 
-    override fun getContext(): Context? {
-        return getActivity()
-    }
+    override fun getContext(): Context? = activity
 
     override fun setAlarms(alarms: ArrayList<Alarm>) {
         recyclerView.adapter = RecyclerAdapter(this, alarms)
     }
 
-    override fun onAlarmAdded(alarm: Alarm) {
-        recyclerView.adapter.notifyItemInserted(recyclerView.adapter.getItemCount() - 1)
-    }
+    override fun onAlarmAdded(alarm: Alarm) = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
     override fun onDestroy() {
         super.onDestroy()

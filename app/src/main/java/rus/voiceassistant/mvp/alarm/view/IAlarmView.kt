@@ -14,6 +14,8 @@ interface IAlarmView : TimePickerDialog.OnTimeSetListener {
 
     fun showTimePicker()
 
+    fun showToast(text: String)
+
     fun onAlarmAdded(alarm: Alarm)
 
     fun setAlarms(alarms: ArrayList<Alarm>)
