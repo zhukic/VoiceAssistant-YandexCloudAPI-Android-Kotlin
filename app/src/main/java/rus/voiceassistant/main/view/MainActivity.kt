@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.main.view;
+package rus.voiceassistant.main.view;
 
 import android.app.Fragment
 import android.app.FragmentManager
@@ -35,21 +35,26 @@ import com.mikepenz.materialdrawer.holder.BadgeStyle
 import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
 import ru.yandex.speechkit.SpeechKit
 import ru.yandex.speechkit.gui.RecognizerActivity
+import rus.voiceassistant.Logger
 import rus.voiceassistant.R
-import rus.voiceassistant.mvp.alarm.model.Alarm
-import rus.voiceassistant.mvp.alarm.view.AlarmsFragment
-import rus.voiceassistant.mvp.main.presenter.IPresenter
-import rus.voiceassistant.mvp.main.presenter.PresenterImpl
+import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.view.AlarmsFragment
+import rus.voiceassistant.main.presenter.IPresenter
+import rus.voiceassistant.main.presenter.PresenterImpl
 import rus.voiceassistant.addFragment
+import rus.voiceassistant.replaceFragment
+import rus.voiceassistant.view.NotificationsFragment
 import java.util.*
 
 
 //TODO Extension functions
+//TODO Logger extension
 class MainActivity : AppCompatActivity(), IView {
 
     companion object {
@@ -62,7 +67,7 @@ class MainActivity : AppCompatActivity(), IView {
     }
 
     lateinit var presenter: IPresenter
-    lateinit var alarmsFragment: AlarmsFragment
+    lateinit var currentFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,9 +81,9 @@ class MainActivity : AppCompatActivity(), IView {
 
         initNavigationDrawer()
 
-        alarmsFragment = AlarmsFragment()
+        currentFragment = AlarmsFragment()
 
-        fragmentManager.addFragment(R.id.fragment_container, AlarmsFragment())
+        fragmentManager.addFragment(R.id.fragment_container, currentFragment)
 
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
     }
@@ -125,7 +130,27 @@ class MainActivity : AppCompatActivity(), IView {
                                 .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
-                //.withOnDrawerItemClickListener { view, i, iDrawerItem -> createAlarm(i) }
+                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
+                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
+                        Logger.log(position.toString())
+                        when(position) {
+                            1 -> {
+                                if(currentFragment !is AlarmsFragment) {
+                                    currentFragment = AlarmsFragment()
+                                    fragmentManager.replaceFragment(R.id.fragment_container, currentFragment )
+                                }
+                            }
+
+                            2 -> {
+                                if(currentFragment !is NotificationsFragment) {
+                                    currentFragment = NotificationsFragment()
+                                    fragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                }
+                            }
+                        }
+                        return true
+                    }
+                })
                 .withCloseOnClick(true)
                 .build()
     }

@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textTime"
+            android:id="@+id/alarmTime"
             android:textColor="@color/primaryTextColor"
             android:textSize="@dimen/alarm_text_date_size" />
 

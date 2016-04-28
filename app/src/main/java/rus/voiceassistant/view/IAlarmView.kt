@@ -1,24 +1,18 @@
-package rus.voiceassistant.mvp.alarm.view
+package rus.voiceassistant.view
 
 import android.content.Context
 import android.widget.TimePicker
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
-import rus.voiceassistant.mvp.alarm.model.Alarm
+import rus.voiceassistant.model.Alarm
 import java.text.FieldPosition
 import java.util.*
 
 /**
  * Created by RUS on 12.04.2016.
  */
-interface IAlarmView : TimePickerDialog.OnTimeSetListener {
+interface IAlarmView : IView<Alarm>, TimePickerDialog.OnTimeSetListener {
 
     fun showTimePicker()
-
-    fun showToast(text: String)
-
-    fun onAlarmAdded(alarm: Alarm)
-
-    fun setAlarms(alarms: ArrayList<Alarm>)
 
     fun onCheckedChange(position: Int, isChecked: Boolean)
 

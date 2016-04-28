@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.main.view
+package rus.voiceassistant.main.view
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog

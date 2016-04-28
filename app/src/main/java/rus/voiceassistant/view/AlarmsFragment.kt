@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.alarm.view
+package rus.voiceassistant.view
 
 import android.app.AlarmManager
 import android.app.Fragment
@@ -19,11 +19,12 @@ import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.alarm_fragment.*
 import rus.voiceassistant.R
-import rus.voiceassistant.RecyclerAdapter
-import rus.voiceassistant.mvp.alarm.model.Alarm
-import rus.voiceassistant.mvp.alarm.presenter.AlarmPresenter
-import rus.voiceassistant.mvp.alarm.presenter.IAlarmPresenter
+import rus.voiceassistant.view.adapters.NotificationsAdapter
+import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.presenter.AlarmPresenter
+import rus.voiceassistant.presenter.IAlarmPresenter
 import rus.voiceassistant.toast
+import rus.voiceassistant.view.adapters.AlarmsAdapter
 import java.util.*
 
 /**
@@ -36,7 +37,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.alarm_fragment, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        fab.setOnClickListener { presenter.onAddAlarmClicked() }
+        fab.setOnClickListener { presenter.onAddActionClicked() }
 
         recyclerView.layoutManager = LinearLayoutManager(getActivity())
 
@@ -48,7 +49,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                presenter.removeAlarm(viewHolder!!.adapterPosition)
+                presenter.removeAction(viewHolder!!.adapterPosition)
                 recyclerView.adapter.notifyItemRemoved(viewHolder!!.adapterPosition)
             }
         }
@@ -61,14 +62,14 @@ class AlarmsFragment : Fragment(), IAlarmView {
         presenter.onResume()
     }
 
-    override fun showToast(text: String) {
-        toast(text)
+    override fun onActionClicked(alarm: Alarm) {
     }
 
-    override fun showTimePicker() {
-        val tpd: TimePickerDialog = TimePickerDialog.newInstance(this, 0, 0, true);
-        tpd.show(getFragmentManager(), "TimePickerDialog");
+    override fun setActions(alarms: ArrayList<Alarm>) {
+        recyclerView.adapter = AlarmsAdapter(this, alarms)
     }
+
+    override fun onActionAdded(action: Alarm) = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
     override fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
         presenter.createAlarm(hourOfDay, minute)
@@ -88,11 +89,14 @@ class AlarmsFragment : Fragment(), IAlarmView {
 
     override fun getContext(): Context? = activity
 
-    override fun setAlarms(alarms: ArrayList<Alarm>) {
-        recyclerView.adapter = RecyclerAdapter(this, alarms)
+    override fun showSnackbar(text: String) {
+        toast(text)
     }
 
-    override fun onAlarmAdded(alarm: Alarm) = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
+    override fun showTimePicker() {
+        val tpd: TimePickerDialog = TimePickerDialog.newInstance(this, 0, 0, true);
+        tpd.show(getFragmentManager(), "TimePickerDialog");
+    }
 
     override fun onDestroy() {
         super.onDestroy()

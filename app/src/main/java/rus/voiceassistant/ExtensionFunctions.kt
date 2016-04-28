@@ -3,6 +3,7 @@ package rus.voiceassistant
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
+import android.util.Log
 import android.widget.Toast
 import java.util.*
 
@@ -13,9 +14,14 @@ fun FragmentManager.addFragment(containerViewId: Int, fragment: Fragment) {
     this.beginTransaction().add(containerViewId, fragment).commit()
 }
 
+fun FragmentManager.replaceFragment(containerViewId: Int, fragment: Fragment) {
+    this.beginTransaction().replace(containerViewId, fragment).addToBackStack(null).commit()
+}
+
 fun Fragment.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(activity, message, duration).show()
 }
+
 fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
     val currentHour = get(Calendar.HOUR_OF_DAY)
     val currentMinute = get(Calendar.MINUTE)
@@ -24,4 +30,8 @@ fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
         return minute > currentMinute
     else
         return hour > currentHour
+}
+
+fun Log.log(message: String) {
+    Log.i("TAG", message);
 }

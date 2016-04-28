@@ -4,7 +4,7 @@ import android.app.Application
 import com.j256.ormlite.android.apptools.OpenHelperManager
 import com.j256.ormlite.dao.Dao
 import rus.voiceassistant.database.DatabaseHelper
-import rus.voiceassistant.mvp.alarm.model.Alarm
+import rus.voiceassistant.model.Alarm
 
 /**
  * Created by RUS on 15.04.2016.

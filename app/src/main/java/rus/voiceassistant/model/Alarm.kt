@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.alarm.model
+package rus.voiceassistant.model
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable

@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.main.presenter
+package rus.voiceassistant.main.presenter
 
 /**
  * Created by RUS on 29.03.2016.

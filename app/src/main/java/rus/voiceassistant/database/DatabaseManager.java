@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import rus.voiceassistant.MyApplication;
-import rus.voiceassistant.mvp.alarm.model.Alarm;
+import rus.voiceassistant.model.Alarm;
 
 /**
  * Created by RUS on 15.04.2016.

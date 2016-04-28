@@ -1,4 +1,4 @@
-package rus.voiceassistant.mvp.main.presenter;
+package rus.voiceassistant.main.presenter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
