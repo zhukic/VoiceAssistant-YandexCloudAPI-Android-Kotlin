@@ -5,6 +5,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager
 import com.j256.ormlite.dao.Dao
 import rus.voiceassistant.database.DatabaseHelper
 import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.model.Notification
 
 /**
  * Created by RUS on 15.04.2016.
@@ -12,15 +13,18 @@ import rus.voiceassistant.model.Alarm
 class MyApplication : Application() {
 
     companion object {
-        var alarmDao: Dao<Alarm, Int>? = null
-        var databaseHelper: DatabaseHelper? = null
+        lateinit var databaseHelper: DatabaseHelper
+        lateinit var alarmDao: Dao<Alarm, Int>
+        lateinit var notificationDao: Dao<Notification, Int>
     }
 
     override fun onCreate() {
         super.onCreate()
 
         databaseHelper = getDatabaseHelper()
-        alarmDao = databaseHelper?.alarmDAO
+
+        alarmDao = databaseHelper.getAlarmDAO()
+        notificationDao = databaseHelper.getNotificationDAO()
 
     }
 
@@ -32,7 +36,7 @@ class MyApplication : Application() {
         super.onTerminate()
 
         OpenHelperManager.releaseHelper()
-        databaseHelper = null
+        //databaseHelper = null
     }
 
 }

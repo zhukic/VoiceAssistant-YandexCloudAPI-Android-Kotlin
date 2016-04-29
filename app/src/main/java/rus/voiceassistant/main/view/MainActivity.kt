@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), IView {
 
         initNavigationDrawer()
 
-        currentFragment = AlarmsFragment()
+        currentFragment = NotificationsFragment()
 
         fragmentManager.addFragment(R.id.fragment_container, currentFragment)
 
@@ -132,7 +132,6 @@ class MainActivity : AppCompatActivity(), IView {
                 )
                 .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
                     override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
-                        Logger.log(position.toString())
                         when(position) {
                             1 -> {
                                 if(currentFragment !is AlarmsFragment) {
@@ -153,6 +152,7 @@ class MainActivity : AppCompatActivity(), IView {
                 })
                 .withCloseOnClick(true)
                 .build()
+        getSystemService(NOTIFICATION_SERVICE)
     }
 
     override fun startRecognitionActivity() {

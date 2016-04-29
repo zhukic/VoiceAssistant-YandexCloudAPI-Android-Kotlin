@@ -11,6 +11,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 
 import rus.voiceassistant.model.Alarm;
+import rus.voiceassistant.model.Notification;
 
 /**
  * Created by RUS on 15.04.2016.
@@ -20,13 +21,14 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     // name of the database file for your application -- change to something appropriate for your app
-    private static final String DATABASE_NAME ="NEWS_DATABASE2.db";
+    private static final String DATABASE_NAME ="NEWS_DATABASE4.db";
 
     // any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1;
 
     // the DAO object we use to access the SimpleData table
     private Dao<Alarm, Integer> alarmDao = null;
+    private Dao<Notification, Integer> notificationDao = null;
 
     /**
      * This is called when the database is first created. Usually you should call createTable statements here to create
@@ -45,6 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try
         {
             TableUtils.createTable(connectionSource, Alarm.class);
+            TableUtils.createTable(connectionSource, Notification.class);
         }
         catch (SQLException e){
             Log.e(TAG, "error creating DB " + DATABASE_NAME);
@@ -64,6 +67,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         try {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, Alarm.class, true);
+            TableUtils.dropTable(connectionSource, Notification.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -90,6 +94,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return alarmDao;
     }
 
+    public Dao<Notification, Integer> getNotificationDAO() throws SQLException {
+        if(notificationDao == null){
+            try {
+                notificationDao = getDao(Notification.class);
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return notificationDao;
+    }
+
     /**
      * Close the database connections and clear any cached DAOs.
      */
@@ -98,5 +113,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     public void close(){
         super.close();
         alarmDao = null;
+        notificationDao = null;
     }
 }

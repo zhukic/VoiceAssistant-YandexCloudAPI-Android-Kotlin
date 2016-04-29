@@ -8,6 +8,7 @@ import java.util.Collections;
 
 import rus.voiceassistant.MyApplication;
 import rus.voiceassistant.model.Alarm;
+import rus.voiceassistant.model.Notification;
 
 /**
  * Created by RUS on 15.04.2016.
@@ -27,9 +28,30 @@ public class DatabaseManager {
         return currentNewsList;
     }
 
-    public static void remove(int id) {
+    public static ArrayList<Notification> getNotificationsListFromDatabase() {
+
+        ArrayList<Notification> currentNewsList = new ArrayList<>();
+        try {
+            QueryBuilder<Notification, Integer> queryBuilder = MyApplication.Companion.getNotificationDao().queryBuilder();
+            currentNewsList = (ArrayList<Notification>)MyApplication.Companion.getNotificationDao().query(queryBuilder.prepare());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Collections.reverse(currentNewsList);
+        return currentNewsList;
+    }
+
+    public static void removeAlarm(int id) {
         try {
             MyApplication.Companion.getAlarmDao().deleteById(id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removeNotification(int id) {
+        try {
+            MyApplication.Companion.getNotificationDao().deleteById(id);
         } catch (SQLException e) {
             e.printStackTrace();
         }
