@@ -34,6 +34,13 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
         view?.createNotification(notification)
     }
 
+    override fun onNotificationCreated(notification: Notification) {
+        notifications.add(notification)
+        MyApplication.notificationDao.create(notification)
+        view?.onActionAdded(notification)
+        view?.createNotification(notification)
+    }
+
     override fun removeAction(position: Int) {
         DatabaseManager.removeNotification(notifications[position].id)
         notifications.removeAt(position)

@@ -1,6 +1,5 @@
 package rus.voiceassistant.main.view;
 
-import android.app.Fragment
 import android.app.FragmentManager
 import android.app.PendingIntent
 import android.content.Intent
@@ -11,6 +10,7 @@ import android.provider.AlarmClock
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), IView {
 
     companion object {
 
-        val TAG = "TAG"
+        val TAG = MainActivity.javaClass.simpleName
 
         val API_KEY = "8b1a122c-9942-4f0d-a1a6-10a18353131f"
         val EXTRA_LANGUAGE = "ru-RU"
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(), IView {
 
         currentFragment = NotificationsFragment()
 
-        fragmentManager.addFragment(R.id.fragment_container, currentFragment)
+        supportFragmentManager.addFragment(R.id.fragment_container, currentFragment)
 
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
     }
@@ -136,14 +136,14 @@ class MainActivity : AppCompatActivity(), IView {
                             1 -> {
                                 if(currentFragment !is AlarmsFragment) {
                                     currentFragment = AlarmsFragment()
-                                    fragmentManager.replaceFragment(R.id.fragment_container, currentFragment )
+                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment )
                                 }
                             }
 
                             2 -> {
                                 if(currentFragment !is NotificationsFragment) {
                                     currentFragment = NotificationsFragment()
-                                    fragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
                                 }
                             }
                         }

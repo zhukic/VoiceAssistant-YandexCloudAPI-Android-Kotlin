@@ -1,7 +1,6 @@
 package rus.voiceassistant.view;
 
 import android.app.AlarmManager
-import android.app.Fragment
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -9,6 +8,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.provider.Settings
+import android.support.v4.app.Fragment
 import android.support.v7.app.NotificationCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -35,7 +35,7 @@ import java.util.*
 /**
  * Created by RUS on 28.04.2016.
  */
-class NotificationsFragment : Fragment(), INotificationView {
+class NotificationsFragment : Fragment(), INotificationView, NotificationCreationListener {
 
     val presenter: INotificationPresenter = NotificationPresenter(this)
 
@@ -90,9 +90,15 @@ class NotificationsFragment : Fragment(), INotificationView {
     }
 
     override fun showCreateNotificationDialog() {
-        val createNotificationDialog = CreateNotificationDialog.Companion.newIntance();
+        val fragmentManager = (activity as MainActivity).supportFragmentManager
+        val createNotificationDialog = CreateNotificationFragmentDialog.Companion.newInstance();
 
-        createNotificationDialog.show((activity as MainActivity).supportFragmentManager, getString(R.string.addNotfication));
+        createNotificationDialog.setTargetFragment(this, 300)
+        createNotificationDialog.show(fragmentManager, "fragment_create_notification");
+    }
+
+    override fun onNotificationCreated(notification: Notification) {
+        presenter.onNotificationCreated(notification)
     }
 
     override fun showSnackbar(text: String) {
