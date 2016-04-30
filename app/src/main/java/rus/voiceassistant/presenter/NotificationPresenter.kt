@@ -20,15 +20,18 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     }
 
     override fun onAddActionClicked() {
-        view?.hideFAB()
-        view?.showEditText()
-//        val notification = Notification()
-//        notification.time = "23:50"
-//        notification.text = "BLA"
-//        notifications.add(notification)
-//        MyApplication.notificationDao.create(notification)
-//        view?.onActionAdded(notification)
-//        view?.createNotification(notification)
+        view?.showCreateNotificationDialog()
+        //createNotification()
+    }
+
+    fun createNotification() {
+        val notification = Notification()
+        notification.time = "23:50"
+        notification.text = "BLA"
+        notifications.add(notification)
+        MyApplication.notificationDao.create(notification)
+        view?.onActionAdded(notification)
+        view?.createNotification(notification)
     }
 
     override fun removeAction(position: Int) {

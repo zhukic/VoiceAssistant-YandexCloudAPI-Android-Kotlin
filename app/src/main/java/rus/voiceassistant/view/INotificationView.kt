@@ -9,12 +9,6 @@ interface INotificationView : IView<Notification> {
 
     fun createNotification(notification: Notification)
 
-    fun hideEditText()
-
-    fun showEditText()
-
-    fun hideFAB()
-
-    fun showFAB()
+    fun showCreateNotificationDialog()
 
 }

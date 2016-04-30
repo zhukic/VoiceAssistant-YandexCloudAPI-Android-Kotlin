@@ -7,10 +7,10 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:name=".MyApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -23,9 +23,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+
         <receiver android:name=".receivers.NotificationReceiver" />
-        
+
+        <activity
+            android:name=".view.CreateNotificationActivity"
+            android:label="@string/title_activity_create_notification"
+            android:parentActivityName=".main.view.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="rus.voiceassistant.main.view.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

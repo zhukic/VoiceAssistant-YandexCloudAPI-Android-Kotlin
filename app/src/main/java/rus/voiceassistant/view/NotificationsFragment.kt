@@ -16,6 +16,7 @@ import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.notification_fragment.*
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
@@ -87,24 +88,17 @@ class NotificationsFragment : Fragment(), INotificationView {
 
     }
 
+    override fun showCreateNotificationDialog() {
+        MaterialDialog.Builder(activity)
+                .title("TITLE")
+                .content("CONTENT")
+                .positiveText("AGREE")
+                .negativeText("DISAGREE")
+                .show();
+    }
+
     override fun showSnackbar(text: String) {
         toast(text)
-    }
-
-    override fun hideEditText() {
-        editText.visibility = View.GONE
-    }
-
-    override fun showEditText() {
-        editText.visibility = View.VISIBLE
-    }
-
-    override fun hideFAB() {
-        fab.hide()
-    }
-
-    override fun showFAB() {
-        fab.show()
     }
 
     override fun onDestroy() {

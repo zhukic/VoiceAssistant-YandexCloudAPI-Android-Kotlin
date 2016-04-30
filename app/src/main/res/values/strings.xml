@@ -6,5 +6,9 @@
     <string name="action_reminder">Напоминания</string>
     <string name="action_note">Заметки</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_create_notification">Создать напоминание</string>
+    <string name="title_activity_wfefwe">wfefwe</string>
+    <string name="notificationName">Текст</string>
+    <string name="notificationTime">Когда</string>
 
 </resources>

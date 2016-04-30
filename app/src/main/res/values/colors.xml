@@ -3,6 +3,8 @@
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#D32F2F</color>
     <color name="colorAccent">#FF9800</color>
+    <color name="lightPrimaryColor">#FFCCBC</color>
+    <color name="hintTextColor">#a8a8a8</color>
     <color name="red">#F44336</color>
     <color name="primaryTextColor">#212121</color>
     <color name="secondaryTextColor">#727272</color>
