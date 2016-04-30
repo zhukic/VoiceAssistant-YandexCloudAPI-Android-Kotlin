@@ -13,6 +13,7 @@ import android.support.v7.app.NotificationCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -89,12 +90,9 @@ class NotificationsFragment : Fragment(), INotificationView {
     }
 
     override fun showCreateNotificationDialog() {
-        MaterialDialog.Builder(activity)
-                .title("TITLE")
-                .content("CONTENT")
-                .positiveText("AGREE")
-                .negativeText("DISAGREE")
-                .show();
+        val createNotificationDialog = CreateNotificationDialog.Companion.newIntance();
+
+        createNotificationDialog.show((activity as MainActivity).supportFragmentManager, getString(R.string.addNotfication));
     }
 
     override fun showSnackbar(text: String) {

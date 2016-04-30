@@ -20,6 +20,6 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@mipmap/ic_alarm_plus"
         app:fabSize="normal"
-        app:layout_behavior="rus.voiceassistant.mvp.alarm.view.ScrollAwareFABBehavior"/>
+        app:layout_behavior="rus.voiceassistant.ScrollAwareFABBehavior"/>
 
 </android.support.design.widget.CoordinatorLayout>
