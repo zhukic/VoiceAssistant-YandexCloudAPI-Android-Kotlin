@@ -24,16 +24,6 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
         //createNotification()
     }
 
-    fun createNotification() {
-        val notification = Notification()
-        notification.time = "23:50"
-        notification.text = "BLA"
-        notifications.add(notification)
-        MyApplication.notificationDao.create(notification)
-        view?.onActionAdded(notification)
-        view?.createNotification(notification)
-    }
-
     override fun onNotificationCreated(notification: Notification) {
         notifications.add(notification)
         MyApplication.notificationDao.create(notification)

@@ -29,6 +29,8 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
         }
     }
 
+    lateinit var notification: Notification
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.create_notification, container)
     }
@@ -36,7 +38,11 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        dialog.setTitle(R.string.addNotfication)
+        dialog.window.requestFeature(Window.FEATURE_NO_TITLE)
+
+        //dialog.setTitle(R.string.addNotfication)
+
+        notification = Notification()
 
         btnCancel.typeface = Typer.set(context).getFont(Font.ROBOTO_MEDIUM)
         btnOk.typeface = Typer.set(context).getFont(Font.ROBOTO_MEDIUM)
@@ -61,19 +67,24 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         notificationDateText.visibility = View.VISIBLE
-        editNotificationDate.setText("$dayOfMonth.$monthOfYear.$year")
+        notification.day = dayOfMonth
+        notification.month = monthOfYear
+        notification.year = year
+        editNotificationDate.setText(notification.getDateString())
+        editNotificationDate.clearFocus()
 
     }
 
     override fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
         notificationTimeText.visibility = View.VISIBLE
-        editNotificationTime.setText("$hourOfDay:$minute")
+        notification.minute = minute
+        notification.hour = hourOfDay
+        editNotificationTime.setText(notification.getTimeString())
+        editNotificationTime.clearFocus()
     }
 
     fun finish() {
-        val notification = Notification()
-        notification.time = "${editNotificationTime.text}"
-        notification.text = "${editNotificationText.text}"
+        notification.text = editNotificationText.text.toString()
         val notificationsFragment = targetFragment as NotificationCreationListener
         notificationsFragment.onNotificationCreated(notification)
         dismiss()

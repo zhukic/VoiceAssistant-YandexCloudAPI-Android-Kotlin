@@ -24,7 +24,7 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Collections.reverse(currentNewsList);
+        //Collections.reverse(currentNewsList);
         return currentNewsList;
     }
 
@@ -37,7 +37,7 @@ public class DatabaseManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        Collections.reverse(currentNewsList);
+       // Collections.reverse(currentNewsList);
         return currentNewsList;
     }
 
