@@ -38,7 +38,7 @@ class NotificationsAdapter(val view: INotificationView, val items: List<Notifica
         holder?.textTime?.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
         holder?.notificationText?.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
 
-        holder?.textTime?.text = items[position].getTimeString()
+        holder?.textTime?.text ="${items[position].getDateString()} ${items[position].getTimeString()}"
         holder?.notificationText?.text = items[position].text
     }
 

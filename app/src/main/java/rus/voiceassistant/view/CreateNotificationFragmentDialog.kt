@@ -1,5 +1,6 @@
 package rus.voiceassistant.view
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.text.Editable
@@ -7,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.inputmethod.InputMethodManager
 import com.elmargomez.typer.Font
 import com.elmargomez.typer.Typer
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog

@@ -75,9 +75,15 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         Logger.log(notification.id.toString())
         val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
         val calendar = Calendar.getInstance()
-        calendar.timeInMillis = System.currentTimeMillis()
-        calendar.set(Calendar.HOUR_OF_DAY, notification.hour)
-        calendar.set(Calendar.MINUTE, notification.minute)
+        with(calendar) {
+            setTimeInMillis(System.currentTimeMillis())
+            set(Calendar.YEAR, notification.year)
+            set(Calendar.MONTH, notification.month)
+            set(Calendar.DAY_OF_MONTH, notification.day)
+            set(Calendar.HOUR_OF_DAY, notification.hour)
+            set(Calendar.MINUTE, notification.minute)
+            set(Calendar.SECOND, 0)
+        }
         alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent);
     }
 
