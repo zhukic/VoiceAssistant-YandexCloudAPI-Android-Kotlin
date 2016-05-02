@@ -9,6 +9,8 @@ interface IPresenter<T> {
 
     fun onAddActionClicked()
 
+    fun onActionClicked(action: T)
+
     fun removeAction(position: Int)
 
     fun onDestroy()

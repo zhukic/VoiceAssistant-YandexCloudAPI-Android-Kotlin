@@ -8,4 +8,6 @@ import rus.voiceassistant.model.Notification
 interface INotificationPresenter : IPresenter<Notification> {
 
     fun onNotificationCreated(notification: Notification)
+
+    fun onNotificationEdited(notification: Notification)
 }

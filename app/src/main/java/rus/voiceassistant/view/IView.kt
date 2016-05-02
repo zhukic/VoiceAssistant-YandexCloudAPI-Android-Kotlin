@@ -15,5 +15,5 @@ interface IView<T> {
 
     fun setActions(actions: ArrayList<T>)
 
-    fun onActionClicked(action: T)
+    fun onDataSetChanged()
 }

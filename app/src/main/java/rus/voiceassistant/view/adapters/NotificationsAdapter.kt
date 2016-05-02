@@ -6,6 +6,7 @@ import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.CheckBox
 import android.widget.Switch
 import android.widget.TextView
@@ -24,12 +25,17 @@ import java.util.*
 /**
  * Created by RUS on 10.04.2016.
  */
-class NotificationsAdapter(val view: INotificationView, val items: List<Notification>): RecyclerView.Adapter<NotificationsAdapter.ViewHolder>() {
+class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val items: List<Notification>): RecyclerView.Adapter<NotificationsAdapter.ViewHolder>() {
+
+    interface OnItemClickListener {
+        fun onItemClicked(notification: Notification)
+    }
 
     class ViewHolder(
             val v: View,
             val textTime: TextView = v.textTime,
-            val notificationText: TextView = v.notificationText ): RecyclerView.ViewHolder(v)
+            val notificationText: TextView = v.notificationText ): RecyclerView.ViewHolder(v) {
+    }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
 
@@ -40,6 +46,8 @@ class NotificationsAdapter(val view: INotificationView, val items: List<Notifica
 
         holder?.textTime?.text ="${items[position].getDateString()} ${items[position].getTimeString()}"
         holder?.notificationText?.text = items[position].text
+
+        holder?.itemView?.setOnClickListener { onItemClickListener.onItemClicked(items[position]) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder?

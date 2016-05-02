@@ -4,10 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.text.Editable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import com.elmargomez.typer.Font
 import com.elmargomez.typer.Typer
@@ -26,12 +23,22 @@ import java.util.*
 class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     companion object {
-        fun newInstance(): CreateNotificationFragmentDialog {
-            return CreateNotificationFragmentDialog()
+
+        val MODE_CREATE = 0
+        val MODE_EDIT = 1
+
+        fun newInstance(notification: Notification? = null, mode: Int = 0): CreateNotificationFragmentDialog {
+            val fragment = CreateNotificationFragmentDialog()
+            val args = Bundle()
+            args.putSerializable("NOTIFICATION", notification)
+            args.putInt("MODE", mode)
+            fragment.arguments = args
+            return fragment
         }
     }
 
     lateinit var notification: Notification
+    var mode: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.create_notification, container)
@@ -44,7 +51,16 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         //dialog.setTitle(R.string.addNotfication)
 
-        notification = Notification()
+        mode = arguments.getInt("MODE")
+
+        if(mode == 0) {
+            notification = Notification()
+        } else {
+            notification = arguments.getSerializable("NOTIFICATION") as Notification
+            editNotificationText.setText(notification.text)
+            editNotificationTime.setText(notification.getTimeString())
+            editNotificationDate.setText(notification.getDateString())
+        }
 
         btnCancel.typeface = Typer.set(context).getFont(Font.ROBOTO_MEDIUM)
         btnOk.typeface = Typer.set(context).getFont(Font.ROBOTO_MEDIUM)
@@ -54,6 +70,9 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         btnCancel.setOnClickListener { dismiss() }
         btnOk.setOnClickListener { finish() }
+
+        editNotificationText.requestFocus()
+        dialog.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
     }
 
     fun showDatePicker() {
@@ -88,7 +107,12 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
     fun finish() {
         notification.text = editNotificationText.text.toString()
         val notificationsFragment = targetFragment as NotificationCreationListener
-        notificationsFragment.onNotificationCreated(notification)
+
+        if(mode == 0)
+            notificationsFragment.onNotificationCreated(notification)
+        else
+            notificationsFragment.onNotificationEdited(notification)
+
         dismiss()
     }
 

@@ -62,9 +62,6 @@ class AlarmsFragment : Fragment(), IAlarmView {
         presenter.onResume()
     }
 
-    override fun onActionClicked(alarm: Alarm) {
-    }
-
     override fun setActions(alarms: ArrayList<Alarm>) {
         recyclerView.adapter = AlarmsAdapter(this, alarms)
     }
@@ -85,6 +82,10 @@ class AlarmsFragment : Fragment(), IAlarmView {
 
     override fun onCheckedChange(position: Int, isChecked: Boolean) {
         presenter.onCheckedChanged(position, isChecked)
+    }
+
+    override fun onDataSetChanged() {
+        recyclerView.getAdapter().notifyDataSetChanged()
     }
 
     override fun getContext(): Context? = activity

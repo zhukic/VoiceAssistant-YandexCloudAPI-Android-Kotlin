@@ -9,6 +9,8 @@ interface INotificationView : IView<Notification> {
 
     fun createNotification(notification: Notification)
 
-    fun showCreateNotificationDialog()
+    fun cancelNotification(notification: Notification)
+
+    fun showNotificationDialog(notification: Notification? = null)
 
 }

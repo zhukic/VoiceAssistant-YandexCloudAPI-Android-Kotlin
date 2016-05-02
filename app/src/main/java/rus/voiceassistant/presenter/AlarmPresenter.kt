@@ -31,6 +31,9 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
         view?.showTimePicker()
     }
 
+    override fun onActionClicked(action: Alarm) {
+    }
+
     override fun removeAction(position: Int) {
         DatabaseManager.removeAlarm(alarms[position].id)
         alarms.removeAt(position)

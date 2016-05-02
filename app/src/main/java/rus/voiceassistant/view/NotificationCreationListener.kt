@@ -9,4 +9,6 @@ interface NotificationCreationListener {
 
     fun onNotificationCreated(notification: Notification)
 
+    fun onNotificationEdited(notification: Notification)
+
 }

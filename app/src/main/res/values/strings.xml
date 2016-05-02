@@ -14,5 +14,10 @@
     <string name="addNotfication">Добавление напоминания</string>
     <string name="cancel">CANCEL</string>
     <string name="save">SAVE</string>
+    <string-array name="dateSpinner">
+        <item>Сегодня</item>
+        <item>Завтра</item>
+        <item>Другое</item>
+    </string-array>
 
 </resources>

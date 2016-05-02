@@ -35,7 +35,7 @@ import java.util.*
 /**
  * Created by RUS on 28.04.2016.
  */
-class NotificationsFragment : Fragment(), INotificationView, NotificationCreationListener {
+class NotificationsFragment : Fragment(), INotificationView, NotificationCreationListener, NotificationsAdapter.OnItemClickListener {
 
     val presenter: INotificationPresenter = NotificationPresenter(this)
 
@@ -84,7 +84,17 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
             set(Calendar.MINUTE, notification.minute)
             set(Calendar.SECOND, 0)
         }
-        alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent);
+        alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+    }
+
+    override fun cancelNotification(notification: Notification) {
+        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val notificationIntent = Intent(activity, NotificationReceiver::class.java)
+        notificationIntent.putExtra("TEXT", notification.text)
+        notificationIntent.putExtra("ID", notification.id)
+        Logger.log(notification.id.toString())
+        val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
+        alarmManager.cancel(pendingIntent)
     }
 
     override fun onActionAdded(action: Notification) = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
@@ -93,13 +103,16 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         recyclerView.adapter = NotificationsAdapter(this, actions);
     }
 
-    override fun onActionClicked(action: Notification) {
-
+    override fun onItemClicked(notification: Notification) {
+        presenter.onActionClicked(notification)
     }
 
-    override fun showCreateNotificationDialog() {
+    override fun showNotificationDialog(notification: Notification?) {
         val fragmentManager = (activity as MainActivity).supportFragmentManager
-        val createNotificationDialog = CreateNotificationFragmentDialog.Companion.newInstance();
+        var createNotificationDialog: CreateNotificationFragmentDialog
+        if(notification == null)
+            createNotificationDialog = CreateNotificationFragmentDialog.Companion.newInstance(mode = CreateNotificationFragmentDialog.MODE_CREATE)
+        else createNotificationDialog = CreateNotificationFragmentDialog.Companion.newInstance(notification, CreateNotificationFragmentDialog.MODE_EDIT)
 
         createNotificationDialog.setTargetFragment(this, 300)
         createNotificationDialog.show(fragmentManager, "fragment_create_notification");
@@ -107,6 +120,14 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
 
     override fun onNotificationCreated(notification: Notification) {
         presenter.onNotificationCreated(notification)
+    }
+
+    override fun onNotificationEdited(notification: Notification) {
+        presenter.onNotificationEdited(notification)
+    }
+
+    override fun onDataSetChanged() {
+        recyclerView.getAdapter().notifyDataSetChanged()
     }
 
     override fun showSnackbar(text: String) {
