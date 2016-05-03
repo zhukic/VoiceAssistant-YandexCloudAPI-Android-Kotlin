@@ -28,6 +28,9 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
         val MODE_EDIT = 1
 
         fun newInstance(notification: Notification? = null, mode: Int = 0): CreateNotificationFragmentDialog {
+            if(mode != MODE_CREATE && mode != MODE_EDIT)
+                throw IllegalArgumentException("invalid mode")
+
             val fragment = CreateNotificationFragmentDialog()
             val args = Bundle()
             args.putSerializable("NOTIFICATION", notification)

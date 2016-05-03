@@ -18,7 +18,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.afollestad.materialdialogs.MaterialDialog
-import kotlinx.android.synthetic.main.notification_fragment.*
+import kotlinx.android.synthetic.main.notifications_fragment.*
+import rus.voiceassistant.DividerItemDecoration
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.main.view.MainActivity
@@ -39,7 +40,7 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
 
     val presenter: INotificationPresenter = NotificationPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.notification_fragment, container, false)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.notifications_fragment, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab.setOnClickListener { presenter.onAddActionClicked() }

@@ -6,7 +6,7 @@
     <dimen name="alarm_icon_size">50dp</dimen>
     <dimen name="alarm_text_date_size">24sp</dimen>
     <dimen name="alarm_text_day_size">16sp</dimen>
-    <dimen name="notification_text_size">24sp</dimen>
-    <dimen name="notification_time_size">16sp</dimen>
+    <dimen name="notification_text_size">14sp</dimen>
+    <dimen name="notification_time_size">14sp</dimen>
     <dimen name="card_margin">8dp</dimen>
 </resources>

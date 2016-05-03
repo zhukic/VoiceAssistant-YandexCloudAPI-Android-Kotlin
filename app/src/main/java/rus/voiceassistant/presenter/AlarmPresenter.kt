@@ -35,7 +35,7 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
     }
 
     override fun removeAction(position: Int) {
-        DatabaseManager.removeAlarm(alarms[position].id)
+        MyApplication.alarmDao.deleteById(alarms[position].id)
         alarms.removeAt(position)
 
     }

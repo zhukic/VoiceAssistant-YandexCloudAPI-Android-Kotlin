@@ -68,6 +68,7 @@ class MainActivity : AppCompatActivity(), IView {
 
     lateinit var presenter: IPresenter
     lateinit var currentFragment: Fragment
+    lateinit var drawer: Drawer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +84,8 @@ class MainActivity : AppCompatActivity(), IView {
 
         currentFragment = NotificationsFragment()
 
+        drawer.setSelectionAtPosition(2)
+
         supportFragmentManager.addFragment(R.id.fragment_container, currentFragment)
 
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
@@ -95,7 +98,7 @@ class MainActivity : AppCompatActivity(), IView {
                 .withHeaderBackground(R.drawable.header)
                 .build()
 
-        DrawerBuilder()
+        drawer = DrawerBuilder()
                 .withActivity(this)
                 .withAccountHeader(accountHeader)
                 .withToolbar(toolbar)

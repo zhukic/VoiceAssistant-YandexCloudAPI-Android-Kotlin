@@ -13,7 +13,7 @@ import android.widget.TextView
 import com.elmargomez.typer.Font
 import com.elmargomez.typer.Typer
 import kotlinx.android.synthetic.main.alarm_item.view.*
-import kotlinx.android.synthetic.main.notifications_item.view.*
+import kotlinx.android.synthetic.main.notification_item.view.*
 import rus.voiceassistant.R
 import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.view.IAlarmView
@@ -51,7 +51,7 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder?
-            = ViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.notifications_item, parent, false))
+            = ViewHolder(LayoutInflater.from(parent?.getContext()).inflate(R.layout.notification_item, parent, false))
 
     override fun getItemCount(): Int = items.size
 
