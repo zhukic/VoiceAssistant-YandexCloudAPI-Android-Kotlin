@@ -49,6 +49,7 @@ import rus.voiceassistant.main.presenter.IPresenter
 import rus.voiceassistant.main.presenter.PresenterImpl
 import rus.voiceassistant.addFragment
 import rus.voiceassistant.replaceFragment
+import rus.voiceassistant.view.NotesFragment
 import rus.voiceassistant.view.NotificationsFragment
 import java.util.*
 
@@ -147,6 +148,14 @@ class MainActivity : AppCompatActivity(), IView {
                                 if(currentFragment !is NotificationsFragment) {
                                     currentFragment = NotificationsFragment()
                                     supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                }
+                            }
+
+                            3 -> {
+                                if(currentFragment !is NotesFragment) {
+                                    currentFragment = NotesFragment()
+                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                    
                                 }
                             }
                         }
