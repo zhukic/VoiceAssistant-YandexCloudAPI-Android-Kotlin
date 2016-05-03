@@ -49,6 +49,7 @@ import rus.voiceassistant.main.presenter.IPresenter
 import rus.voiceassistant.main.presenter.PresenterImpl
 import rus.voiceassistant.addFragment
 import rus.voiceassistant.replaceFragment
+import rus.voiceassistant.view.NotesFragment
 import rus.voiceassistant.view.NotificationsFragment
 import java.util.*
 
@@ -68,6 +69,7 @@ class MainActivity : AppCompatActivity(), IView {
 
     lateinit var presenter: IPresenter
     lateinit var currentFragment: Fragment
+    lateinit var drawer: Drawer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,6 +85,8 @@ class MainActivity : AppCompatActivity(), IView {
 
         currentFragment = NotificationsFragment()
 
+        drawer.setSelectionAtPosition(2)
+
         supportFragmentManager.addFragment(R.id.fragment_container, currentFragment)
 
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
@@ -95,7 +99,7 @@ class MainActivity : AppCompatActivity(), IView {
                 .withHeaderBackground(R.drawable.header)
                 .build()
 
-        DrawerBuilder()
+        drawer = DrawerBuilder()
                 .withActivity(this)
                 .withAccountHeader(accountHeader)
                 .withToolbar(toolbar)
@@ -144,6 +148,14 @@ class MainActivity : AppCompatActivity(), IView {
                                 if(currentFragment !is NotificationsFragment) {
                                     currentFragment = NotificationsFragment()
                                     supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                }
+                            }
+
+                            3 -> {
+                                if(currentFragment !is NotesFragment) {
+                                    currentFragment = NotesFragment()
+                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                    
                                 }
                             }
                         }

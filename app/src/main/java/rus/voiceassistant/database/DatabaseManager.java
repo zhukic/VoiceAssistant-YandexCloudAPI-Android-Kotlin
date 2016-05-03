@@ -40,20 +40,4 @@ public class DatabaseManager {
        // Collections.reverse(currentNewsList);
         return currentNewsList;
     }
-
-    public static void removeAlarm(int id) {
-        try {
-            MyApplication.Companion.getAlarmDao().deleteById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void removeNotification(int id) {
-        try {
-            MyApplication.Companion.getNotificationDao().deleteById(id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 }
