@@ -50,7 +50,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
                 presenter.removeAction(viewHolder!!.adapterPosition)
-                recyclerView.adapter.notifyItemRemoved(viewHolder!!.adapterPosition)
+                recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
             }
         }
         val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)

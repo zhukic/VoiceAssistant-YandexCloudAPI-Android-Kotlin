@@ -41,8 +41,8 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     }
 
     override fun removeAction(position: Int) {
-        DatabaseManager.removeNotification(notifications[position].id)
         view?.cancelNotification(notifications[position])
+        MyApplication.notificationDao.deleteById(notifications[position].id)
         notifications.removeAt(position)
     }
 
