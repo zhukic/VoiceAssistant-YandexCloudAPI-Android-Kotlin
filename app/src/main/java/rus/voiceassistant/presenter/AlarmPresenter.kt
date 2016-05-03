@@ -45,7 +45,7 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
         alarm.hour = hourOfDay
         alarm.minute = minute
         alarms.add(alarm)
-        MyApplication.alarmDao?.create(alarm)
+        MyApplication.alarmDao.create(alarm)
         view?.onActionAdded(alarm)
     }
 
