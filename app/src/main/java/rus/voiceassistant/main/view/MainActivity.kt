@@ -83,9 +83,9 @@ class MainActivity : AppCompatActivity(), IView {
 
         initNavigationDrawer()
 
-        currentFragment = NotificationsFragment()
+        currentFragment = NotesFragment()
 
-        drawer.setSelectionAtPosition(2)
+        drawer.setSelectionAtPosition(3)
 
         supportFragmentManager.addFragment(R.id.fragment_container, currentFragment)
 
@@ -155,10 +155,10 @@ class MainActivity : AppCompatActivity(), IView {
                                 if(currentFragment !is NotesFragment) {
                                     currentFragment = NotesFragment()
                                     supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
-                                    
                                 }
                             }
                         }
+                        drawer.closeDrawer()
                         return true
                     }
                 })
