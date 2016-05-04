@@ -8,6 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import rus.voiceassistant.model.Note;
+import rus.voiceassistant.model.yandex.Example;
 
 /**
  * Created by RUS on 04.05.2016.
@@ -21,6 +22,6 @@ public interface YandexService {
     String TEXT = "Напомни через 15 минут сделать кофе";
 
     @GET("?text=" + TEXT + LAYERS + API_KEY)
-    Call<ResponseBody> getJSON();
+    Call<Example> getJsonResponse();
 
 }
