@@ -25,6 +25,7 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
 
     override fun onActionClicked(position: Int) {
         view?.showNotificationDialog(notifications[position])
+        
     }
 
     override fun onLongActionClicked(position: Int) {
