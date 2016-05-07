@@ -41,20 +41,20 @@ class AlarmsFragment : Fragment(), IAlarmView {
 
         recyclerView.layoutManager = LinearLayoutManager(getActivity())
 
-        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
-
-            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                presenter.removeAction(viewHolder!!.adapterPosition)
-                recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
-            }
-        }
-        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+//        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
+//                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
+//
+//            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+//                return true
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+//                presenter.removeAction()
+//                recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
+//            }
+//        }
+//        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+//        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onResume() {
@@ -66,7 +66,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
         recyclerView.adapter = AlarmsAdapter(this, alarms)
     }
 
-    override fun onActionAdded(action: Alarm) = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
+    override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
     override fun onTimeSet(view: RadialPickerLayout?, hourOfDay: Int, minute: Int, second: Int) {
         presenter.createAlarm(hourOfDay, minute)
@@ -80,6 +80,12 @@ class AlarmsFragment : Fragment(), IAlarmView {
         startActivity(intent)
     }
 
+    override fun onActionRemoved(position: Int) {
+    }
+
+    override fun showDeleteActionDialog(position: Int) {
+    }
+
     override fun onCheckedChange(position: Int, isChecked: Boolean) {
         presenter.onCheckedChanged(position, isChecked)
     }
@@ -90,7 +96,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
 
     override fun getContext(): Context? = activity
 
-    override fun showSnackbar(text: String) {
+    override fun showSnackBar(text: String) {
         toast(text)
     }
 

@@ -23,14 +23,18 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
         view?.showNotificationDialog()
     }
 
-    override fun onActionClicked(action: Notification) {
-        view?.showNotificationDialog(action)
+    override fun onActionClicked(position: Int) {
+        view?.showNotificationDialog(notifications[position])
+    }
+
+    override fun onLongActionClicked(position: Int) {
+        view?.showDeleteActionDialog(position)
     }
 
     override fun onNotificationCreated(notification: Notification) {
         notifications.add(notification)
         MyApplication.notificationDao.create(notification)
-        view?.onActionAdded(notification)
+        view?.onActionAdded()
         view?.createNotification(notification)
     }
 
@@ -44,6 +48,7 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
         view?.cancelNotification(notifications[position])
         MyApplication.notificationDao.deleteById(notifications[position].id)
         notifications.removeAt(position)
+        view?.onActionRemoved(position)
     }
 
     override fun onDestroy() {

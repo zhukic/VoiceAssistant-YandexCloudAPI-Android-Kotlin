@@ -10,12 +10,12 @@ import java.util.*
 /**
  * Created by RUS on 18.04.2016.
  */
-fun FragmentManager.addFragment(containerViewId: Int, fragment: Fragment) {
-    this.beginTransaction().add(containerViewId, fragment).commit()
+fun FragmentManager.addFragment(fragment: Fragment) {
+    this.beginTransaction().add(R.id.fragment_container, fragment).commit()
 }
 
-fun FragmentManager.replaceFragment(containerViewId: Int, fragment: Fragment) {
-    this.beginTransaction().replace(containerViewId, fragment).addToBackStack(null).commit()
+fun FragmentManager.replaceFragment(fragment: Fragment) {
+    this.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit()
 }
 
 fun Fragment.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {

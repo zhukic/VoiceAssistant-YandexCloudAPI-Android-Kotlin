@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity(), IView {
 
         drawer.setSelectionAtPosition(3)
 
-        supportFragmentManager.addFragment(R.id.fragment_container, currentFragment)
+        supportFragmentManager.addFragment(currentFragment)
 
         //fab.setOnClickListener({presenter.onRecognitionStarted()});
     }
@@ -140,21 +140,21 @@ class MainActivity : AppCompatActivity(), IView {
                             1 -> {
                                 if(currentFragment !is AlarmsFragment) {
                                     currentFragment = AlarmsFragment()
-                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment )
+                                    supportFragmentManager.replaceFragment(currentFragment )
                                 }
                             }
 
                             2 -> {
                                 if(currentFragment !is NotificationsFragment) {
                                     currentFragment = NotificationsFragment()
-                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                    supportFragmentManager.replaceFragment(currentFragment)
                                 }
                             }
 
                             3 -> {
                                 if(currentFragment !is NotesFragment) {
                                     currentFragment = NotesFragment()
-                                    supportFragmentManager.replaceFragment(R.id.fragment_container, currentFragment)
+                                    supportFragmentManager.replaceFragment(currentFragment)
                                 }
                             }
                         }

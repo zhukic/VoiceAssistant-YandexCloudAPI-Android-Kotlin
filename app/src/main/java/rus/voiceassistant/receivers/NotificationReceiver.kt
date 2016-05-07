@@ -26,9 +26,7 @@ class NotificationReceiver : BroadcastReceiver() {
                 .setVibrate(longArrayOf(1000, 1000, 1000, 1000))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
         val  mNotificationId = intent?.extras?.getInt("ID") as Int
-        // Gets an instance of the NotificationManager service
         val  mNotifyMgr = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager;
-        // Builds the notification and issues it.
         mNotifyMgr.notify(mNotificationId, notificationBuilder.build());
     }
 }

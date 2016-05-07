@@ -28,7 +28,9 @@ import java.util.*
 class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val items: List<Notification>): RecyclerView.Adapter<NotificationsAdapter.ViewHolder>() {
 
     interface OnItemClickListener {
-        fun onItemClicked(notification: Notification)
+        fun onItemClicked(position: Int)
+
+        fun onLongItemClicked(position: Int): Boolean
     }
 
     class ViewHolder(
@@ -47,7 +49,8 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
         holder?.textTime?.text ="${items[position].getDateString()} ${items[position].getTimeString()}"
         holder?.notificationText?.text = items[position].text
 
-        holder?.itemView?.setOnClickListener { onItemClickListener.onItemClicked(items[position]) }
+        holder?.itemView?.setOnClickListener { onItemClickListener.onItemClicked(holder.adapterPosition) }
+        holder?.itemView?.setOnLongClickListener { onItemClickListener.onLongItemClicked(holder.adapterPosition) }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder?

@@ -9,11 +9,15 @@ import java.util.*
  */
 interface IView<T> {
 
-    fun showSnackbar(text: String)
+    fun showSnackBar(text: String)
 
-    fun onActionAdded(action: T)
+    fun onActionAdded()
+
+    fun onActionRemoved(position: Int)
 
     fun setActions(actions: ArrayList<T>)
 
     fun onDataSetChanged()
+
+    fun showDeleteActionDialog(position: Int)
 }

@@ -31,7 +31,10 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
         view?.showTimePicker()
     }
 
-    override fun onActionClicked(action: Alarm) {
+    override fun onActionClicked(position: Int) {
+    }
+
+    override fun onLongActionClicked(position: Int) {
     }
 
     override fun removeAction(position: Int) {
@@ -46,7 +49,7 @@ class AlarmPresenter(var view: IAlarmView?) : IAlarmPresenter {
         alarm.minute = minute
         alarms.add(alarm)
         MyApplication.alarmDao.create(alarm)
-        view?.onActionAdded(alarm)
+        view?.onActionAdded()
     }
 
     override fun onDestroy() {

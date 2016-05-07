@@ -17,6 +17,7 @@ import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.notifications_fragment.*
 import rus.voiceassistant.DividerItemDecoration
@@ -47,20 +48,20 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
 
         recyclerView.layoutManager = LinearLayoutManager(getActivity())
 
-        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
-
-            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-                return true
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-                presenter.removeAction(viewHolder!!.adapterPosition)
-                recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
-            }
-        }
-        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+//        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
+//                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
+//
+//            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
+//                return true
+//            }
+//
+//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+//                presenter.removeAction(viewHolder!!.adapterPosition)
+//                recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
+//            }
+//        }
+//        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
+//        itemTouchHelper.attachToRecyclerView(recyclerView)
     }
 
     override fun onResume() {
@@ -73,7 +74,6 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         val notificationIntent = Intent(activity, NotificationReceiver::class.java)
         notificationIntent.putExtra("TEXT", notification.text)
         notificationIntent.putExtra("ID", notification.id)
-        Logger.log(notification.id.toString())
         val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
         val calendar = Calendar.getInstance()
         with(calendar) {
@@ -93,19 +93,26 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         val notificationIntent = Intent(activity, NotificationReceiver::class.java)
         notificationIntent.putExtra("TEXT", notification.text)
         notificationIntent.putExtra("ID", notification.id)
-        Logger.log(notification.id.toString())
         val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
         alarmManager.cancel(pendingIntent)
     }
 
-    override fun onActionAdded(action: Notification) = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
+    override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
+
+    override fun onActionRemoved(position: Int) = recyclerView.adapter.notifyItemRemoved(position)
 
     override fun setActions(actions: ArrayList<Notification>) {
         recyclerView.adapter = NotificationsAdapter(this, actions);
     }
 
-    override fun onItemClicked(notification: Notification) {
-        presenter.onActionClicked(notification)
+    override fun onItemClicked(position: Int) {
+        presenter.onActionClicked(position)
+    }
+
+    override fun onLongItemClicked(position: Int): Boolean {
+        Logger.log("OnLongItemClicked $position")
+        presenter.onLongActionClicked(position)
+        return true
     }
 
     override fun showNotificationDialog(notification: Notification?) {
@@ -119,6 +126,15 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         createNotificationDialog.show(fragmentManager, "fragment_create_notification");
     }
 
+    override fun showDeleteActionDialog(position: Int) {
+        MaterialDialog.Builder(activity)
+                .content(R.string.deleteNotificationTitle)
+                .positiveText(android.R.string.ok)
+                .negativeText(android.R.string.cancel)
+                .onPositive { materialDialog: MaterialDialog, dialogAction: DialogAction -> presenter.removeAction(position)}
+                .show()
+    }
+
     override fun onNotificationCreated(notification: Notification) {
         presenter.onNotificationCreated(notification)
     }
@@ -128,10 +144,10 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
     }
 
     override fun onDataSetChanged() {
-        recyclerView.getAdapter().notifyDataSetChanged()
+        recyclerView.adapter.notifyDataSetChanged()
     }
 
-    override fun showSnackbar(text: String) {
+    override fun showSnackBar(text: String) {
         toast(text)
     }
 
