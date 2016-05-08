@@ -3,6 +3,7 @@ package rus.voiceassistant
 import android.app.Application
 import com.j256.ormlite.android.apptools.OpenHelperManager
 import com.j256.ormlite.dao.Dao
+import com.j256.ormlite.table.TableUtils
 import rus.voiceassistant.database.DatabaseHelper
 import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.model.Notification
@@ -25,6 +26,8 @@ class MyApplication : Application() {
 
         alarmDao = databaseHelper.getAlarmDAO()
         notificationDao = databaseHelper.getNotificationDAO()
+
+        TableUtils.clearTable(notificationDao.connectionSource, Notification::class.java)
 
     }
 

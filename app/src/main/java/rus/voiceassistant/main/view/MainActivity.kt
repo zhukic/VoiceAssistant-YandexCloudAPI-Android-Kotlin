@@ -45,8 +45,6 @@ import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.view.AlarmsFragment
-import rus.voiceassistant.main.presenter.IPresenter
-import rus.voiceassistant.main.presenter.PresenterImpl
 import rus.voiceassistant.addFragment
 import rus.voiceassistant.replaceFragment
 import rus.voiceassistant.view.NotesFragment
@@ -67,7 +65,6 @@ class MainActivity : AppCompatActivity(), IView {
         val EXTRA_MODEL = "general"
     }
 
-    lateinit var presenter: IPresenter
     lateinit var currentFragment: Fragment
     lateinit var drawer: Drawer
 
@@ -76,16 +73,14 @@ class MainActivity : AppCompatActivity(), IView {
 
         SpeechKit.getInstance().configure(this, API_KEY)
 
-        presenter = PresenterImpl(this)
-
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
         initNavigationDrawer()
 
-        currentFragment = NotesFragment()
+        currentFragment = NotificationsFragment()
 
-        drawer.setSelectionAtPosition(3)
+        drawer.setSelectionAtPosition(2)
 
         supportFragmentManager.addFragment(currentFragment)
 
@@ -198,7 +193,6 @@ class MainActivity : AppCompatActivity(), IView {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.onDestroy()
     }
 
 }

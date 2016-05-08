@@ -2,6 +2,8 @@ package rus.voiceassistant.model
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
+import org.joda.time.DateTime
+import rus.voiceassistant.Logger
 import java.io.Serializable
 
 /**
@@ -15,55 +17,57 @@ class Notification : Serializable {
 
     @DatabaseField
     var minute: Int = 0
+    set(value) {
+        field = value
+        this.dateTime = this.dateTime?.withMinuteOfHour(value)
+    }
 
     @DatabaseField
     var hour: Int = 0
+    set(value) {
+        field = value
+        this.dateTime = this.dateTime?.withHourOfDay(value)
+    }
 
     @DatabaseField
     var day: Int = 0
+    set(value) {
+        field = value
+        this.dateTime = this.dateTime?.withDayOfMonth(value)
+    }
 
     @DatabaseField
     var month: Int = 0
+    set(value) {
+        field = value
+        this.dateTime = this.dateTime?.withMonthOfYear(value)
+    }
 
     @DatabaseField
     var year: Int = 0
+    set(value) {
+        field = year
+        this.dateTime = this.dateTime?.withYear(value)
+    }
 
     @DatabaseField
     var text: String = ""
 
+    var dateTime: DateTime? = null
+
     constructor() {}
 
     fun getTimeString(): String {
-        var stringTime = ""
-        if (hour < 10)
-            stringTime += "0$hour"
-        else
-            stringTime += "$hour"
-
-        stringTime += ":"
-
-        if (minute < 10)
-            stringTime += "0$minute"
-        else stringTime += "$minute"
-
-        return stringTime
+        if(dateTime == null) {
+            dateTime = DateTime(year, month, day, hour, minute)
+        }
+        return "${dateTime?.toLocalTime()?.toString("HH:mm")}"
     }
 
     fun getDateString(): String {
-        var stringDate = ""
-        if (day < 10)
-            stringDate += "0$day"
-        else
-            stringDate += "$day"
-
-        stringDate += "."
-
-        if (month < 10)
-            stringDate += "0$month"
-        else stringDate += "$month"
-
-        stringDate += ".$year"
-
-        return stringDate
+        if(dateTime == null) {
+            dateTime = DateTime(year, month, day, hour, minute)
+        }
+        return "${dateTime?.toLocalDate()?.toString("dd.MM.yyyy")}"
     }
 }

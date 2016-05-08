@@ -29,7 +29,7 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         fun newInstance(notification: Notification? = null, mode: Int = 0): CreateNotificationFragmentDialog {
             if(mode != MODE_CREATE && mode != MODE_EDIT)
-                throw IllegalArgumentException("invalid mode")
+                throw IllegalArgumentException("Invalid mode")
 
             val fragment = CreateNotificationFragmentDialog()
             val args = Bundle()
@@ -58,6 +58,7 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         if(mode == 0) {
             notification = Notification()
+            editNotificationDate.setText(notification.getDateString())
         } else {
             notification = arguments.getSerializable("NOTIFICATION") as Notification
             editNotificationText.setText(notification.text)
