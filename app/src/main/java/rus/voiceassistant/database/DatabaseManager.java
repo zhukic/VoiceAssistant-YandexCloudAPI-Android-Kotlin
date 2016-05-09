@@ -17,27 +17,27 @@ public class DatabaseManager {
 
     public static ArrayList<Alarm> getAlarmsListFromDatabase() {
 
-        ArrayList<Alarm> currentNewsList = new ArrayList<>();
+        ArrayList<Alarm> currentList = new ArrayList<>();
         try {
             QueryBuilder<Alarm, Integer> queryBuilder = MyApplication.Companion.getAlarmDao().queryBuilder();
-            currentNewsList = (ArrayList<Alarm>)MyApplication.Companion.getAlarmDao().query(queryBuilder.prepare());
+            currentList = (ArrayList<Alarm>)MyApplication.Companion.getAlarmDao().query(queryBuilder.prepare());
         } catch (SQLException e) {
             e.printStackTrace();
         }
         //Collections.reverse(currentNewsList);
-        return currentNewsList;
+        return currentList;
     }
 
     public static ArrayList<Notification> getNotificationsListFromDatabase() {
 
-        ArrayList<Notification> currentNewsList = new ArrayList<>();
+        ArrayList<Notification> currentList = new ArrayList<>();
         try {
             QueryBuilder<Notification, Integer> queryBuilder = MyApplication.Companion.getNotificationDao().queryBuilder();
-            currentNewsList = (ArrayList<Notification>)MyApplication.Companion.getNotificationDao().query(queryBuilder.prepare());
+            currentList = (ArrayList<Notification>)MyApplication.Companion.getNotificationDao().query(queryBuilder.prepare());
         } catch (SQLException e) {
             e.printStackTrace();
         }
        // Collections.reverse(currentNewsList);
-        return currentNewsList;
+        return currentList;
     }
 }

@@ -58,7 +58,7 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         if(mode == 0) {
             notification = Notification()
-            editNotificationDate.setText(notification.getDateString())
+            //editNotificationDate.setText(notification.getDateString())
         } else {
             notification = arguments.getSerializable("NOTIFICATION") as Notification
             editNotificationText.setText(notification.text)

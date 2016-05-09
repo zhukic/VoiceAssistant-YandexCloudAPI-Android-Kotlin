@@ -17,57 +17,31 @@ class Notification : Serializable {
 
     @DatabaseField
     var minute: Int = 0
-    set(value) {
-        field = value
-        this.dateTime = this.dateTime?.withMinuteOfHour(value)
-    }
 
     @DatabaseField
     var hour: Int = 0
-    set(value) {
-        field = value
-        this.dateTime = this.dateTime?.withHourOfDay(value)
-    }
 
     @DatabaseField
     var day: Int = 0
-    set(value) {
-        field = value
-        this.dateTime = this.dateTime?.withDayOfMonth(value)
-    }
 
     @DatabaseField
     var month: Int = 0
-    set(value) {
-        field = value
-        this.dateTime = this.dateTime?.withMonthOfYear(value)
-    }
 
     @DatabaseField
     var year: Int = 0
-    set(value) {
-        field = year
-        this.dateTime = this.dateTime?.withYear(value)
-    }
 
     @DatabaseField
     var text: String = ""
 
-    var dateTime: DateTime? = null
-
     constructor() {}
 
     fun getTimeString(): String {
-        if(dateTime == null) {
-            dateTime = DateTime(year, month, day, hour, minute)
-        }
-        return "${dateTime?.toLocalTime()?.toString("HH:mm")}"
+        val dateTime = DateTime(year, month, day, hour, minute)
+        return "${dateTime.toLocalTime()?.toString("HH:mm")}"
     }
 
     fun getDateString(): String {
-        if(dateTime == null) {
-            dateTime = DateTime(year, month, day, hour, minute)
-        }
-        return "${dateTime?.toLocalDate()?.toString("dd.MM.yyyy")}"
+        val dateTime = DateTime(year, month, day, hour, minute)
+        return "${dateTime.toLocalDate()?.toString("dd.MM.yyyy")}"
     }
 }
