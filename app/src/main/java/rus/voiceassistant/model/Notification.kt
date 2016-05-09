@@ -2,6 +2,8 @@ package rus.voiceassistant.model
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
+import org.joda.time.DateTime
+import rus.voiceassistant.Logger
 import java.io.Serializable
 
 /**
@@ -34,36 +36,12 @@ class Notification : Serializable {
     constructor() {}
 
     fun getTimeString(): String {
-        var stringTime = ""
-        if (hour < 10)
-            stringTime += "0$hour"
-        else
-            stringTime += "$hour"
-
-        stringTime += ":"
-
-        if (minute < 10)
-            stringTime += "0$minute"
-        else stringTime += "$minute"
-
-        return stringTime
+        val dateTime = DateTime(year, month, day, hour, minute)
+        return "${dateTime.toLocalTime()?.toString("HH:mm")}"
     }
 
     fun getDateString(): String {
-        var stringDate = ""
-        if (day < 10)
-            stringDate += "0$day"
-        else
-            stringDate += "$day"
-
-        stringDate += "."
-
-        if (month < 10)
-            stringDate += "0$month"
-        else stringDate += "$month"
-
-        stringDate += ".$year"
-
-        return stringDate
+        val dateTime = DateTime(year, month, day, hour, minute)
+        return "${dateTime.toLocalDate()?.toString("dd.MM.yyyy")}"
     }
 }

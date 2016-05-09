@@ -4,7 +4,6 @@ import android.content.Intent
 import org.json.JSONObject
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
-import rus.voiceassistant.main.presenter.MyObserver
 import rus.voiceassistant.view.INoteView
 import java.net.URLEncoder
 

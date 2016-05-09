@@ -12,9 +12,9 @@
     <string name="notificationDate">Дата</string>
     <string name="notificationTime">Время</string>
     <string name="addNotfication">Добавление напоминания</string>
-    <string name="deleteNotificationTitle">Delete notification?</string>
-    <string name="cancel">CANCEL</string>
-    <string name="save">SAVE</string>
+    <string name="deleteNotificationTitle">Удалить напоминание?</string>
+    <string name="cancel">ОТМЕНА</string>
+    <string name="save">СОХРАНИТЬ</string>
     <string-array name="dateSpinner">
         <item>Сегодня</item>
         <item>Завтра</item>
