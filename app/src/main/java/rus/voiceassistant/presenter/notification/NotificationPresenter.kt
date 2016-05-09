@@ -1,11 +1,11 @@
-package rus.voiceassistant.presenter
+package rus.voiceassistant.presenter.notification
 
 import android.support.v7.app.NotificationCompat
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.database.DatabaseManager
 import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.model.Notification
-import rus.voiceassistant.view.INotificationView
+import rus.voiceassistant.view.notification.INotificationView
 import java.util.*
 
 /**

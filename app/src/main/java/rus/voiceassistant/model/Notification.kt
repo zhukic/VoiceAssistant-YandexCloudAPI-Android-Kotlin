@@ -10,38 +10,38 @@ import java.io.Serializable
  * Created by RUS on 28.04.2016.
  */
 @DatabaseTable(tableName = "notifications")
-class Notification : Serializable {
-
-    @DatabaseField(generatedId = true)
-    var id: Int = 0
-
-    @DatabaseField
-    var minute: Int = 0
-
-    @DatabaseField
-    var hour: Int = 0
-
-    @DatabaseField
-    var day: Int = 0
-
-    @DatabaseField
-    var month: Int = 0
-
-    @DatabaseField
-    var year: Int = 0
+class Notification : Action, Serializable {
 
     @DatabaseField
     var text: String = ""
 
-    constructor() {}
+    class Builder : Action.Builder {
+        var text: String = ""
 
-    fun getTimeString(): String {
-        val dateTime = DateTime(year, month, day, hour, minute)
-        return "${dateTime.toLocalTime()?.toString("HH:mm")}"
+        constructor() : super()
+
+        constructor(notification: Notification) : super(notification) {
+            this.text = notification.text
+        }
+
+        fun text(text: String?): Builder {
+            this.text = text ?: ""
+            return this
+        }
+
+        override fun build(): Action = Notification(this)
     }
 
-    fun getDateString(): String {
-        val dateTime = DateTime(year, month, day, hour, minute)
-        return "${dateTime.toLocalDate()?.toString("dd.MM.yyyy")}"
+    constructor() : super() {
+
     }
+
+    constructor(builder: Builder) : super(builder) {
+        this.text = builder.text
+    }
+
+    override fun toString(): String{
+        return "${super.toString()} \nNotification(text='$text')"
+    }
+
 }

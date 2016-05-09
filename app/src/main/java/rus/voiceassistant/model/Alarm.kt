@@ -2,41 +2,34 @@ package rus.voiceassistant.model
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
+import java.io.Serializable
 
 /**
  * Created by RUS on 10.04.2016.
  */
 @DatabaseTable(tableName = "alarms")
-class Alarm {
-
-    @DatabaseField(generatedId = true)
-    var id: Int = 0
-
-    @DatabaseField
-    var hour: Int = 0
-
-    @DatabaseField
-    var minute: Int = 0;
+class Alarm : Action, Serializable {
 
     @DatabaseField
     var isOn: Boolean = false
 
-    constructor() {}
+    class Builder : Action.Builder {
 
-    fun getTime(): String {
-        var stringTime = ""
-        if (hour < 10)
-            stringTime += "0$hour"
-        else
-            stringTime += "$hour"
+        constructor() : super()
 
-        stringTime += ":"
+        constructor(alarm: Alarm) : super(alarm)
 
-        if (minute < 10)
-            stringTime += "0$minute"
-        else stringTime += "$minute"
+        override fun build(): Action = Alarm(this)
+    }
 
-        return stringTime
+    constructor() : super() {
+
+    }
+
+    constructor(builder: Alarm.Builder) : super(builder)
+
+    override fun toString(): String {
+        return "${super.toString()} \nAlarm"
     }
 
 }

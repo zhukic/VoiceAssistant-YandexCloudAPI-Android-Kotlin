@@ -24,10 +24,8 @@ class MyApplication : Application() {
 
         databaseHelper = getDatabaseHelper()
 
-        alarmDao = databaseHelper.getAlarmDAO()
-        notificationDao = databaseHelper.getNotificationDAO()
-
-        TableUtils.clearTable(notificationDao.connectionSource, Notification::class.java)
+        alarmDao = databaseHelper.alarmDAO
+        notificationDao = databaseHelper.notificationDAO
 
     }
 

@@ -16,10 +16,10 @@ import kotlinx.android.synthetic.main.alarm_item.view.*
 import kotlinx.android.synthetic.main.notification_item.view.*
 import rus.voiceassistant.R
 import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.view.IAlarmView
+import rus.voiceassistant.view.alarm.IAlarmView
 import rus.voiceassistant.isDateComesToday
 import rus.voiceassistant.model.Notification
-import rus.voiceassistant.view.INotificationView
+import rus.voiceassistant.view.notification.INotificationView
 import java.util.*
 
 /**

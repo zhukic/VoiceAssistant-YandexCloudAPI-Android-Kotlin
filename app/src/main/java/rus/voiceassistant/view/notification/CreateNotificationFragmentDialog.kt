@@ -1,4 +1,4 @@
-package rus.voiceassistant.view
+package rus.voiceassistant.view.notification
 
 import android.content.Context
 import android.os.Bundle
@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.create_notification.*
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.Notification
+import rus.voiceassistant.view.notification.NotificationCreationListener
 import java.util.*
 
 /**
@@ -92,6 +93,7 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         notificationDateText.visibility = View.VISIBLE
+        Logger.log("month = $monthOfYear")
         notification.day = dayOfMonth
         notification.month = monthOfYear
         notification.year = year

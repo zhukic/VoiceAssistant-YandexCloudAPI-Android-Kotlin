@@ -1,4 +1,4 @@
-package rus.voiceassistant.view;
+package rus.voiceassistant.view.notification;
 
 import android.app.AlarmManager
 import android.app.NotificationManager
@@ -25,12 +25,14 @@ import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.main.view.MainActivity
 import rus.voiceassistant.model.Notification
-import rus.voiceassistant.presenter.AlarmPresenter
-import rus.voiceassistant.presenter.IAlarmPresenter
-import rus.voiceassistant.presenter.INotificationPresenter
-import rus.voiceassistant.presenter.NotificationPresenter
+import rus.voiceassistant.presenter.alarm.AlarmPresenter
+import rus.voiceassistant.presenter.alarm.IAlarmPresenter
+import rus.voiceassistant.presenter.notification.INotificationPresenter
+import rus.voiceassistant.presenter.notification.NotificationPresenter
 import rus.voiceassistant.receivers.NotificationReceiver
 import rus.voiceassistant.toast
+import rus.voiceassistant.view.notification.CreateNotificationFragmentDialog
+import rus.voiceassistant.view.notification.NotificationCreationListener
 import rus.voiceassistant.view.adapters.NotificationsAdapter
 import java.util.*
 
@@ -74,6 +76,7 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         val notificationIntent = Intent(activity, NotificationReceiver::class.java)
         notificationIntent.putExtra("TEXT", notification.text)
         notificationIntent.putExtra("ID", notification.id)
+        Logger.log(notification.toString())
         val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
         val calendar = Calendar.getInstance()
         with(calendar) {
@@ -110,7 +113,6 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
     }
 
     override fun onLongItemClicked(position: Int): Boolean {
-        Logger.log("OnLongItemClicked $position")
         presenter.onLongActionClicked(position)
         return true
     }
@@ -119,8 +121,8 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         val fragmentManager = (activity as MainActivity).supportFragmentManager
         var createNotificationDialog: CreateNotificationFragmentDialog
         if(notification == null)
-            createNotificationDialog = CreateNotificationFragmentDialog.Companion.newInstance(mode = CreateNotificationFragmentDialog.MODE_CREATE)
-        else createNotificationDialog = CreateNotificationFragmentDialog.Companion.newInstance(notification, CreateNotificationFragmentDialog.MODE_EDIT)
+            createNotificationDialog = CreateNotificationFragmentDialog.newInstance(mode = CreateNotificationFragmentDialog.MODE_CREATE)
+        else createNotificationDialog = CreateNotificationFragmentDialog.newInstance(notification, CreateNotificationFragmentDialog.MODE_EDIT)
 
         createNotificationDialog.setTargetFragment(this, 300)
         createNotificationDialog.show(fragmentManager, "fragment_create_notification");

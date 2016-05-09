@@ -4,11 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
 
-
 /**
  * Created by RUS on 04.05.2016.
  */
-
 @Generated("org.jsonschema2pojo")
 public class Token {
 

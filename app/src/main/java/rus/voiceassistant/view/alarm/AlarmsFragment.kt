@@ -1,4 +1,4 @@
-package rus.voiceassistant.view
+package rus.voiceassistant.view.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -21,8 +21,8 @@ import kotlinx.android.synthetic.main.alarm_fragment.*
 import rus.voiceassistant.R
 import rus.voiceassistant.view.adapters.NotificationsAdapter
 import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.presenter.AlarmPresenter
-import rus.voiceassistant.presenter.IAlarmPresenter
+import rus.voiceassistant.presenter.alarm.AlarmPresenter
+import rus.voiceassistant.presenter.alarm.IAlarmPresenter
 import rus.voiceassistant.toast
 import rus.voiceassistant.view.adapters.AlarmsAdapter
 import java.util.*

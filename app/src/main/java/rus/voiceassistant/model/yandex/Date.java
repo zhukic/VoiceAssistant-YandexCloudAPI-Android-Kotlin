@@ -1,12 +1,12 @@
 package rus.voiceassistant.model.yandex;
 
-/**
- * Created by RUS on 04.05.2016.
- */
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
 
+/**
+ * Created by RUS on 04.05.2016.
+ */
 @Generated("org.jsonschema2pojo")
 public class Date {
 
@@ -17,6 +17,7 @@ public class Date {
     private Integer Year;
     private Boolean RelativeDay;
     private Tokens Tokens;
+    private Duration Duration;
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -145,6 +146,14 @@ public class Date {
         this.Tokens = Tokens;
     }
 
+    public Duration getDuration() {
+        return Duration;
+    }
+
+    public void setDuration(Duration duration) {
+        Duration = duration;
+    }
+
     public Map<String, Object> getAdditionalProperties() {
         return this.additionalProperties;
     }
@@ -163,6 +172,7 @@ public class Date {
                 ", Day=" + Day +
                 ", Min=" + Min +
                 ", Hour=" + Hour +
+                "\nDuration=" + Duration +
                 '}';
     }
 }

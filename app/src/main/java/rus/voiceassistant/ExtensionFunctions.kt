@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.widget.Toast
+import rus.voiceassistant.model.yandex.Token
 import java.util.*
 
 /**
@@ -30,6 +31,14 @@ fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
         return minute > currentMinute
     else
         return hour > currentHour
+}
+
+fun List<Token>.containsWords(words: Array<String>): Boolean {
+    for(word in words) {
+        if(filter({ it.text.equals(word) }).isEmpty())
+            return false
+    }
+    return true
 }
 
 fun Log.log(message: String) {

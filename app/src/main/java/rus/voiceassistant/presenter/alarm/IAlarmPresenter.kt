@@ -1,6 +1,7 @@
-package rus.voiceassistant.presenter
+package rus.voiceassistant.presenter.alarm
 
 import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.presenter.IPresenter
 import java.util.*
 
 /**

@@ -1,31 +1,26 @@
 package rus.voiceassistant.presenter;
 
-import android.util.Log;
 
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rus.voiceassistant.Logger;
-import rus.voiceassistant.model.yandex.Example;
+import rus.voiceassistant.model.yandex.YandexResponse;
 
 /**
  * Created by RUS on 04.05.2016.
  */
-class DownloadInteractor implements IDownloadInteractor {
+public class DownloadInteractor implements IDownloadInteractor {
 
-    public static final String  BASE_URL = "https://vins-markup.voicetech.yandex.net/markup/0.x/";
+    public static final String BASE_URL = "https://vins-markup.voicetech.yandex.net/";
+    public static final String LAYERS = "OriginalRequest,ProcessedRequest,Tokens,Date";
+    public static final String API_KEY = "8b1a122c-9942-4f0d-a1a6-10a18353131f";
+    public static final String TEXT = "напомни через 2 минуты сделать кофе";
 
     private YandexService yandexService;
 
-    DownloadInteractor() {
+    public DownloadInteractor() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -33,19 +28,17 @@ class DownloadInteractor implements IDownloadInteractor {
         yandexService = retrofit.create(YandexService.class);
     }
 
-    @Override
-    public void downloadJson(@NotNull String text, @NotNull final OnFinishedListener onFinishedListener) {
+    public void downloadJson(final String text, final IDownloadInteractor.OnFinishedListener onFinishedListener) {
 
-        Call<Example> call = yandexService.getJsonResponse();
-        call.enqueue(new Callback<Example>() {
-            @Override
-            public void onResponse(Call<Example> call, Response<Example> response) {
-                    Logger.Companion.log(response.body().toString());
+        Call<YandexResponse> call = yandexService.getJsonResponse(TEXT, LAYERS, API_KEY);
+        call.enqueue(new Callback<YandexResponse>() {
+
+            public void onResponse(Call<YandexResponse> call, Response<YandexResponse> response) {
+                onFinishedListener.onDownloadFinished(response.body());
             }
 
-            @Override
-            public void onFailure(Call<Example> call, Throwable t) {
-                Logger.Companion.log("Error");
+            public void onFailure(Call<YandexResponse> call, Throwable t) {
+
             }
         });
     }

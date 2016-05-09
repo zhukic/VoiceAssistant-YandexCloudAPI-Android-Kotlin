@@ -44,11 +44,11 @@ import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.view.AlarmsFragment
+import rus.voiceassistant.view.alarm.AlarmsFragment
 import rus.voiceassistant.addFragment
 import rus.voiceassistant.replaceFragment
-import rus.voiceassistant.view.NotesFragment
-import rus.voiceassistant.view.NotificationsFragment
+import rus.voiceassistant.view.note.NotesFragment
+import rus.voiceassistant.view.notification.NotificationsFragment
 import java.util.*
 
 
