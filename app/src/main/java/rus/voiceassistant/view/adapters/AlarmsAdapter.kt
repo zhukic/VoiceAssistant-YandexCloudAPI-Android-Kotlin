@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.alarm_item.view.*
 import rus.voiceassistant.R
 import rus.voiceassistant.isDateComesToday
 import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.view.IAlarmView
+import rus.voiceassistant.view.alarm.IAlarmView
 import rus.voiceassistant.view.IView
 import java.util.*
 
@@ -37,7 +37,7 @@ class AlarmsAdapter(val view: IAlarmView, val items: List<Alarm>): RecyclerView.
         val calendar = Calendar.getInstance()
 
         holder?.textDay?.text = if(calendar.isDateComesToday(items[position].hour, items[position].minute)) "Сегодня" else "Завтра"
-        holder?.textTime?.text = items.get(position).getTime()
+        //holder?.textTime?.text = items.get(position).getTime()
         holder?.switch?.setOnCheckedChangeListener { button, isChecked -> view.onCheckedChange(position, isChecked) }
     }
 

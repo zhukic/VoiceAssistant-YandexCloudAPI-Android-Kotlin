@@ -1,9 +1,10 @@
-package rus.voiceassistant.view
+package rus.voiceassistant.view.alarm
 
 import android.content.Context
 import android.widget.TimePicker
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.view.IView
 import java.text.FieldPosition
 import java.util.*
 

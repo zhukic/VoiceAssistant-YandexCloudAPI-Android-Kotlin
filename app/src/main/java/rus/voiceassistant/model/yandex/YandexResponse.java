@@ -11,13 +11,12 @@ import javax.annotation.Generated;
  */
 
 @Generated("org.jsonschema2pojo")
-public class Example {
+public class YandexResponse {
 
     private List<Date> Date = new ArrayList<Date>();
     private String OriginalRequest;
     private String ProcessedRequest;
     private List<Token> Tokens = new ArrayList<Token>();
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
      *
@@ -91,21 +90,13 @@ public class Example {
         this.Tokens = Tokens;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
-
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
-
     @Override
     public String toString() {
         return "Example{" +
                 "Tokens=" + Tokens +
-                ", ProcessedRequest='" + ProcessedRequest + '\'' +
-                ", OriginalRequest='" + OriginalRequest + '\'' +
-                ", Date=" + Date +
+                "\nProcessedRequest='" + ProcessedRequest + '\'' +
+                "\nOriginalRequest='" + OriginalRequest + '\'' +
+                "\nDate=" + Date +
                 '}';
     }
 }

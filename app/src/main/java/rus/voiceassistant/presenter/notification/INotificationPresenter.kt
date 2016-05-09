@@ -1,6 +1,7 @@
-package rus.voiceassistant.presenter
+package rus.voiceassistant.presenter.notification
 
 import rus.voiceassistant.model.Notification
+import rus.voiceassistant.presenter.IPresenter
 
 /**
  * Created by RUS on 28.04.2016.

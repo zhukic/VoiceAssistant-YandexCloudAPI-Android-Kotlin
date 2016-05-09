@@ -1,6 +1,7 @@
-package rus.voiceassistant.view
+package rus.voiceassistant.view.notification
 
 import rus.voiceassistant.model.Notification
+import rus.voiceassistant.view.IView
 
 /**
  * Created by RUS on 28.04.2016.
