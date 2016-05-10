@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.notifications_fragment.*
 import rus.voiceassistant.DividerItemDecoration
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
-import rus.voiceassistant.main.view.MainActivity
+import rus.voiceassistant.MainActivity
 import rus.voiceassistant.model.Notification
 import rus.voiceassistant.presenter.alarm.AlarmPresenter
 import rus.voiceassistant.presenter.alarm.IAlarmPresenter

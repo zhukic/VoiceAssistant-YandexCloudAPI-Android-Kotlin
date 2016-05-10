@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.notes_fragment.*
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.R
-import rus.voiceassistant.main.view.MainActivity
+import rus.voiceassistant.MainActivity
 import rus.voiceassistant.model.Notification
 import rus.voiceassistant.presenter.note.INotePresenter
 import rus.voiceassistant.presenter.note.NotePresenter
@@ -36,10 +36,10 @@ class NotesFragment : Fragment(), INoteView {
     }
 
     override fun startRecognitionActivity() {
-        val intent = Intent(activity, RecognizerActivity::class.java)
-        intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, MainActivity.EXTRA_LANGUAGE)
-        intent.putExtra(RecognizerActivity.EXTRA_MODEL, MainActivity.EXTRA_MODEL)
-        startActivityForResult(intent, 0)
+//        val intent = Intent(activity, RecognizerActivity::class.java)
+//        intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, MainActivity.EXTRA_LANGUAGE)
+//        intent.putExtra(RecognizerActivity.EXTRA_MODEL, MainActivity.EXTRA_MODEL)
+//        startActivityForResult(intent, 0)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

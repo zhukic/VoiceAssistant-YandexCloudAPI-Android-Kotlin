@@ -10,10 +10,14 @@ open class Action(@DatabaseField var year: Int = 0,
                   @DatabaseField var month: Int = 0,
                   @DatabaseField var day: Int = 0,
                   @DatabaseField var hour: Int = 0,
-                  @DatabaseField var minute: Int = 0) {
+                  @DatabaseField var minute: Int = 0,
+                  @DatabaseField var second: Int = 0) {
 
     @DatabaseField(generatedId = true)
     var id: Int = 0
+
+    @DatabaseField
+    var isDone: Boolean = false
 
     var originalRequest: String = ""
 
@@ -31,6 +35,18 @@ open class Action(@DatabaseField var year: Int = 0,
             this.dateTime = this.dateTime.withDayOfMonth(action.day)
             this.dateTime = this.dateTime.withHourOfDay(action.hour)
             this.dateTime = this.dateTime.withMinuteOfHour(action.minute)
+            this.dateTime = this.dateTime.withSecondOfMinute(action.second)
+        }
+
+        fun second(second: Int?): Builder {
+            if(second != null)
+                this.dateTime = this.dateTime.withSecondOfMinute(second)
+            return this
+        }
+
+        fun secondForward(second: Int?): Builder {
+            this.dateTime = this.dateTime.plusSeconds(second ?: 0)
+            return this
         }
 
         fun minute(minute: Int?): Builder {

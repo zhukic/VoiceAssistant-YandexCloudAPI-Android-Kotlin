@@ -9,7 +9,7 @@ import android.provider.Settings
 import android.support.v7.app.NotificationCompat
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
-import rus.voiceassistant.main.view.MainActivity
+import rus.voiceassistant.MainActivity
 
 /**
  * Created by RUS on 29.04.2016.

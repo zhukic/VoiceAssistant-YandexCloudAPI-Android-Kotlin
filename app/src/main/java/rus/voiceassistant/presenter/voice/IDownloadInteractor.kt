@@ -1,4 +1,4 @@
-package rus.voiceassistant.presenter
+package rus.voiceassistant.presenter.voice
 
 import org.json.JSONObject
 import rus.voiceassistant.model.yandex.YandexResponse
@@ -16,6 +16,6 @@ interface IDownloadInteractor {
 
     }
 
-    fun downloadJson(text: String, onFinishedListener: OnFinishedListener)
+    fun makeRequestToYandexServer(text: String, onFinishedListener: OnFinishedListener)
 
 }

@@ -1,11 +1,18 @@
 package rus.voiceassistant
 
 import android.app.Activity
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.widget.Toast
+import rus.voiceassistant.model.Notification
 import rus.voiceassistant.model.yandex.Token
+import rus.voiceassistant.receivers.NotificationReceiver
+import java.security.AccessControlContext
 import java.util.*
 
 /**
@@ -21,6 +28,10 @@ fun FragmentManager.replaceFragment(fragment: Fragment) {
 
 fun Fragment.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(activity, message, duration).show()
+}
+
+fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
+    Toast.makeText(this, message, duration).show()
 }
 
 fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
@@ -41,6 +52,20 @@ fun List<Token>.containsWords(words: Array<String>): Boolean {
     return true
 }
 
-fun Log.log(message: String) {
-    Log.i("TAG", message);
+fun AlarmManager.createNotification(context: Context, notification: Notification) {
+    val notificationIntent = Intent(context, NotificationReceiver::class.java)
+    notificationIntent.putExtra("TEXT", notification.text)
+    notificationIntent.putExtra("ID", notification.id)
+    val pendingIntent = PendingIntent.getBroadcast(context, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
+    val calendar = Calendar.getInstance()
+    with(calendar) {
+        setTimeInMillis(System.currentTimeMillis())
+        set(Calendar.YEAR, notification.year)
+        set(Calendar.MONTH, notification.month)
+        set(Calendar.DAY_OF_MONTH, notification.day)
+        set(Calendar.HOUR_OF_DAY, notification.hour)
+        set(Calendar.MINUTE, notification.minute)
+        set(Calendar.SECOND, 0)
+    }
+    set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
 }

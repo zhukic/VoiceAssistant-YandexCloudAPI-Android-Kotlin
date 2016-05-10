@@ -1,5 +1,7 @@
-package rus.voiceassistant.presenter;
+package rus.voiceassistant.presenter.voice;
 
+
+import org.jetbrains.annotations.NotNull;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,7 +18,6 @@ public class DownloadInteractor implements IDownloadInteractor {
     public static final String BASE_URL = "https://vins-markup.voicetech.yandex.net/";
     public static final String LAYERS = "OriginalRequest,ProcessedRequest,Tokens,Date";
     public static final String API_KEY = "8b1a122c-9942-4f0d-a1a6-10a18353131f";
-    public static final String TEXT = "напомни через 2 минуты сделать кофе";
 
     private YandexService yandexService;
 
@@ -28,9 +29,9 @@ public class DownloadInteractor implements IDownloadInteractor {
         yandexService = retrofit.create(YandexService.class);
     }
 
-    public void downloadJson(final String text, final IDownloadInteractor.OnFinishedListener onFinishedListener) {
+    public void makeRequestToYandexServer(@NotNull final String text, @NotNull final OnFinishedListener onFinishedListener) {
 
-        Call<YandexResponse> call = yandexService.getJsonResponse(TEXT, LAYERS, API_KEY);
+        Call<YandexResponse> call = yandexService.getJsonResponse(text, LAYERS, API_KEY);
         call.enqueue(new Callback<YandexResponse>() {
 
             public void onResponse(Call<YandexResponse> call, Response<YandexResponse> response) {

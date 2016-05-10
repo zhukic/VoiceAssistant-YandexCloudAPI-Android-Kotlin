@@ -1,4 +1,4 @@
-package rus.voiceassistant.presenter;
+package rus.voiceassistant.presenter.voice;
 
 
 import retrofit2.Call;

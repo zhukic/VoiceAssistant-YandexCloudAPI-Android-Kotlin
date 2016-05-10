@@ -1,18 +1,15 @@
-package rus.voiceassistant;
+package rus.voiceassistant.widgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.speech.RecognizerIntent;
-import android.test.suitebuilder.annotation.SmallTest;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 
-import java.util.Locale;
+import rus.voiceassistant.Logger;
+import rus.voiceassistant.view.voice.VoiceActivity;
+import rus.voiceassistant.R;
 
 /**
  * Implementation of App Widget functionality.
@@ -39,7 +36,7 @@ public class Widget extends AppWidgetProvider {
         for (int appWidgetId : appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId);
 
-            Intent intent = new Intent(context, Main2Activity.class);
+            Intent intent = new Intent(context, VoiceActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
 
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget);
@@ -63,7 +60,7 @@ public class Widget extends AppWidgetProvider {
         super.onReceive(context, intent);
         if(intent.getAction().equals(ACTION)) {
             Logger.Companion.log("widget click");
-            Intent intent1 = new Intent(context, Main2Activity.class);
+            Intent intent1 = new Intent(context, VoiceActivity.class);
             context.startActivity(intent1);
         }
     }

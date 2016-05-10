@@ -1,4 +1,4 @@
-package presenter
+package rus.voiceassistant.presenter.voice
 
 import rus.voiceassistant.containsWords
 import rus.voiceassistant.model.Action

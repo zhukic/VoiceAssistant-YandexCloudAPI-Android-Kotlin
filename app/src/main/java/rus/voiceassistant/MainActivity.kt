@@ -1,4 +1,4 @@
-package rus.voiceassistant.main.view;
+package rus.voiceassistant;
 
 import android.app.FragmentManager
 import android.app.PendingIntent
@@ -54,11 +54,11 @@ import java.util.*
 
 //TODO Extension functions
 //TODO Logger extension
-class MainActivity : AppCompatActivity(), IView {
+class MainActivity : AppCompatActivity() {
 
     companion object {
 
-        val TAG = MainActivity.javaClass.simpleName
+        val TAG = javaClass.simpleName
 
         val API_KEY = "8b1a122c-9942-4f0d-a1a6-10a18353131f"
         val EXTRA_LANGUAGE = "ru-RU"
@@ -70,7 +70,6 @@ class MainActivity : AppCompatActivity(), IView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         SpeechKit.getInstance().configure(this, API_KEY)
 
         setContentView(R.layout.activity_main)
@@ -162,7 +161,7 @@ class MainActivity : AppCompatActivity(), IView {
         getSystemService(NOTIFICATION_SERVICE)
     }
 
-    override fun startRecognitionActivity() {
+    fun startRecognitionActivity() {
         val intent = Intent(this, RecognizerActivity::class.java)
         intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, EXTRA_LANGUAGE)
         intent.putExtra(RecognizerActivity.EXTRA_MODEL, EXTRA_MODEL)
@@ -173,7 +172,7 @@ class MainActivity : AppCompatActivity(), IView {
         //presenter.onRecognitionFinished(requestCode, resultCode, data)
     }
 
-    override fun onError() {
+    fun onError() {
 
     }
 

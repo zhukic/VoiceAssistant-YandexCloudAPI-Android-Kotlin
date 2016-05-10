@@ -2,14 +2,14 @@ package rus.voiceassistant.presenter.note
 
 import android.content.Intent
 import org.json.JSONObject
-import presenter.ActionBuilder
+import rus.voiceassistant.presenter.voice.ActionBuilder
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.model.Notification
 import rus.voiceassistant.model.yandex.YandexResponse
-import rus.voiceassistant.presenter.DownloadInteractor
-import rus.voiceassistant.presenter.IDownloadInteractor
+import rus.voiceassistant.presenter.voice.DownloadInteractor
+import rus.voiceassistant.presenter.voice.IDownloadInteractor
 import rus.voiceassistant.view.note.INoteView
 import java.net.URLEncoder
 
@@ -33,7 +33,7 @@ class NotePresenter(var view: INoteView?): INotePresenter, IDownloadInteractor.O
 
     fun resultOK(text: String? = "") {
         val downloadInteractor = DownloadInteractor()
-        downloadInteractor.downloadJson(text ?: "", this)
+        downloadInteractor.makeRequestToYandexServer(text ?: "", this)
     }
 
 
