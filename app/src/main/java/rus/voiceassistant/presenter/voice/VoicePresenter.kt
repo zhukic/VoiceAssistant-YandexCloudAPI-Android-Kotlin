@@ -39,6 +39,7 @@ class VoicePresenter(var view: IVoiceView?) : IVoicePresenter, IDownloadInteract
 
     fun resultOK(text: String) {
         Logger.log(text)
+        view?.showToast(text)
         val downloadInteractor = DownloadInteractor()
         downloadInteractor.makeRequestToYandexServer(text, this)
     }

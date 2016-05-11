@@ -52,6 +52,22 @@ fun List<Token>.containsWords(words: Array<String>): Boolean {
     return true
 }
 
+fun List<Token>.containsAtLeastOneWordFromArray(words: Array<String>): Boolean {
+    for(word in words) {
+        if(!filter({ it.text.equals(word) }).isEmpty())
+            return true
+    }
+    return false
+}
+
+fun List<Token>.containsArraysWords(arrays: Array<Array<String>>): Boolean {
+    for(array in arrays) {
+        if(!containsAtLeastOneWordFromArray(array))
+            return false
+    }
+    return true
+}
+
 fun AlarmManager.createNotification(context: Context, notification: Notification) {
     val notificationIntent = Intent(context, NotificationReceiver::class.java)
     notificationIntent.putExtra("TEXT", notification.text)

@@ -1,5 +1,8 @@
 package rus.voiceassistant.presenter.voice
 
+import rus.voiceassistant.Logger
+import rus.voiceassistant.containsArraysWords
+import rus.voiceassistant.containsAtLeastOneWordFromArray
 import rus.voiceassistant.containsWords
 import rus.voiceassistant.model.Action
 import rus.voiceassistant.model.Alarm
@@ -11,14 +14,19 @@ import rus.voiceassistant.model.yandex.YandexResponse
  */
 class ActionBuilder(val yandexResponse: YandexResponse) {
 
+    companion object {
+        val REMIND_WORDS: Array<String> = arrayOf("запомни", "наполни", "напомни", "напомнит", "напомнить")
+    }
+
     var builder: Action.Builder? = null
 
     fun getAction(): Action? {
-        if(!yandexResponse.tokens.filter({ it.text.equals("напомни") }).isEmpty()) {
+        if(yandexResponse.tokens.containsAtLeastOneWordFromArray(REMIND_WORDS)) {
+            Logger.log("true")
             builder = Notification.Builder()
             getDate()
             getText()
-        } else if(yandexResponse.tokens.containsWords(arrayOf("поставь", "будильник"))) {
+        } else if(yandexResponse.tokens.containsArraysWords(arrayOf(arrayOf("поставь"),arrayOf("будильник")))) {
             builder = Alarm.Builder()
             getDate()
         } else {
