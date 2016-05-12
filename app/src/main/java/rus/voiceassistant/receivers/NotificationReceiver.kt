@@ -10,6 +10,7 @@ import android.support.v7.app.NotificationCompat
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.MainActivity
+import rus.voiceassistant.MyApplication
 
 /**
  * Created by RUS on 29.04.2016.
@@ -28,5 +29,8 @@ class NotificationReceiver : BroadcastReceiver() {
         val  mNotificationId = intent?.extras?.getInt("ID") as Int
         val  mNotifyMgr = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager;
         mNotifyMgr.notify(mNotificationId, notificationBuilder.build());
+        val notification = MyApplication.notificationDao.queryForId(mNotificationId)
+        notification.isDone = true
+        MyApplication.notificationDao.update(notification)
     }
 }

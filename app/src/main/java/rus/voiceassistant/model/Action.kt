@@ -11,7 +11,7 @@ open class Action(@DatabaseField var year: Int = 0,
                   @DatabaseField var day: Int = 0,
                   @DatabaseField var hour: Int = 0,
                   @DatabaseField var minute: Int = 0,
-                  @DatabaseField var second: Int = 0) {
+                  @DatabaseField var second: Int = 0) : Comparable<Action> {
 
     @DatabaseField(generatedId = true)
     var id: Int = 0
@@ -114,6 +114,8 @@ open class Action(@DatabaseField var year: Int = 0,
 
     constructor(builder: Builder) : this(builder.dateTime.year, builder.dateTime.monthOfYear - 1, builder.dateTime.dayOfMonth, builder.dateTime.hourOfDay, builder.dateTime.minuteOfHour)
 
+    fun getDateTime(): DateTime = DateTime(year, month, day, hour, minute, second)
+
     fun getTimeString(): String {
         val dateTime = DateTime(year, month + 1, day, hour, minute)
         return "${dateTime.toLocalTime()?.toString("HH:mm")}"
@@ -122,6 +124,12 @@ open class Action(@DatabaseField var year: Int = 0,
     fun getDateString(): String {
         val dateTime = DateTime(year, month + 1, day, hour, minute)
         return "${dateTime.toLocalDate()?.toString("dd.MM.yyyy")}"
+    }
+
+    override fun compareTo(other: Action): Int {
+        if(isDone.equals(other.isDone))
+            return getDateTime().compareTo(other.getDateTime())
+        else return isDone.compareTo(other.isDone) * (-1)
     }
 
     override fun toString(): String{

@@ -20,17 +20,13 @@ import android.view.ViewGroup
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.notifications_fragment.*
-import rus.voiceassistant.DividerItemDecoration
-import rus.voiceassistant.Logger
-import rus.voiceassistant.R
-import rus.voiceassistant.MainActivity
+import rus.voiceassistant.*
 import rus.voiceassistant.model.Notification
 import rus.voiceassistant.presenter.alarm.AlarmPresenter
 import rus.voiceassistant.presenter.alarm.IAlarmPresenter
 import rus.voiceassistant.presenter.notification.INotificationPresenter
 import rus.voiceassistant.presenter.notification.NotificationPresenter
 import rus.voiceassistant.receivers.NotificationReceiver
-import rus.voiceassistant.toast
 import rus.voiceassistant.view.notification.CreateNotificationFragmentDialog
 import rus.voiceassistant.view.notification.NotificationCreationListener
 import rus.voiceassistant.view.adapters.NotificationsAdapter
@@ -56,34 +52,9 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         presenter.onResume()
     }
 
-    override fun createNotification(notification: Notification) {
-        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val notificationIntent = Intent(activity, NotificationReceiver::class.java)
-        notificationIntent.putExtra("TEXT", notification.text)
-        notificationIntent.putExtra("ID", notification.id)
-        Logger.log(notification.toString())
-        val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
-        val calendar = Calendar.getInstance()
-        with(calendar) {
-            setTimeInMillis(System.currentTimeMillis())
-            set(Calendar.YEAR, notification.year)
-            set(Calendar.MONTH, notification.month)
-            set(Calendar.DAY_OF_MONTH, notification.day)
-            set(Calendar.HOUR_OF_DAY, notification.hour)
-            set(Calendar.MINUTE, notification.minute)
-            set(Calendar.SECOND, 0)
-        }
-        alarmManager.set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
-    }
+    override fun createNotification(notification: Notification) = ActionManager.createNotification(activity, notification)
 
-    override fun cancelNotification(notification: Notification) {
-        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val notificationIntent = Intent(activity, NotificationReceiver::class.java)
-        notificationIntent.putExtra("TEXT", notification.text)
-        notificationIntent.putExtra("ID", notification.id)
-        val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
-        alarmManager.cancel(pendingIntent)
-    }
+    override fun cancelNotification(notification: Notification) = ActionManager.cancelNotification(activity, notification)
 
     override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 

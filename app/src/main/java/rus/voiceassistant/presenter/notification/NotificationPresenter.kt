@@ -16,6 +16,7 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     val notifications: ArrayList<Notification> = DatabaseManager.getNotificationsListFromDatabase()
 
     override fun onResume() {
+        notifications.sort()
         view?.setActions(notifications)
     }
 
@@ -35,6 +36,8 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
         notifications.add(notification)
         MyApplication.notificationDao.create(notification)
         view?.onActionAdded()
+        notifications.sort()
+        view?.onDataSetChanged()
         view?.createNotification(notification)
     }
 
