@@ -15,6 +15,7 @@ import com.elmargomez.typer.Typer
 import kotlinx.android.synthetic.main.alarm_item.view.*
 import kotlinx.android.synthetic.main.notification_item.view.*
 import kotlinx.android.synthetic.main.subheader_item.view.*
+import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.view.alarm.IAlarmView
@@ -33,6 +34,8 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
         val TYPE_ITEM = 1
     }
 
+    var headersCount = 0;
+
     interface OnItemClickListener {
         fun onItemClicked(position: Int)
 
@@ -50,20 +53,26 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder?, position: Int) {
 
         if(holder is SubHeaderViewHolder) {
-
+            holder.text.typeface = Typer.set(holder.text.context).getFont(Font.ROBOTO_MEDIUM)
+            holder.text.text = "Header"
         }
 
-        if(holder is ItemViewHolder?) {
-            val context = holder?.itemView?.context
+        if(holder is ItemViewHolder) {
+            var newPosition = position
+            if(items.indexOfFirst { it.isDone.equals(true) } != -1)
+                newPosition--;
+            if(items.indexOfFirst { it.isDone.equals(false) } != -1 && position >= items.indexOfFirst { it.isDone.equals(false) })
+                newPosition--;
+            val context = holder.itemView.context
 
-            holder?.textTime?.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
-            holder?.notificationText?.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
+            holder.textTime.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
+            holder.notificationText.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
 
-            holder?.textTime?.text ="${items[position].getDateString()} ${items[position].getTimeString()}"
-            holder?.notificationText?.text = "${items[position].text}(${items[position].isDone})"
+            holder.textTime.text ="${items[newPosition].getDateString()} ${items[newPosition].getTimeString()}"
+            holder.notificationText.text = "${items[newPosition].text}(${items[newPosition].isDone})"
 
-            holder?.itemView?.setOnClickListener { onItemClickListener.onItemClicked(holder.adapterPosition) }
-            holder?.itemView?.setOnLongClickListener { onItemClickListener.onLongItemClicked(holder.adapterPosition) }
+            holder.itemView?.setOnClickListener { onItemClickListener.onItemClicked(holder.adapterPosition) }
+            holder.itemView?.setOnLongClickListener { onItemClickListener.onLongItemClicked(holder.adapterPosition) }
         }
     }
 
@@ -77,10 +86,14 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
 
 
     override fun getItemViewType(position: Int): Int {
-        return TYPE_ITEM
+        Logger.log(items.indexOfFirst { it.isDone.equals(true) }.toString())
+        Logger.log(items.indexOfFirst { it.isDone.equals(false) }.toString())
+        Logger.log("---------------------------")
+        if(position == items.indexOfFirst { it.isDone.equals(false) } || position == items.indexOfFirst { it.isDone.equals(true) })
+            return TYPE_HEADER
+        else return TYPE_ITEM
     }
 
-
-    override fun getItemCount(): Int = items.size
+    override fun getItemCount(): Int = items.size + 2
 
 }
