@@ -51,9 +51,10 @@ import rus.voiceassistant.view.note.NotesFragment
 import rus.voiceassistant.view.notification.NotificationsFragment
 import java.util.*
 
-
-//TODO Extension functions
-//TODO Logger extension
+//TODO default time in createNotificationDialog
+//TODO stickyListHeader
+//TODO alarm
+//TODO custom spinner
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -158,22 +159,6 @@ class MainActivity : AppCompatActivity() {
                 })
                 .withCloseOnClick(true)
                 .build()
-        getSystemService(NOTIFICATION_SERVICE)
-    }
-
-    fun startRecognitionActivity() {
-        val intent = Intent(this, RecognizerActivity::class.java)
-        intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, EXTRA_LANGUAGE)
-        intent.putExtra(RecognizerActivity.EXTRA_MODEL, EXTRA_MODEL)
-        startActivityForResult(intent, 0)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //presenter.onRecognitionFinished(requestCode, resultCode, data)
-    }
-
-    fun onError() {
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

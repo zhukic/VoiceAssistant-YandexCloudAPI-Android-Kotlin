@@ -59,7 +59,11 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         if(mode == 0) {
             notification = Notification()
-            //editNotificationDate.setText(notification.getDateString())
+            val calendar = Calendar.getInstance()
+            notification.year = calendar.get(Calendar.YEAR)
+            notification.month = calendar.get(Calendar.MONTH)
+            notification.day = calendar.get(Calendar.DAY_OF_MONTH)
+            editNotificationDate.setText(notification.getDateString())
         } else {
             notification = arguments.getSerializable("NOTIFICATION") as Notification
             editNotificationText.setText(notification.text)
@@ -83,17 +87,18 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
     fun showDatePicker() {
         val calendar = Calendar.getInstance()
         val dpd: DatePickerDialog = DatePickerDialog.newInstance(this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+        dpd.setOnCancelListener { editNotificationDate.clearFocus() }
         dpd.show(activity.fragmentManager, "DatePicker")
     }
 
     fun showTimePicker() {
         val tpd: TimePickerDialog = TimePickerDialog.newInstance(this, 0, 0, true);
+        tpd.setOnCancelListener { editNotificationTime.clearFocus() }
         tpd.show(activity.fragmentManager, "TimePicker")
     }
 
     override fun onDateSet(view: DatePickerDialog?, year: Int, monthOfYear: Int, dayOfMonth: Int) {
         notificationDateText.visibility = View.VISIBLE
-        Logger.log("month = $monthOfYear")
         notification.day = dayOfMonth
         notification.month = monthOfYear
         notification.year = year

@@ -48,22 +48,7 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab.setOnClickListener { presenter.onAddActionClicked() }
 
-        recyclerView.layoutManager = LinearLayoutManager(getActivity())
-
-//        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
-//                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
-//
-//            override fun onMove(recyclerView: RecyclerView?, viewHolder: RecyclerView.ViewHolder?, target: RecyclerView.ViewHolder?): Boolean {
-//                return true
-//            }
-//
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
-//                presenter.removeAction(viewHolder!!.adapterPosition)
-//                recyclerView.adapter.notifyItemRemoved(viewHolder.adapterPosition)
-//            }
-//        }
-//        val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(simpleItemTouchCallback)
-//        itemTouchHelper.attachToRecyclerView(recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
     }
 
     override fun onResume() {
