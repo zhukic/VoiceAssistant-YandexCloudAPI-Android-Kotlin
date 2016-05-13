@@ -1,6 +1,7 @@
 package rus.voiceassistant.presenter.notification
 
 import android.support.v7.app.NotificationCompat
+import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.database.DatabaseManager
 import rus.voiceassistant.model.Alarm
@@ -16,6 +17,7 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     val notifications: ArrayList<Notification> = DatabaseManager.getNotificationsListFromDatabase()
 
     override fun onResume() {
+        notifications.sort()
         view?.setActions(notifications)
     }
 
@@ -24,17 +26,20 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     }
 
     override fun onActionClicked(position: Int) {
+        Logger.log("onActionClicked=$position")
         view?.showNotificationDialog(notifications[position])
     }
 
     override fun onLongActionClicked(position: Int) {
+        Logger.log("onLongActionClicked=$position")
         view?.showDeleteActionDialog(position)
     }
 
     override fun onNotificationCreated(notification: Notification) {
         notifications.add(notification)
+        notifications.sort()
         MyApplication.notificationDao.create(notification)
-        view?.onActionAdded()
+        view?.onDataSetChanged()
         view?.createNotification(notification)
     }
 
@@ -48,7 +53,7 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
         view?.cancelNotification(notifications[position])
         MyApplication.notificationDao.deleteById(notifications[position].id)
         notifications.removeAt(position)
-        view?.onActionRemoved(position)
+        view?.onDataSetChanged()
     }
 
     override fun onDestroy() {

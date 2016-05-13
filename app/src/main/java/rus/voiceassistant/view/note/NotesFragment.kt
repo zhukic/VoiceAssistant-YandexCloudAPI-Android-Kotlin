@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -32,7 +33,12 @@ class NotesFragment : Fragment(), INoteView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
 
         presenter = NotePresenter(this)
-        fab.setOnClickListener { presenter.onRecognitionStarted() }
+        fab.setOnClickListener { openGooglePage() }
+    }
+
+    fun openGooglePage() {
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse("http://www.google.ru/search?q=привет"))
+        startActivity(intent)
     }
 
     override fun startRecognitionActivity() {

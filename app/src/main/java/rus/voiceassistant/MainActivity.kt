@@ -51,7 +51,6 @@ import rus.voiceassistant.view.note.NotesFragment
 import rus.voiceassistant.view.notification.NotificationsFragment
 import java.util.*
 
-//TODO default time in createNotificationDialog
 //TODO stickyListHeader
 //TODO alarm
 //TODO custom spinner
@@ -62,8 +61,6 @@ class MainActivity : AppCompatActivity() {
         val TAG = javaClass.simpleName
 
         val API_KEY = "8b1a122c-9942-4f0d-a1a6-10a18353131f"
-        val EXTRA_LANGUAGE = "ru-RU"
-        val EXTRA_MODEL = "general"
     }
 
     lateinit var currentFragment: Fragment
