@@ -40,6 +40,14 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
     private var isHeaderCurrentExist: Boolean = false
     var headersCount = 0;
 
+
+    init {
+        if(items.indexOfFirst { it.isDone.equals(true) } != -1)
+            isHeaderCompletedExist = true
+        if(items.indexOfFirst { it.isDone.equals(false) } != -1)
+            isHeaderCurrentExist = true
+    }
+
     interface OnItemClickListener {
         fun onItemClicked(position: Int)
 
@@ -95,17 +103,16 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
         Logger.log(items.indexOfFirst { it.isDone.equals(true) }.toString())
         Logger.log("---------------------------")
         if(position == items.indexOfFirst { it.isDone.equals(true) }) {
-            isHeaderCompletedExist = true
             return TYPE_HEADER_COMPLETED
         }
         if(position == items.indexOfFirst { it.isDone.equals(false) } + isHeaderCompletedExist.toInt()) {
-            isHeaderCurrentExist = true
             return TYPE_HEADER_CURRENT
         }
         else return TYPE_ITEM
     }
 
     private fun getRealPosition(position: Int): Int {
+        //Logger.log("adapterPosition=$position")
         var realPosition = position
         if(items.indexOfFirst { it.isDone.equals(true) } != -1)
             realPosition--;
@@ -114,6 +121,10 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
         return realPosition
     }
 
-    override fun getItemCount(): Int = items.size + isHeaderCompletedExist.toInt() + isHeaderCurrentExist.toInt()
+    override fun getItemCount(): Int {
+        val itemCount = items.size + isHeaderCompletedExist.toInt() + isHeaderCurrentExist.toInt()
+        Logger.log("itemsSize=${items.size}, itemCount=$itemCount, completed=${isHeaderCompletedExist.toInt()}, current=${isHeaderCurrentExist.toInt()}")
+        return items.size + isHeaderCompletedExist.toInt() + isHeaderCurrentExist.toInt()
+    }
 
 }

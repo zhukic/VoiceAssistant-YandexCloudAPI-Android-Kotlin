@@ -56,9 +56,9 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
 
     override fun cancelNotification(notification: Notification) = ActionManager.cancelNotification(activity, notification)
 
-    override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
+    override fun onActionAdded() = recyclerView.adapter.notifyDataSetChanged()
 
-    override fun onActionRemoved(position: Int) = recyclerView.adapter.notifyItemRemoved(position)
+    override fun onActionRemoved(position: Int) = recyclerView.adapter.notifyDataSetChanged()
 
     override fun setActions(actions: ArrayList<Notification>) {
         recyclerView.adapter = NotificationsAdapter(this, actions);
