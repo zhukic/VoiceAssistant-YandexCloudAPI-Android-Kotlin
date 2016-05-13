@@ -13,6 +13,7 @@ import rus.voiceassistant.model.Notification
 import rus.voiceassistant.model.yandex.Token
 import rus.voiceassistant.receivers.NotificationReceiver
 import java.security.AccessControlContext
+import java.text.FieldPosition
 import java.util.*
 
 /**
@@ -44,25 +45,23 @@ fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
         return hour > currentHour
 }
 
-fun List<Token>.containsWords(words: Array<String>): Boolean {
+private fun List<Token>.containsAtLeastOneWordFromArrayOnPosition(words: Array<String>, position: Int): Boolean {
     for(word in words) {
-        if(filter({ it.text.equals(word) }).isEmpty())
-            return false
-    }
-    return true
-}
-
-fun List<Token>.containsAtLeastOneWordFromArray(words: Array<String>): Boolean {
-    for(word in words) {
-        if(!filter({ it.text.equals(word) }).isEmpty())
+        if(this[position].text.equals(word))
             return true
     }
     return false
 }
 
-fun List<Token>.containsArraysWords(arrays: Array<Array<String>>): Boolean {
-    for(array in arrays) {
-        if(!containsAtLeastOneWordFromArray(array))
+fun List<Token>.startsWithAtLeastOneWordFromArray(words: Array<String>): Boolean {
+    return containsAtLeastOneWordFromArrayOnPosition(words, 0)
+}
+
+fun List<Token>.startsWithArraysWords(arrays: Array<Array<String>>): Boolean {
+    if(size < arrays.size)
+        return false
+    for(i in 0..arrays.size - 1) {
+        if(!containsAtLeastOneWordFromArrayOnPosition(arrays[i], i))
             return false
     }
     return true
