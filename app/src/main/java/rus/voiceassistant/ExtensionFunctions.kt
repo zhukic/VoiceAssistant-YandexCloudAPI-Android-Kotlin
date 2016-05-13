@@ -44,6 +44,10 @@ fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
         return hour > currentHour
 }
 
+fun Boolean.toInt(): Int {
+    return if(this) 1 else 0
+}
+
 fun List<Token>.containsWords(words: Array<String>): Boolean {
     for(word in words) {
         if(filter({ it.text.equals(word) }).isEmpty())
