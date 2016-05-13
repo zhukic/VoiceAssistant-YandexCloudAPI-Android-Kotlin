@@ -19,6 +19,10 @@ import java.util.*
 /**
  * Created by RUS on 18.04.2016.
  */
+fun Boolean.toInt(): Int {
+    return if(this) 1 else 0
+}
+
 fun FragmentManager.addFragment(fragment: Fragment) {
     this.beginTransaction().add(R.id.fragment_container, fragment).commit()
 }
