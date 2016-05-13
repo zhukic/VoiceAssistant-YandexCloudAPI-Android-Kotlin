@@ -38,15 +38,6 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
 
     private var isHeaderCompletedExist: Boolean = false
     private var isHeaderCurrentExist: Boolean = false
-    var headersCount = 0;
-
-
-    init {
-        if(items.indexOfFirst { it.isDone.equals(true) } != -1)
-            isHeaderCompletedExist = true
-        if(items.indexOfFirst { it.isDone.equals(false) } != -1)
-            isHeaderCurrentExist = true
-    }
 
     interface OnItemClickListener {
         fun onItemClicked(position: Int)
@@ -67,20 +58,15 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
         if(holder is SubHeaderViewHolder) {
             holder.textView.typeface = Typer.set(holder.textView.context).getFont(Font.ROBOTO_MEDIUM)
             holder.textView.text = holder.text
-        }
-
-        if(holder is ItemViewHolder) {
-            var newPosition = getRealPosition(position)
+        } else if(holder is ItemViewHolder) {
+            var realPosition = getRealPosition(position)
             val context = holder.itemView.context
 
             holder.textTime.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
             holder.notificationText.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
 
-            holder.textTime.text ="default=$position"
-            holder.notificationText.text = "real=$newPosition"
-
-            holder.textTime.text ="${items[newPosition].getDateString()} ${items[newPosition].getTimeString()}"
-            holder.notificationText.text = "${items[newPosition].text}(${items[newPosition].isDone})"
+            holder.textTime.text ="${items[realPosition].getDateString()} ${items[realPosition].getTimeString()}"
+            holder.notificationText.text = "${items[realPosition].text}"
 
             holder.itemView?.setOnClickListener { onItemClickListener.onItemClicked(getRealPosition(holder.adapterPosition)) }
             holder.itemView?.setOnLongClickListener { onItemClickListener.onLongItemClicked(getRealPosition(holder.adapterPosition)) }
@@ -99,15 +85,13 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
 
 
     override fun getItemViewType(position: Int): Int {
-        Logger.log(items.indexOfFirst { it.isDone.equals(false) }.toString())
-        Logger.log(items.indexOfFirst { it.isDone.equals(true) }.toString())
-        Logger.log("---------------------------")
-        if(position == items.indexOfFirst { it.isDone.equals(true) }) {
+//        Logger.log(items.indexOfFirst { it.isDone.equals(false) }.toString())
+//        Logger.log(items.indexOfFirst { it.isDone.equals(true) }.toString())
+//        Logger.log("---------------------------")
+        if(position == items.indexOfFirst { it.isDone.equals(true) })
             return TYPE_HEADER_COMPLETED
-        }
-        if(position == items.indexOfFirst { it.isDone.equals(false) } + isHeaderCompletedExist.toInt()) {
+        if(position == items.indexOfFirst { it.isDone.equals(false) } + isHeaderCompletedExist.toInt())
             return TYPE_HEADER_CURRENT
-        }
         else return TYPE_ITEM
     }
 
@@ -121,9 +105,15 @@ class NotificationsAdapter(val onItemClickListener: OnItemClickListener, val ite
         return realPosition
     }
 
+    private fun checkHeaders() {
+        isHeaderCompletedExist = items.indexOfFirst { it.isDone.equals(true) } != -1
+        isHeaderCurrentExist = items.indexOfFirst { it.isDone.equals(false) } != -1
+    }
+
     override fun getItemCount(): Int {
+        checkHeaders()
         val itemCount = items.size + isHeaderCompletedExist.toInt() + isHeaderCurrentExist.toInt()
-        Logger.log("itemsSize=${items.size}, itemCount=$itemCount, completed=${isHeaderCompletedExist.toInt()}, current=${isHeaderCurrentExist.toInt()}")
+        //Logger.log("itemsSize=${items.size}, itemCount=$itemCount, completed=${isHeaderCompletedExist.toInt()}, current=${isHeaderCurrentExist.toInt()}")
         return items.size + isHeaderCompletedExist.toInt() + isHeaderCurrentExist.toInt()
     }
 
