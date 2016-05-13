@@ -52,13 +52,23 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         presenter.onResume()
     }
 
-    override fun createNotification(notification: Notification) = ActionManager.createNotification(activity, notification)
+    override fun createNotification(notification: Notification) {
+        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        alarmManager.createNotification(activity, notification)
+    }
 
-    override fun cancelNotification(notification: Notification) = ActionManager.cancelNotification(activity, notification)
+    override fun cancelNotification(notification: Notification) {
+        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val notificationIntent = Intent(activity, NotificationReceiver::class.java)
+        notificationIntent.putExtra("TEXT", notification.text)
+        notificationIntent.putExtra("ID", notification.id)
+        val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
+        alarmManager.cancel(pendingIntent)
+    }
 
-    override fun onActionAdded() = recyclerView.adapter.notifyDataSetChanged()
+    override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
-    override fun onActionRemoved(position: Int) = recyclerView.adapter.notifyDataSetChanged()
+    override fun onActionRemoved(position: Int) = recyclerView.adapter.notifyItemRemoved(position)
 
     override fun setActions(actions: ArrayList<Notification>) {
         recyclerView.adapter = NotificationsAdapter(this, actions);

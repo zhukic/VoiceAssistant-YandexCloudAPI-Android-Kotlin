@@ -1,13 +1,13 @@
 package rus.voiceassistant.presenter.voice
 
 import rus.voiceassistant.Logger
-import rus.voiceassistant.containsArraysWords
-import rus.voiceassistant.containsAtLeastOneWordFromArray
-import rus.voiceassistant.containsWords
+import rus.voiceassistant.startsWithAtLeastOneWordFromArray
 import rus.voiceassistant.model.Action
 import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.yandex.GoogleSearchAction
 import rus.voiceassistant.model.yandex.YandexResponse
+import rus.voiceassistant.startsWithArraysWords
 
 /**
  * Created by RUS on 05.05.2016.
@@ -15,24 +15,38 @@ import rus.voiceassistant.model.yandex.YandexResponse
 class ActionBuilder(val yandexResponse: YandexResponse) {
 
     companion object {
-        val REMIND_WORDS: Array<String> = arrayOf("запомни", "наполни", "напомни", "напомнит", "напомнить")
+        val REMIND_WORDS: Array<String> = arrayOf("запомни", "наполни", "напомни", "напомнит", "напомнить", "наполнитель")
+        val SET_WORDS: Array<String> = arrayOf("поставь", "поставить")
+        val ALARM_WORDS: Array<String> = arrayOf("будильник")
+        val FIND_WORDS: Array<String> = arrayOf("найди", "найти")
+        val IN_WORDS: Array<String> = arrayOf("в")
+        val INTERNET_WORDS: Array<String> = arrayOf("интернете", "интернет")
     }
 
     var builder: Action.Builder? = null
 
     fun getAction(): Action? {
-        if(yandexResponse.tokens.containsAtLeastOneWordFromArray(REMIND_WORDS)) {
+        var action: Action? = null
+        if(yandexResponse.tokens.startsWithAtLeastOneWordFromArray(REMIND_WORDS)) {
+            yandexResponse.tokens.removeAt(0)
             Logger.log("true")
             builder = Notification.Builder()
             getDate()
             getText()
-        } else if(yandexResponse.tokens.containsArraysWords(arrayOf(arrayOf("поставь"),arrayOf("будильник")))) {
+            action = builder?.build()
+        } else if(yandexResponse.tokens.startsWithArraysWords(arrayOf(SET_WORDS, ALARM_WORDS))) {
+            yandexResponse.tokens.removeAt(0)
+            yandexResponse.tokens.removeAt(0)
             builder = Alarm.Builder()
             getDate()
-        } else {
-
+            action = builder?.build()
+        } else if(yandexResponse.tokens.startsWithArraysWords(arrayOf(FIND_WORDS, IN_WORDS, INTERNET_WORDS))) {
+            yandexResponse.tokens.removeAt(0)
+            yandexResponse.tokens.removeAt(0)
+            yandexResponse.tokens.removeAt(0)
+            action = GoogleSearchAction(getText())
         }
-        val action = builder?.build()
+
         action?.originalRequest = getOriginalRequest()
         return action
     }
@@ -59,7 +73,7 @@ class ActionBuilder(val yandexResponse: YandexResponse) {
         }
     }
 
-    private fun getText() {
+    private fun getText(): String {
         var startDateTokenNum = 0;
         var endDateTokenNum = 0
         var text = ""
@@ -69,5 +83,6 @@ class ActionBuilder(val yandexResponse: YandexResponse) {
         }
         yandexResponse.tokens.filterIndexed { index, token -> !(index >= startDateTokenNum && index < endDateTokenNum) }.forEach { text += "${it.text} "}
         if(builder is Notification.Builder) (builder as Notification.Builder).text(text)
+        return text
     }
 }

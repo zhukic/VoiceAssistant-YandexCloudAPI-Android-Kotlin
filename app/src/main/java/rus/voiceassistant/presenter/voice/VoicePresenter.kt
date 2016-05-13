@@ -5,13 +5,16 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.speech.RecognizerIntent
 import rus.voiceassistant.presenter.voice.ActionBuilder
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.createNotification
+import rus.voiceassistant.model.Alarm
 import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.yandex.GoogleSearchAction
 import rus.voiceassistant.model.yandex.YandexResponse
 import rus.voiceassistant.presenter.voice.DownloadInteractor
 import rus.voiceassistant.presenter.voice.IDownloadInteractor
@@ -46,11 +49,23 @@ class VoicePresenter(var view: IVoiceView?) : IVoicePresenter, IDownloadInteract
 
     override fun onDownloadFinished(yandexResponse: YandexResponse) {
         val actionBuilder: ActionBuilder = ActionBuilder(yandexResponse)
-        val action = actionBuilder.getAction() as Notification
-        MyApplication.notificationDao.create(action)
-        createNotification(action)
-        Logger.log(action.toString())
+        val action = actionBuilder.getAction()
+        if(action is Notification) {
+            MyApplication.notificationDao.create(action)
+            createNotification(action)
+            Logger.log(action.toString())
+        } else if(action is Alarm) {
+            Logger.log(action.toString())
+            view?.showToast("Alarm created")
+        } else if(action is GoogleSearchAction) {
+            openBrowser(action.text)
+        }
         view?.finishActivity()
+    }
+
+    fun openBrowser(text: String) {
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.google.ru/search?q=$text"))
+        view?.getContext()?.startActivity(intent)
     }
 
     fun createNotification(notification: Notification) {
