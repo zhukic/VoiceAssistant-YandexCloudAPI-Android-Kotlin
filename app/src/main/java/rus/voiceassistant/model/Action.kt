@@ -114,7 +114,7 @@ open class Action(@DatabaseField var year: Int = 0,
 
     constructor(builder: Builder) : this(builder.dateTime.year, builder.dateTime.monthOfYear - 1, builder.dateTime.dayOfMonth, builder.dateTime.hourOfDay, builder.dateTime.minuteOfHour)
 
-    fun getDateTime(): DateTime = DateTime(year, month, day, hour, minute, second)
+    fun getDateTime(): DateTime = DateTime(year, month + 1, day, hour, minute, second)
 
     fun getTimeString(): String {
         val dateTime = DateTime(year, month + 1, day, hour, minute)
