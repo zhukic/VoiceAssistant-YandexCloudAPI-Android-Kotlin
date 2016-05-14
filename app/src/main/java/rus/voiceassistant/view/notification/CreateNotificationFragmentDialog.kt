@@ -117,8 +117,10 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
     fun finish() {
         notification.text = editNotificationText.text.toString()
-        val notificationsFragment = targetFragment as NotificationCreationListener
+        if(notification.getDateTime().isBeforeNow)
+            notification.isDone = true
 
+        val notificationsFragment = targetFragment as NotificationCreationListener
         if(mode == 0)
             notificationsFragment.onNotificationCreated(notification)
         else
