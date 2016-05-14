@@ -2,11 +2,11 @@ package rus.voiceassistant.presenter.note
 
 import android.content.Intent
 import org.json.JSONObject
-import rus.voiceassistant.presenter.voice.ActionBuilder
+import rus.voiceassistant.presenter.voice.ActionBuilderFromResponse
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.model.yandex.YandexResponse
 import rus.voiceassistant.presenter.voice.DownloadInteractor
 import rus.voiceassistant.presenter.voice.IDownloadInteractor
@@ -38,8 +38,8 @@ class NotePresenter(var view: INoteView?): INotePresenter, IDownloadInteractor.O
 
 
     override fun onDownloadFinished(yandexResponse: YandexResponse) {
-        val actionBuilder: ActionBuilder = ActionBuilder(yandexResponse)
-        val action = actionBuilder.getAction() as Notification
+        val actionBuilderFromResponse: ActionBuilderFromResponse = ActionBuilderFromResponse(yandexResponse)
+        val action = actionBuilderFromResponse.getAction() as Notification
         MyApplication.notificationDao.create(action)
         view?.createNotification(action)
         Logger.log(action.toString())

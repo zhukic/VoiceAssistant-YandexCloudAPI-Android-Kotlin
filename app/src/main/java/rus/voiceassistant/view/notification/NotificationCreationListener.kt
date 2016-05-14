@@ -1,6 +1,6 @@
 package rus.voiceassistant.view.notification
 
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 
 /**
  * Created by RUS on 30.04.2016.

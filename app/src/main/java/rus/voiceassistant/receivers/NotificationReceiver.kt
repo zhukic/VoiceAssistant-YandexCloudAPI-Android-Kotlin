@@ -26,10 +26,10 @@ class NotificationReceiver : BroadcastReceiver() {
                 .setLights(R.color.colorPrimary, 1000, 1000)
                 .setVibrate(longArrayOf(1000, 1000, 1000, 1000))
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
-        val  mNotificationId = intent?.extras?.getInt("ID") as Int
-        val  mNotifyMgr = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager;
-        mNotifyMgr.notify(mNotificationId, notificationBuilder.build());
-        val notification = MyApplication.notificationDao.queryForId(mNotificationId)
+        val notificationId = intent?.extras?.getInt("ID") as Int
+        val notifyMgr = context?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager;
+        notifyMgr.notify(notificationId, notificationBuilder.build());
+        val notification = MyApplication.notificationDao.queryForId(notificationId)
         notification.isDone = true
         MyApplication.notificationDao.update(notification)
     }

@@ -14,7 +14,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.create_notification.*
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.view.notification.NotificationCreationListener
 import java.util.*
 
@@ -28,21 +28,24 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
         val MODE_CREATE = 0
         val MODE_EDIT = 1
 
+        val KEY_MODE = "MODE"
+        val KEY_NOTIFICATION = "NOTIFICATION"
+
         fun newInstance(notification: Notification? = null, mode: Int = 0): CreateNotificationFragmentDialog {
             if(mode != MODE_CREATE && mode != MODE_EDIT)
                 throw IllegalArgumentException("Invalid mode")
 
             val fragment = CreateNotificationFragmentDialog()
             val args = Bundle()
-            args.putSerializable("NOTIFICATION", notification)
-            args.putInt("MODE", mode)
+            args.putSerializable(KEY_NOTIFICATION, notification)
+            args.putInt(KEY_MODE, mode)
             fragment.arguments = args
             return fragment
         }
     }
 
-    lateinit var notification: Notification
-    var mode: Int = 0
+    private lateinit var notification: Notification
+    private var mode: Int = 0
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.create_notification, container)
@@ -53,9 +56,7 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
 
         dialog.window.requestFeature(Window.FEATURE_NO_TITLE)
 
-        //dialog.setTitle(R.string.addNotfication)
-
-        mode = arguments.getInt("MODE")
+        mode = arguments.getInt(KEY_MODE)
 
         if(mode == 0) {
             notification = Notification()
@@ -119,6 +120,7 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
         notification.text = editNotificationText.text.toString()
         if(notification.getDateTime().isBeforeNow)
             notification.isDone = true
+        else notification.isDone = false
 
         val notificationsFragment = targetFragment as NotificationCreationListener
         if(mode == 0)

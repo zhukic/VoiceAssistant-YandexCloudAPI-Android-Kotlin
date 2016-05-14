@@ -21,7 +21,7 @@ import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.notifications_fragment.*
 import rus.voiceassistant.*
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.presenter.alarm.AlarmPresenter
 import rus.voiceassistant.presenter.alarm.IAlarmPresenter
 import rus.voiceassistant.presenter.notification.INotificationPresenter

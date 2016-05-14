@@ -7,13 +7,13 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.speech.RecognizerIntent
-import rus.voiceassistant.presenter.voice.ActionBuilder
+import rus.voiceassistant.presenter.voice.ActionBuilderFromResponse
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.createNotification
-import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Alarm
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.model.yandex.GoogleSearchAction
 import rus.voiceassistant.model.yandex.YandexResponse
 import rus.voiceassistant.presenter.voice.DownloadInteractor
@@ -29,13 +29,11 @@ class VoicePresenter(var view: IVoiceView?) : IVoicePresenter, IDownloadInteract
 
     override fun onResult(requestCode: Int, resultCode: Int, data: Intent) {
         when (resultCode) {
-            Activity.RESULT_OK -> {
-                val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
-                Logger.log(result[0])
-                Logger.log(data.getStringExtra(RecognizerActivity.EXTRA_RESULT))
-            }
             RecognizerActivity.RESULT_OK -> {
                 resultOK(data.getStringExtra(RecognizerActivity.EXTRA_RESULT))
+            }
+            RecognizerActivity.RESULT_ERROR -> {
+                view?.finishActivity()
             }
         }
     }
@@ -48,8 +46,8 @@ class VoicePresenter(var view: IVoiceView?) : IVoicePresenter, IDownloadInteract
     }
 
     override fun onDownloadFinished(yandexResponse: YandexResponse) {
-        val actionBuilder: ActionBuilder = ActionBuilder(yandexResponse)
-        val action = actionBuilder.getAction()
+        val actionBuilderFromResponse: ActionBuilderFromResponse = ActionBuilderFromResponse(yandexResponse)
+        val action = actionBuilderFromResponse.getAction()
         if(action is Notification) {
             MyApplication.notificationDao.create(action)
             createNotification(action)

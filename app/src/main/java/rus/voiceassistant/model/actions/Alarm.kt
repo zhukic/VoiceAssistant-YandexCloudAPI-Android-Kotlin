@@ -1,7 +1,8 @@
-package rus.voiceassistant.model
+package rus.voiceassistant.model.actions
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
+import rus.voiceassistant.model.builders.AlarmBuilder
 import java.io.Serializable
 
 /**
@@ -13,20 +14,11 @@ class Alarm : Action, Serializable {
     @DatabaseField
     var isOn: Boolean = false
 
-    class Builder : Action.Builder {
-
-        constructor() : super()
-
-        constructor(alarm: Alarm) : super(alarm)
-
-        override fun build(): Action = Alarm(this)
-    }
-
     constructor() : super() {
 
     }
 
-    constructor(builder: Alarm.Builder) : super(builder)
+    constructor(builder: AlarmBuilder) : super(builder)
 
     override fun toString(): String {
         return "${super.toString()} \nAlarm"

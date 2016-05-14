@@ -4,7 +4,7 @@ import android.util.Log
 import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.database.DatabaseManager
-import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.model.actions.Alarm
 import rus.voiceassistant.view.alarm.IAlarmView
 import java.util.*
 

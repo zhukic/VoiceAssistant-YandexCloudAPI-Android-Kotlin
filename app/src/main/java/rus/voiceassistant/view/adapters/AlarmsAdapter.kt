@@ -11,7 +11,7 @@ import com.elmargomez.typer.Typer
 import kotlinx.android.synthetic.main.alarm_item.view.*
 import rus.voiceassistant.R
 import rus.voiceassistant.isDateComesToday
-import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.model.actions.Alarm
 import rus.voiceassistant.view.alarm.IAlarmView
 import rus.voiceassistant.view.IView
 import java.util.*

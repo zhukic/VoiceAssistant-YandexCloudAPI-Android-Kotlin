@@ -43,7 +43,7 @@ import ru.yandex.speechkit.SpeechKit
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
-import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.model.actions.Alarm
 import rus.voiceassistant.view.alarm.AlarmsFragment
 import rus.voiceassistant.addFragment
 import rus.voiceassistant.replaceFragment
@@ -51,7 +51,6 @@ import rus.voiceassistant.view.note.NotesFragment
 import rus.voiceassistant.view.notification.NotificationsFragment
 import java.util.*
 
-//TODO stickyListHeader
 //TODO alarm
 //TODO custom spinner
 class MainActivity : AppCompatActivity() {

@@ -1,11 +1,8 @@
 package rus.voiceassistant.presenter.notification
 
-import android.support.v7.app.NotificationCompat
-import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.database.DatabaseManager
-import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.view.notification.INotificationView
 import java.util.*
 
@@ -26,12 +23,10 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     }
 
     override fun onActionClicked(position: Int) {
-        Logger.log("onActionClicked=$position")
         view?.showNotificationDialog(notifications[position])
     }
 
     override fun onLongActionClicked(position: Int) {
-        Logger.log("onLongActionClicked=$position")
         view?.showDeleteActionDialog(position)
     }
 
@@ -50,7 +45,8 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     }
 
     override fun removeAction(position: Int) {
-        view?.cancelNotification(notifications[position])
+        if(!notifications[position].isDone)
+            view?.cancelNotification(notifications[position])
         MyApplication.notificationDao.deleteById(notifications[position].id)
         notifications.removeAt(position)
         view?.onDataSetChanged()

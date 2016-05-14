@@ -1,9 +1,10 @@
-package rus.voiceassistant.model
+package rus.voiceassistant.model.actions
 
 import com.j256.ormlite.field.DatabaseField
 import com.j256.ormlite.table.DatabaseTable
 import org.joda.time.DateTime
 import rus.voiceassistant.Logger
+import rus.voiceassistant.model.builders.NotificationBuilder
 import java.io.Serializable
 
 /**
@@ -15,28 +16,11 @@ class Notification : Action, Serializable {
     @DatabaseField
     var text: String = ""
 
-    class Builder : Action.Builder {
-        var text: String = ""
-
-        constructor() : super()
-
-        constructor(notification: Notification) : super(notification) {
-            this.text = notification.text
-        }
-
-        fun text(text: String?): Builder {
-            this.text = text ?: ""
-            return this
-        }
-
-        override fun build(): Action = Notification(this)
-    }
-
     constructor() : super() {
 
     }
 
-    constructor(builder: Builder) : super(builder) {
+    constructor(builder: NotificationBuilder) : super(builder) {
         this.text = builder.text
     }
 

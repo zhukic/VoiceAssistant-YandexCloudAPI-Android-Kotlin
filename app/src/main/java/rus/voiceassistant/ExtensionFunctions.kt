@@ -9,7 +9,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.widget.Toast
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.model.yandex.Token
 import rus.voiceassistant.receivers.NotificationReceiver
 import java.security.AccessControlContext
@@ -84,7 +84,7 @@ fun AlarmManager.createNotification(context: Context, notification: Notification
         set(Calendar.DAY_OF_MONTH, notification.day)
         set(Calendar.HOUR_OF_DAY, notification.hour)
         set(Calendar.MINUTE, notification.minute)
-        set(Calendar.SECOND, 0)
+        set(Calendar.SECOND, notification.second)
     }
     set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
 }

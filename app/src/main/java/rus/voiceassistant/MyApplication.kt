@@ -5,8 +5,8 @@ import com.j256.ormlite.android.apptools.OpenHelperManager
 import com.j256.ormlite.dao.Dao
 import com.j256.ormlite.table.TableUtils
 import rus.voiceassistant.database.DatabaseHelper
-import rus.voiceassistant.model.Alarm
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Alarm
+import rus.voiceassistant.model.actions.Notification
 
 /**
  * Created by RUS on 15.04.2016.

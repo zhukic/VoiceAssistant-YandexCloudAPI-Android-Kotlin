@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.notes_fragment.*
 import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.R
 import rus.voiceassistant.MainActivity
-import rus.voiceassistant.model.Notification
+import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.presenter.note.INotePresenter
 import rus.voiceassistant.presenter.note.NotePresenter
 import rus.voiceassistant.receivers.NotificationReceiver

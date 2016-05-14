@@ -20,7 +20,7 @@ import com.wdullaer.materialdatetimepicker.time.TimePickerDialog
 import kotlinx.android.synthetic.main.alarm_fragment.*
 import rus.voiceassistant.R
 import rus.voiceassistant.view.adapters.NotificationsAdapter
-import rus.voiceassistant.model.Alarm
+import rus.voiceassistant.model.actions.Alarm
 import rus.voiceassistant.presenter.alarm.AlarmPresenter
 import rus.voiceassistant.presenter.alarm.IAlarmPresenter
 import rus.voiceassistant.toast
