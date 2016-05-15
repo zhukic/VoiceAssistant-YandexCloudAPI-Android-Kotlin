@@ -2,6 +2,7 @@ package rus.voiceassistant
 
 import android.app.Activity
 import android.app.AlarmManager
+import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -9,7 +10,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.util.Log
 import android.widget.Toast
-import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.model.yandex.Token
 import rus.voiceassistant.receivers.NotificationReceiver
 import java.security.AccessControlContext
@@ -71,20 +71,8 @@ fun List<Token>.startsWithArraysWords(arrays: Array<Array<String>>): Boolean {
     return true
 }
 
-fun AlarmManager.createNotification(context: Context, notification: Notification) {
-    val notificationIntent = Intent(context, NotificationReceiver::class.java)
-    notificationIntent.putExtra("TEXT", notification.text)
-    notificationIntent.putExtra("ID", notification.id)
-    val pendingIntent = PendingIntent.getBroadcast(context, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
-    val calendar = Calendar.getInstance()
-    with(calendar) {
-        setTimeInMillis(System.currentTimeMillis())
-        set(Calendar.YEAR, notification.year)
-        set(Calendar.MONTH, notification.month)
-        set(Calendar.DAY_OF_MONTH, notification.day)
-        set(Calendar.HOUR_OF_DAY, notification.hour)
-        set(Calendar.MINUTE, notification.minute)
-        set(Calendar.SECOND, notification.second)
-    }
-    set(AlarmManager.RTC, calendar.timeInMillis, pendingIntent)
+inline fun notification(context: Context, func: Notification.Builder.() -> Unit ): Notification {
+    val builder = Notification.Builder(context)
+    builder.func()
+    return builder.build()
 }

@@ -14,9 +14,7 @@ class Alarm : Action, Serializable {
     @DatabaseField
     var isOn: Boolean = false
 
-    constructor() : super() {
-
-    }
+    constructor() : super()
 
     constructor(builder: AlarmBuilder) : super(builder)
 

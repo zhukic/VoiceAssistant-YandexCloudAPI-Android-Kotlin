@@ -52,19 +52,9 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         presenter.onResume()
     }
 
-    override fun createNotification(notification: Notification) {
-        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.createNotification(activity, notification)
-    }
+    override fun createNotification(notification: Notification) = ActionCreator.createNotification(activity, notification)
 
-    override fun cancelNotification(notification: Notification) {
-        val alarmManager = activity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val notificationIntent = Intent(activity, NotificationReceiver::class.java)
-        notificationIntent.putExtra("TEXT", notification.text)
-        notificationIntent.putExtra("ID", notification.id)
-        val pendingIntent = PendingIntent.getBroadcast(activity, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
-        alarmManager.cancel(pendingIntent)
-    }
+    override fun cancelNotification(notification: Notification) = ActionCreator.cancelNotification(activity, notification)
 
     override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
@@ -74,9 +64,7 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
         recyclerView.adapter = NotificationsAdapter(this, actions);
     }
 
-    override fun onItemClicked(position: Int) {
-        presenter.onActionClicked(position)
-    }
+    override fun onItemClicked(position: Int) = presenter.onActionClicked(position)
 
     override fun onLongItemClicked(position: Int): Boolean {
         presenter.onLongActionClicked(position)
@@ -103,24 +91,17 @@ class NotificationsFragment : Fragment(), INotificationView, NotificationCreatio
                 .show()
     }
 
-    override fun onNotificationCreated(notification: Notification) {
-        presenter.onNotificationCreated(notification)
-    }
+    override fun onNotificationCreated(notification: Notification) = presenter.onNotificationCreated(notification)
 
-    override fun onNotificationEdited(notification: Notification) {
-        presenter.onNotificationEdited(notification)
-    }
+    override fun onNotificationEdited(notification: Notification) = presenter.onNotificationEdited(notification)
 
-    override fun onDataSetChanged() {
-        recyclerView.adapter.notifyDataSetChanged()
-    }
+    override fun onDataSetChanged() = recyclerView.adapter.notifyDataSetChanged()
 
-    override fun showSnackBar(text: String) {
-        toast(text)
-    }
+    override fun showSnackBar(text: String) = toast(text)
 
     override fun onDestroy() {
         super.onDestroy()
         presenter.onDestroy()
     }
+
 }

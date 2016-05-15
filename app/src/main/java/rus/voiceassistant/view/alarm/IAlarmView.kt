@@ -17,8 +17,6 @@ interface IAlarmView : IView<Alarm>, TimePickerDialog.OnTimeSetListener {
 
     fun onCheckedChange(position: Int, isChecked: Boolean)
 
-    fun getContext(): Context?
-
     fun onAlarmOnOff(alarm: Alarm)
 
 }

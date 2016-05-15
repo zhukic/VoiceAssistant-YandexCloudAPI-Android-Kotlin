@@ -52,7 +52,7 @@ class VoiceActivity : Activity(), IVoiceView {
 
     override fun getContext(): Context = this
 
-    fun yandex() {
+    private fun yandex() {
         val intent = Intent(this, RecognizerActivity::class.java)
         intent.putExtra(RecognizerActivity.EXTRA_LANGUAGE, EXTRA_LANGUAGE)
         intent.putExtra(RecognizerActivity.EXTRA_MODEL, EXTRA_MODEL)

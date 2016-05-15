@@ -22,8 +22,6 @@ open class Action(@DatabaseField var year: Int = 0,
 
     var originalRequest: String = ""
 
-
-
     constructor(builder: ActionBuilder) : this(
             builder.dateTime.year,
             builder.dateTime.monthOfYear - 1,

@@ -4,6 +4,9 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import android.provider.AlarmClock
+import rus.voiceassistant.model.actions.Alarm
 import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.receivers.NotificationReceiver
 import java.util.*
@@ -11,7 +14,7 @@ import java.util.*
 /**
  * Created by RUS on 12.05.2016.
  */
-class ActionManager {
+class ActionCreator {
 
     companion object {
 
@@ -42,6 +45,19 @@ class ActionManager {
             notificationIntent.putExtra("ID", notification.id)
             val pendingIntent = PendingIntent.getBroadcast(context, notification.id, notificationIntent, PendingIntent.FLAG_ONE_SHOT)
             alarmManager.cancel(pendingIntent)
+        }
+
+        fun createAlarm(context: Context, alarm: Alarm) {
+            val intent = Intent(AlarmClock.ACTION_SET_ALARM)
+            intent.putExtra(AlarmClock.EXTRA_HOUR, alarm.hour)
+            intent.putExtra(AlarmClock.EXTRA_MINUTES, alarm.minute)
+            intent.putExtra(AlarmClock.EXTRA_IS_PM, true)
+            context.startActivity(intent)
+        }
+
+        fun openBrowser(context: Context, text: String) {
+            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.google.ru/search?q=$text"))
+            context.startActivity(intent)
         }
     }
 

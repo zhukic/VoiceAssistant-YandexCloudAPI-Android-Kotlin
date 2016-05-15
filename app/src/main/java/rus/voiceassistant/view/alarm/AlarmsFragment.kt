@@ -39,7 +39,7 @@ class AlarmsFragment : Fragment(), IAlarmView {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab.setOnClickListener { presenter.onAddActionClicked() }
 
-        recyclerView.layoutManager = LinearLayoutManager(getActivity())
+        recyclerView.layoutManager = LinearLayoutManager(activity)
 
 //        val simpleItemTouchCallback = object : ItemTouchHelper.SimpleCallback(0,
 //                ItemTouchHelper.LEFT or  ItemTouchHelper.RIGHT) {
@@ -91,10 +91,10 @@ class AlarmsFragment : Fragment(), IAlarmView {
     }
 
     override fun onDataSetChanged() {
-        recyclerView.getAdapter().notifyDataSetChanged()
+        recyclerView.adapter.notifyDataSetChanged()
     }
 
-    override fun getContext(): Context? = activity
+    override fun getContext(): Context = activity
 
     override fun showSnackBar(text: String) {
         toast(text)

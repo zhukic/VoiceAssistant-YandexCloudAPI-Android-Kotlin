@@ -9,6 +9,8 @@ import java.util.*
  */
 interface IView<T> {
 
+    fun getContext(): Context
+
     fun showSnackBar(text: String)
 
     fun onActionAdded()

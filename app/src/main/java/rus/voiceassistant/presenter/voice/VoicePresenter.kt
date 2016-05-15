@@ -9,9 +9,9 @@ import android.net.Uri
 import android.speech.RecognizerIntent
 import rus.voiceassistant.presenter.voice.ActionBuilderFromResponse
 import ru.yandex.speechkit.gui.RecognizerActivity
+import rus.voiceassistant.ActionCreator
 import rus.voiceassistant.Logger
 import rus.voiceassistant.MyApplication
-import rus.voiceassistant.createNotification
 import rus.voiceassistant.model.actions.Alarm
 import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.model.yandex.GoogleSearchAction
@@ -29,12 +29,8 @@ class VoicePresenter(var view: IVoiceView?) : IVoicePresenter, IDownloadInteract
 
     override fun onResult(requestCode: Int, resultCode: Int, data: Intent) {
         when (resultCode) {
-            RecognizerActivity.RESULT_OK -> {
-                resultOK(data.getStringExtra(RecognizerActivity.EXTRA_RESULT))
-            }
-            RecognizerActivity.RESULT_ERROR -> {
-                view?.finishActivity()
-            }
+            RecognizerActivity.RESULT_OK -> resultOK(data.getStringExtra(RecognizerActivity.EXTRA_RESULT))
+            RecognizerActivity.RESULT_ERROR -> view?.finishActivity()
         }
     }
 
@@ -50,25 +46,15 @@ class VoicePresenter(var view: IVoiceView?) : IVoicePresenter, IDownloadInteract
         val action = actionBuilderFromResponse.getAction()
         if(action is Notification) {
             MyApplication.notificationDao.create(action)
-            createNotification(action)
+            ActionCreator.createNotification(view!!.getContext(), action)
             Logger.log(action.toString())
         } else if(action is Alarm) {
+            ActionCreator.createAlarm(view!!.getContext(), action)
             Logger.log(action.toString())
-            view?.showToast("Alarm created")
         } else if(action is GoogleSearchAction) {
-            openBrowser(action.text)
+            ActionCreator.openBrowser(view!!.getContext(), action.text)
         }
         view?.finishActivity()
-    }
-
-    fun openBrowser(text: String) {
-        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse("https://www.google.ru/search?q=$text"))
-        view?.getContext()?.startActivity(intent)
-    }
-
-    fun createNotification(notification: Notification) {
-        val alarmManager = view!!.getContext().getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.createNotification(view!!.getContext(), notification)
     }
 
     override fun onDownloadError(t: Throwable) {
