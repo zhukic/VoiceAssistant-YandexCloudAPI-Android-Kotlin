@@ -24,6 +24,10 @@ class ActionBuilderFromResponse(val yandexResponse: YandexResponse) {
         val FIND_WORDS: Array<String> = arrayOf("найди", "найти")
         val IN_WORDS: Array<String> = arrayOf("в")
         val INTERNET_WORDS: Array<String> = arrayOf("интернете", "интернет")
+
+        val REMIND_WORDS_COUNT = 1
+        val ALARM_WORDS_COUNT = 2
+        val SEARCH_WORDS_COUNT = 3
     }
 
     var builder: ActionBuilder? = null
@@ -31,23 +35,17 @@ class ActionBuilderFromResponse(val yandexResponse: YandexResponse) {
     fun getAction(): Action? {
         var action: Action? = null
         if(yandexResponse.tokens.startsWithAtLeastOneWordFromArray(REMIND_WORDS)) {
-            yandexResponse.tokens.removeAt(0)
             Logger.log("true")
             builder = NotificationBuilder()
             getDate()
-            getText()
+            (builder as NotificationBuilder).text = getText(REMIND_WORDS_COUNT)
             action = builder?.build()
         } else if(yandexResponse.tokens.startsWithArraysWords(arrayOf(SET_WORDS, ALARM_WORDS))) {
-            yandexResponse.tokens.removeAt(0)
-            yandexResponse.tokens.removeAt(0)
             builder = AlarmBuilder()
             getDate()
             action = builder?.build()
         } else if(yandexResponse.tokens.startsWithArraysWords(arrayOf(FIND_WORDS, IN_WORDS, INTERNET_WORDS))) {
-            yandexResponse.tokens.removeAt(0)
-            yandexResponse.tokens.removeAt(0)
-            yandexResponse.tokens.removeAt(0)
-            action = GoogleSearchAction(getText())
+            action = GoogleSearchAction(getText(SEARCH_WORDS_COUNT))
         }
 
         action?.originalRequest = getOriginalRequest()
@@ -77,7 +75,7 @@ class ActionBuilderFromResponse(val yandexResponse: YandexResponse) {
         }
     }
 
-    private fun getText(): String {
+    private fun getText(wordsCount: Int): String {
         var startDateTokenNum = 0;
         var endDateTokenNum = 0
         var text = ""
@@ -85,8 +83,7 @@ class ActionBuilderFromResponse(val yandexResponse: YandexResponse) {
             startDateTokenNum = yandexResponse.date.first().tokens.begin
             endDateTokenNum = yandexResponse.date.first().tokens.end
         }
-        yandexResponse.tokens.filterIndexed { index, token -> !(index >= startDateTokenNum && index < endDateTokenNum) }.forEach { text += "${it.text} "}
-        if(builder is NotificationBuilder) (builder as NotificationBuilder).text(text)
+        yandexResponse.tokens.filterIndexed { index, token -> index >= endDateTokenNum }.forEach { text += "${it.text} "}
         return text
     }
 }
