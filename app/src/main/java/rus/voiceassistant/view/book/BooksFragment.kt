@@ -1,45 +1,46 @@
-package rus.voiceassistant.view.notification;
+package rus.voiceassistant.view.book
 
 import android.app.AlarmManager
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.support.v4.app.Fragment
-import android.support.v7.app.NotificationCompat
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
-import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.afollestad.materialdialogs.DialogAction
 import com.afollestad.materialdialogs.MaterialDialog
-import kotlinx.android.synthetic.main.notifications_fragment.*
-import rus.voiceassistant.*
+import kotlinx.android.synthetic.main.books_fragment.*
+import ru.yandex.speechkit.gui.RecognizerActivity
+import rus.voiceassistant.ActionCreator
+import rus.voiceassistant.R
+import rus.voiceassistant.MainActivity
+import rus.voiceassistant.model.actions.Book
 import rus.voiceassistant.model.actions.Notification
-import rus.voiceassistant.presenter.alarm.AlarmPresenter
-import rus.voiceassistant.presenter.alarm.IAlarmPresenter
+import rus.voiceassistant.presenter.book.BookPresenter
+import rus.voiceassistant.presenter.book.IBookPresenter
 import rus.voiceassistant.presenter.notification.INotificationPresenter
 import rus.voiceassistant.presenter.notification.NotificationPresenter
 import rus.voiceassistant.receivers.NotificationReceiver
-import rus.voiceassistant.view.notification.CreateNotificationFragmentDialog
-import rus.voiceassistant.view.notification.ItemCreationListener
+import rus.voiceassistant.toast
+import rus.voiceassistant.view.adapters.BooksAdapter
 import rus.voiceassistant.view.adapters.NotificationsAdapter
+import rus.voiceassistant.view.notification.CreateNotificationFragmentDialog
+import rus.voiceassistant.view.notification.INotificationView
+import rus.voiceassistant.view.notification.ItemCreationListener
 import java.util.*
 
 /**
- * Created by RUS on 28.04.2016.
+ * Created by RUS on 03.05.2016.
  */
-class NotificationsFragment : Fragment(), INotificationView, ItemCreationListener<Notification>, NotificationsAdapter.OnItemClickListener {
+class BooksFragment : Fragment(), IBookView, ItemCreationListener<Book>, BooksAdapter.OnItemClickListener {
 
-    val presenter: INotificationPresenter = NotificationPresenter(this)
+    val presenter: IBookPresenter = BookPresenter(this)
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.notifications_fragment, container, false)
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.books_fragment, container, false)
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         fab.setOnClickListener { presenter.onAddActionClicked() }
@@ -52,16 +53,12 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
         presenter.onResume()
     }
 
-    override fun createNotification(notification: Notification) = ActionCreator.createNotification(activity, notification)
-
-    override fun cancelNotification(notification: Notification) = ActionCreator.cancelNotification(activity, notification)
-
     override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
     override fun onActionRemoved(position: Int) = recyclerView.adapter.notifyItemRemoved(position)
 
-    override fun setActions(actions: ArrayList<Notification>) {
-        recyclerView.adapter = NotificationsAdapter(this, actions);
+    override fun setActions(actions: ArrayList<Book>) {
+        recyclerView.adapter = BooksAdapter(this, actions);
     }
 
     override fun onItemClicked(position: Int) = presenter.onActionClicked(position)
@@ -71,15 +68,15 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
         return true
     }
 
-    override fun showNotificationDialog(notification: Notification?) {
+    override fun showBookDialog(book: Book?) {
         val fragmentManager = (activity as MainActivity).supportFragmentManager
-        var createNotificationDialog: CreateNotificationFragmentDialog
-        if(notification == null)
-            createNotificationDialog = CreateNotificationFragmentDialog.newInstance(mode = CreateNotificationFragmentDialog.MODE_CREATE)
-        else createNotificationDialog = CreateNotificationFragmentDialog.newInstance(notification, CreateNotificationFragmentDialog.MODE_EDIT)
+        var createBookDialog: CreateBookFragmentDialog
+        if(book == null)
+            createBookDialog = CreateBookFragmentDialog.newInstance(mode = CreateNotificationFragmentDialog.MODE_CREATE)
+        else createBookDialog = CreateBookFragmentDialog.newInstance(book, CreateNotificationFragmentDialog.MODE_EDIT)
 
-        createNotificationDialog.setTargetFragment(this, 300)
-        createNotificationDialog.show(fragmentManager, "fragment_create_notification");
+        createBookDialog.setTargetFragment(this, 300)
+        createBookDialog.show(fragmentManager, "fragment_create_book");
     }
 
     override fun showDeleteActionDialog(position: Int) {
@@ -91,9 +88,9 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
                 .show()
     }
 
-    override fun onItemCreated(notification: Notification) = presenter.onNotificationCreated(notification)
+    override fun onItemCreated(item: Book) = presenter.onBookCreated(item)
 
-    override fun onItemEdited(notification: Notification) = presenter.onNotificationEdited(notification)
+    override fun onItemEdited(item: Book) = presenter.onBookEdited(item)
 
     override fun onDataSetChanged() = recyclerView.adapter.notifyDataSetChanged()
 

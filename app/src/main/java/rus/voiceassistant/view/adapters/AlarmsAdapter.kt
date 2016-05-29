@@ -37,7 +37,7 @@ class AlarmsAdapter(val view: IAlarmView, val items: List<Alarm>): RecyclerView.
         val calendar = Calendar.getInstance()
 
         holder?.textDay?.text = if(calendar.isDateComesToday(items[position].hour, items[position].minute)) "Сегодня" else "Завтра"
-        //holder?.textTime?.text = items.get(position).getTime()
+        holder?.textTime?.text = items.get(position).getTimeString()
         holder?.switch?.setOnCheckedChangeListener { button, isChecked -> view.onCheckedChange(position, isChecked) }
     }
 

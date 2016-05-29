@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.create_notification.*
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.actions.Notification
-import rus.voiceassistant.view.notification.NotificationCreationListener
+import rus.voiceassistant.view.notification.ItemCreationListener
 import java.util.*
 
 /**
@@ -122,11 +122,11 @@ class CreateNotificationFragmentDialog() : DialogFragment(), DatePickerDialog.On
             notification.isDone = true
         else notification.isDone = false
 
-        val notificationsFragment = targetFragment as NotificationCreationListener
+        val notificationsFragment = targetFragment as ItemCreationListener<Notification>
         if(mode == 0)
-            notificationsFragment.onNotificationCreated(notification)
+            notificationsFragment.onItemCreated(notification)
         else
-            notificationsFragment.onNotificationEdited(notification)
+            notificationsFragment.onItemEdited(notification)
 
         dismiss()
     }

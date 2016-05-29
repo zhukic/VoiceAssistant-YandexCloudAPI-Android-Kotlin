@@ -12,6 +12,7 @@ import com.j256.ormlite.table.TableUtils;
 
 import rus.voiceassistant.ActionCreator;
 import rus.voiceassistant.model.actions.Alarm;
+import rus.voiceassistant.model.actions.Book;
 import rus.voiceassistant.model.actions.Notification;
 
 /**
@@ -22,7 +23,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     private static final String TAG = DatabaseHelper.class.getSimpleName();
 
     // name of the database file for your application -- change to something appropriate for your app
-    private static final String DATABASE_NAME ="NEWS_DATABASE7.db";
+    private static final String DATABASE_NAME ="NEWS_DATABASE8.db";
 
     // any time you make changes to your database objects, you may have to increase the database version
     private static final int DATABASE_VERSION = 1;
@@ -30,6 +31,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
     // the DAO object we use to access the SimpleData table
     private Dao<Alarm, Integer> alarmDao = null;
     private Dao<Notification, Integer> notificationDao = null;
+    private Dao<Book, Integer> bookDao = null;
 
     /**
      * This is called when the database is first created. Usually you should call createTable statements here to create
@@ -49,6 +51,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         {
             TableUtils.createTable(connectionSource, Alarm.class);
             TableUtils.createTable(connectionSource, Notification.class);
+            TableUtils.createTable(connectionSource, Book.class);
         }
         catch (SQLException e){
             Log.e(TAG, "error creating DB " + DATABASE_NAME);
@@ -69,6 +72,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             Log.i(DatabaseHelper.class.getName(), "onUpgrade");
             TableUtils.dropTable(connectionSource, Alarm.class, true);
             TableUtils.dropTable(connectionSource, Notification.class, true);
+            TableUtils.dropTable(connectionSource, Book.class, true);
             // after we drop the old databases, we create the new ones
             onCreate(db, connectionSource);
         } catch (SQLException e) {
@@ -106,6 +110,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         return notificationDao;
     }
 
+    public Dao<Book, Integer> getBookDAO() throws SQLException {
+        if(bookDao == null){
+            try {
+                bookDao = getDao(Book.class);
+            } catch (java.sql.SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return bookDao;
+    }
+
     /**
      * Close the database connections and clear any cached DAOs.
      */
@@ -115,5 +130,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         super.close();
         alarmDao = null;
         notificationDao = null;
+        bookDao = null;
     }
 }

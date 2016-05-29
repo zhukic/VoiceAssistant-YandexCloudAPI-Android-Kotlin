@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:text="@string/addNotification"
+        android:text="@string/addBook"
         android:textColor="@android:color/black"
         android:textSize="20sp"/>
 
@@ -24,79 +24,49 @@
         android:paddingTop="8dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:text="@string/notificationTitle"
+        android:text="@string/bookAuthor"
         android:textSize="12sp"
         android:textColor="@color/hintTextColor"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editNotificationText"
+        android:id="@+id/editBookAuthor"
+        android:inputType="text"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text="@string/bookName"
+        android:textSize="12sp"
+        android:textColor="@color/hintTextColor"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editBookName"
         android:inputType="text"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:paddingBottom="@dimen/activity_vertical_margin">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <CheckBox
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:id="@+id/checkboxIsBookRead"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:id="@+id/notificationDateText"
-                android:text="@string/notificationDate"
-                android:textSize="12sp"
-                android:textColor="@color/hintTextColor"
-                android:visibility="invisible"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/editNotificationDate"
-                android:hint="@string/notificationDate"
-                android:editable="false" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/editLinear"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:id="@+id/notificationTimeText"
-                android:text="@string/notificationTime"
-                android:textSize="12sp"
-                android:textColor="@color/hintTextColor"
-                android:visibility="invisible"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/editNotificationTime"
-                android:hint="@string/notificationTime"
-                android:editable="false" />
-
-        </LinearLayout>
-
+            android:text="Книга прочитана"/>
 
     </LinearLayout>
-    
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
