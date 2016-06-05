@@ -22,22 +22,21 @@ import com.afollestad.materialdialogs.MaterialDialog
 import kotlinx.android.synthetic.main.notifications_fragment.*
 import rus.voiceassistant.*
 import rus.voiceassistant.model.actions.Notification
-import rus.voiceassistant.presenter.alarm.AlarmPresenter
-import rus.voiceassistant.presenter.alarm.IAlarmPresenter
-import rus.voiceassistant.presenter.notification.INotificationPresenter
+import rus.voiceassistant.presenter.ItemPresenter
 import rus.voiceassistant.presenter.notification.NotificationPresenter
 import rus.voiceassistant.receivers.NotificationReceiver
 import rus.voiceassistant.view.notification.CreateNotificationFragmentDialog
-import rus.voiceassistant.view.notification.ItemCreationListener
+import rus.voiceassistant.view.ItemCreationListener
+import rus.voiceassistant.view.ItemView
 import rus.voiceassistant.view.adapters.NotificationsAdapter
 import java.util.*
 
 /**
  * Created by RUS on 28.04.2016.
  */
-class NotificationsFragment : Fragment(), INotificationView, ItemCreationListener<Notification>, NotificationsAdapter.OnItemClickListener {
+class NotificationsFragment : Fragment(), ItemView<Notification>, ItemCreationListener<Notification>, NotificationsAdapter.OnItemClickListener {
 
-    val presenter: INotificationPresenter = NotificationPresenter(this)
+    val presenter: ItemPresenter<Notification> = NotificationPresenter(this)
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? = inflater?.inflate(R.layout.notifications_fragment, container, false)
 
@@ -51,10 +50,6 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
         super.onResume()
         presenter.onResume()
     }
-
-    override fun createNotification(notification: Notification) = ActionCreator.createNotification(activity, notification)
-
-    override fun cancelNotification(notification: Notification) = ActionCreator.cancelNotification(activity, notification)
 
     override fun onActionAdded() = recyclerView.adapter.notifyItemInserted(recyclerView.adapter.itemCount - 1)
 
@@ -71,7 +66,7 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
         return true
     }
 
-    override fun showNotificationDialog(notification: Notification?) {
+    override fun showItemFragmentDialog(notification: Notification?) {
         val fragmentManager = (activity as MainActivity).supportFragmentManager
         var createNotificationDialog: CreateNotificationFragmentDialog
         if(notification == null)
@@ -82,7 +77,7 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
         createNotificationDialog.show(fragmentManager, "fragment_create_notification");
     }
 
-    override fun showDeleteActionDialog(position: Int) {
+    override fun showDeleteItemFragmentDialog(position: Int) {
         MaterialDialog.Builder(activity)
                 .content(R.string.deleteNotificationTitle)
                 .positiveText(android.R.string.ok)
@@ -91,13 +86,15 @@ class NotificationsFragment : Fragment(), INotificationView, ItemCreationListene
                 .show()
     }
 
-    override fun onItemCreated(notification: Notification) = presenter.onNotificationCreated(notification)
+    override fun onItemCreated(notification: Notification) = presenter.onItemCreated(notification)
 
-    override fun onItemEdited(notification: Notification) = presenter.onNotificationEdited(notification)
+    override fun onItemEdited(notification: Notification) = presenter.onItemEdited(notification)
 
     override fun onDataSetChanged() = recyclerView.adapter.notifyDataSetChanged()
 
     override fun showSnackBar(text: String) = toast(text)
+
+    override fun getContext(): Context = activity
 
     override fun onDestroy() {
         super.onDestroy()

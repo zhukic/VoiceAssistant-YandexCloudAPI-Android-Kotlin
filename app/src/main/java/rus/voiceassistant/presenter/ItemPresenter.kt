@@ -1,11 +1,12 @@
 package rus.voiceassistant.presenter
 
+import rus.voiceassistant.model.actions.Book
 import java.text.FieldPosition
 
 /**
  * Created by RUS on 28.04.2016.
  */
-interface IPresenter<T> {
+interface ItemPresenter<T> {
 
     fun onResume()
 
@@ -16,6 +17,10 @@ interface IPresenter<T> {
     fun onLongActionClicked(position: Int)
 
     fun removeAction(position: Int)
+
+    fun onItemCreated(item: T)
+
+    fun onItemEdited(item: T)
 
     fun onDestroy()
 }

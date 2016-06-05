@@ -44,15 +44,12 @@ import ru.yandex.speechkit.gui.RecognizerActivity
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.actions.Alarm
-import rus.voiceassistant.view.alarm.AlarmsFragment
 import rus.voiceassistant.addFragment
 import rus.voiceassistant.replaceFragment
 import rus.voiceassistant.view.book.BooksFragment
 import rus.voiceassistant.view.notification.NotificationsFragment
 import java.util.*
 
-//TODO alarm
-//TODO custom spinner
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -76,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
         currentFragment = BooksFragment()
 
-        drawer.setSelectionAtPosition(3)
+        drawer.setSelectionAtPosition(2)
 
         supportFragmentManager.addFragment(currentFragment)
 
@@ -96,22 +93,15 @@ class MainActivity : AppCompatActivity() {
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         PrimaryDrawerItem()
-                                .withName(getString(R.string.action_alarm))
-                                .withIdentifier(1)
-                                .withTextColor(Color.BLACK)
-                                .withSelectedTextColorRes(R.color.colorPrimary)
-                                .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
-                                .withIcon(GoogleMaterial.Icon.gmd_access_alarms),
-                        PrimaryDrawerItem()
                                 .withName(getString(R.string.action_reminder))
-                                .withIdentifier(2)
+                                .withIdentifier(1)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
                                 .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
                                 .withIcon(GoogleMaterial.Icon.gmd_event),
                         PrimaryDrawerItem()
                                 .withName(getString(R.string.books))
-                                .withIdentifier(3)
+                                .withIdentifier(2)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
                                 .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
@@ -119,40 +109,31 @@ class MainActivity : AppCompatActivity() {
                         DividerDrawerItem(),
                         PrimaryDrawerItem()
                                 .withName(getString(R.string.action_settings))
-                                .withIdentifier(4)
+                                .withIdentifier(3)
                                 .withTextColor(Color.BLACK)
                                 .withSelectedTextColorRes(R.color.colorPrimary)
                                 .withTypeface(Typer.set(this).getFont(Font.ROBOTO_MEDIUM))
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
-                .withOnDrawerItemClickListener(object : Drawer.OnDrawerItemClickListener {
-                    override fun onItemClick(view: View?, position: Int, drawerItem: IDrawerItem<*, *>?): Boolean {
-                        when(position) {
-                            1 -> {
-                                if(currentFragment !is AlarmsFragment) {
-                                    currentFragment = AlarmsFragment()
-                                    supportFragmentManager.replaceFragment(currentFragment )
-                                }
-                            }
-
-                            2 -> {
-                                if(currentFragment !is NotificationsFragment) {
-                                    currentFragment = NotificationsFragment()
-                                    supportFragmentManager.replaceFragment(currentFragment)
-                                }
-                            }
-
-                            3 -> {
-                                if(currentFragment !is BooksFragment) {
-                                    currentFragment = BooksFragment()
-                                    supportFragmentManager.replaceFragment(currentFragment)
-                                }
+                .withOnDrawerItemClickListener { view, position, drawerItem ->
+                    when(position) {
+                        1 -> {
+                            if(currentFragment !is NotificationsFragment) {
+                                currentFragment = NotificationsFragment()
+                                supportFragmentManager.replaceFragment(currentFragment)
                             }
                         }
-                        drawer.closeDrawer()
-                        return true
+
+                        2 -> {
+                            if(currentFragment !is BooksFragment) {
+                                currentFragment = BooksFragment()
+                                supportFragmentManager.replaceFragment(currentFragment)
+                            }
+                        }
                     }
-                })
+                    drawer.closeDrawer()
+                    true
+                }
                 .withCloseOnClick(true)
                 .build()
     }

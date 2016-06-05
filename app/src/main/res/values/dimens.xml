@@ -9,6 +9,8 @@
     <dimen name="notification_text_size">14sp</dimen>
     <dimen name="notification_time_size">14sp</dimen>
     <dimen name="subHeader_size">14sp</dimen>
+    <dimen name="bookAuthorSize">16sp</dimen>
+    <dimen name="bookNameSize">14sp</dimen>
     <dimen name="card_margin">8dp</dimen>
 
     <!--

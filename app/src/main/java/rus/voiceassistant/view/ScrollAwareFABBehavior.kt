@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton
 import android.support.v4.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
+import rus.voiceassistant.Logger
 
 /**
  * Created by RUS on 15.04.2016.
@@ -28,6 +29,8 @@ class ScrollAwareFABBehavior : FloatingActionButton.Behavior {
             child?.hide();
         } else if (dyConsumed < 0 && child?.visibility != View.VISIBLE) {
             child?.show();
+        } else if (dyUnconsumed > 0 && child?.visibility != View.VISIBLE) {
+            child?.show()
         }
 
     }

@@ -13,7 +13,7 @@ import rus.voiceassistant.R
 import rus.voiceassistant.model.actions.Book
 import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.notification
-import rus.voiceassistant.view.notification.ItemCreationListener
+import rus.voiceassistant.view.ItemCreationListener
 import java.util.*
 
 /**

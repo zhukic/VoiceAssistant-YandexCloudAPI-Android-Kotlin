@@ -39,16 +39,6 @@ fun Activity.toast(message: CharSequence, duration: Int = Toast.LENGTH_SHORT) {
     Toast.makeText(this, message, duration).show()
 }
 
-fun Calendar.isDateComesToday(hour: Int, minute: Int): Boolean {
-    val currentHour = get(Calendar.HOUR_OF_DAY)
-    val currentMinute = get(Calendar.MINUTE)
-
-    if(hour == currentHour)
-        return minute > currentMinute
-    else
-        return hour > currentHour
-}
-
 private fun List<Token>.containsAtLeastOneWordFromArrayOnPosition(words: Array<String>, position: Int): Boolean {
     for(word in words) {
         if(this[position].text.equals(word))

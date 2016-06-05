@@ -18,11 +18,8 @@ import kotlinx.android.synthetic.main.subheader_item.view.*
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.actions.Alarm
-import rus.voiceassistant.view.alarm.IAlarmView
-import rus.voiceassistant.isDateComesToday
 import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.toInt
-import rus.voiceassistant.view.notification.INotificationView
 import java.util.*
 
 /**

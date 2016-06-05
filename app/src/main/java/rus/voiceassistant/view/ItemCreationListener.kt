@@ -1,4 +1,4 @@
-package rus.voiceassistant.view.notification
+package rus.voiceassistant.view
 
 import rus.voiceassistant.model.actions.Notification
 

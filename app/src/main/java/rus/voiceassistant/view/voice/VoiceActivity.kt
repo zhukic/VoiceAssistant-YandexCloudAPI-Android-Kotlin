@@ -35,7 +35,7 @@ class VoiceActivity : Activity(), IVoiceView {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main2)
+        setContentView(R.layout.voice_activity)
 
         SpeechKit.getInstance().configure(this, API_KEY)
 

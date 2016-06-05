@@ -10,16 +10,17 @@ import rus.voiceassistant.database.DatabaseManager
 import rus.voiceassistant.model.actions.Book
 import rus.voiceassistant.model.actions.Notification
 import rus.voiceassistant.model.yandex.YandexResponse
+import rus.voiceassistant.presenter.ItemPresenter
 import rus.voiceassistant.presenter.voice.DownloadInteractor
 import rus.voiceassistant.presenter.voice.IDownloadInteractor
-import rus.voiceassistant.view.book.IBookView
+import rus.voiceassistant.view.ItemView
 import java.net.URLEncoder
 import java.util.*
 
 /**
  * Created by RUS on 04.05.2016.
  */
-class BookPresenter(var view: IBookView?): IBookPresenter {
+class BookPresenter(var view: ItemView<Book>?): ItemPresenter<Book> {
 
     val books: ArrayList<Book> = DatabaseManager.getBooksListFromDatabase()
 
@@ -29,26 +30,27 @@ class BookPresenter(var view: IBookView?): IBookPresenter {
     }
 
     override fun onAddActionClicked() {
-        view?.showBookDialog()
+        view?.showItemFragmentDialog()
     }
 
     override fun onActionClicked(position: Int) {
-        view?.showBookDialog(books[position])
+        view?.showItemFragmentDialog(books[position])
     }
 
     override fun onLongActionClicked(position: Int) {
-        view?.showDeleteActionDialog(position)
+        view?.showDeleteItemFragmentDialog(position)
     }
 
-    override fun onBookCreated(book: Book) {
-        books.add(book)
+    override fun onItemCreated(item: Book) {
+        books.add(item)
         books.sort()
-        MyApplication.bookDao.create(book)
+        MyApplication.bookDao.create(item)
         view?.onDataSetChanged()
     }
 
-    override fun onBookEdited(book: Book) {
-        MyApplication.bookDao.update(book)
+    override fun onItemEdited(item: Book) {
+        MyApplication.bookDao.update(item)
+        books.sort()
         view?.onDataSetChanged()
     }
 

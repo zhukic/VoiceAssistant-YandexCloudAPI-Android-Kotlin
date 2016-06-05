@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.create_notification.*
 import rus.voiceassistant.Logger
 import rus.voiceassistant.R
 import rus.voiceassistant.model.actions.Notification
-import rus.voiceassistant.view.notification.ItemCreationListener
+import rus.voiceassistant.view.ItemCreationListener
 import java.util.*
 
 /**

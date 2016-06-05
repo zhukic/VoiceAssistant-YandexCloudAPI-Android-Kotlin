@@ -36,7 +36,8 @@ class BooksAdapter(val onItemClickListener: OnItemClickListener, val items: List
 
     class ItemViewHolder(
             val v: View,
-            val text: TextView = v.book) : RecyclerView.ViewHolder(v)
+            val bookAuthor: TextView = v.bookAuthor,
+            val bookName: TextView = v.bookName) : RecyclerView.ViewHolder(v)
 
     class SubHeaderViewHolder(val v: View,
                               val text: String,
@@ -51,9 +52,11 @@ class BooksAdapter(val onItemClickListener: OnItemClickListener, val items: List
             var realPosition = getRealPosition(position)
             val context = holder.itemView.context
 
-            holder.text.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
+            holder.bookAuthor.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
+            holder.bookName.typeface = Typer.set(context).getFont(Font.ROBOTO_REGULAR)
 
-            holder.text.text ="${items[realPosition].author} - ${items[realPosition].name}"
+            holder.bookAuthor.text =items[realPosition].author
+            holder.bookName.text = items[realPosition].name
 
             holder.itemView?.setOnClickListener { onItemClickListener.onItemClicked(getRealPosition(holder.adapterPosition)) }
             holder.itemView?.setOnLongClickListener { onItemClickListener.onLongItemClicked(getRealPosition(holder.adapterPosition)) }
@@ -66,7 +69,7 @@ class BooksAdapter(val onItemClickListener: OnItemClickListener, val items: List
         else if(viewType == TYPE_HEADER_COMPLETED)
             return SubHeaderViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.subheader_item, parent, false), "Прочитанные")
         else if(viewType == TYPE_HEADER_CURRENT)
-            return SubHeaderViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.subheader_item, parent, false), "Надо прочитать")
+            return SubHeaderViewHolder(LayoutInflater.from(parent?.context).inflate(R.layout.subheader_item, parent, false), "Непрочитанные")
         return null
     }
 

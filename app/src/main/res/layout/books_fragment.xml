@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_calendar_plus"
+        android:src="@mipmap/ic_plus_white_24dp"
         app:fabSize="normal"
         app:layout_behavior="rus.voiceassistant.view.ScrollAwareFABBehavior"/>
 

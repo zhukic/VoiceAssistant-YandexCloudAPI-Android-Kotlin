@@ -1,15 +1,17 @@
 package rus.voiceassistant.presenter.notification
 
+import rus.voiceassistant.ActionCreator
 import rus.voiceassistant.MyApplication
 import rus.voiceassistant.database.DatabaseManager
 import rus.voiceassistant.model.actions.Notification
-import rus.voiceassistant.view.notification.INotificationView
+import rus.voiceassistant.presenter.ItemPresenter
+import rus.voiceassistant.view.ItemView
 import java.util.*
 
 /**
  * Created by RUS on 28.04.2016.
  */
-class NotificationPresenter(var view: INotificationView?) : INotificationPresenter {
+class NotificationPresenter(var view: ItemView<Notification>?) : ItemPresenter<Notification> {
 
     val notifications: ArrayList<Notification> = DatabaseManager.getNotificationsListFromDatabase()
 
@@ -19,34 +21,34 @@ class NotificationPresenter(var view: INotificationView?) : INotificationPresent
     }
 
     override fun onAddActionClicked() {
-        view?.showNotificationDialog()
+        view?.showItemFragmentDialog()
     }
 
     override fun onActionClicked(position: Int) {
-        view?.showNotificationDialog(notifications[position])
+        view?.showItemFragmentDialog(notifications[position])
     }
 
     override fun onLongActionClicked(position: Int) {
-        view?.showDeleteActionDialog(position)
+        view?.showDeleteItemFragmentDialog(position)
     }
 
-    override fun onNotificationCreated(notification: Notification) {
-        notifications.add(notification)
+    override fun onItemCreated(item: Notification) {
+        notifications.add(item)
         notifications.sort()
-        MyApplication.notificationDao.create(notification)
+        MyApplication.notificationDao.create(item)
         view?.onDataSetChanged()
-        view?.createNotification(notification)
+        ActionCreator.createNotification(view!!.getContext(), item)
     }
 
-    override fun onNotificationEdited(notification: Notification) {
-        MyApplication.notificationDao.update(notification)
-        view?.createNotification(notification)
+    override fun onItemEdited(item: Notification) {
+        MyApplication.notificationDao.update(item)
+        ActionCreator.createNotification(view!!.getContext(), item)
         view?.onDataSetChanged()
     }
 
     override fun removeAction(position: Int) {
         if(!notifications[position].isDone)
-            view?.cancelNotification(notifications[position])
+            ActionCreator.cancelNotification(view!!.getContext(), notifications[position])
         MyApplication.notificationDao.deleteById(notifications[position].id)
         notifications.removeAt(position)
         view?.onDataSetChanged()
